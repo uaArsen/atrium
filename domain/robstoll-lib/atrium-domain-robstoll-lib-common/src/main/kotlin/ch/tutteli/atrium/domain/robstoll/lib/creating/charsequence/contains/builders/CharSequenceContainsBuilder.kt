@@ -18,7 +18,7 @@ import ch.tutteli.atrium.domain.robstoll.lib.creating.basic.contains.builders.Co
  * @param plant The [AssertionPlant] for which the sophisticated `contains` assertions shall be built.
  * @param searchBehaviour The search behaviour which shall be applied to the input of the search.
  */
-class CharSequenceContainsBuilder<out T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
+class CharSequenceContainsBuilder<T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
     plant: AssertionPlant<T>, searchBehaviour: S
 ) : ContainsBuilder<T, S>(plant, searchBehaviour), CharSequenceContains.Builder<T, S>
 

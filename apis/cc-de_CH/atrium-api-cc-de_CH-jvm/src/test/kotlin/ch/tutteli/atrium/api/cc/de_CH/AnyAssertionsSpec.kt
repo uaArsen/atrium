@@ -1,8 +1,10 @@
 package ch.tutteli.atrium.api.cc.de_CH
 
 import ch.tutteli.atrium.AssertionVerbFactory
+import ch.tutteli.atrium.api.cc.en_GB.contains
 import ch.tutteli.atrium.creating.Assert
 import ch.tutteli.atrium.creating.AssertionPlantNullable
+import ch.tutteli.atrium.esGilt
 import ch.tutteli.atrium.spec.integration.AnyAssertionsSpec
 import kotlin.reflect.KFunction2
 import kotlin.reflect.KProperty1
@@ -40,4 +42,8 @@ class AnyAssertionsSpec : ch.tutteli.atrium.spec.integration.AnyAssertionsSpec(
         fun getAndLazyPair(): Pair<String, Assert<Int>.(Assert<Int>.() -> Unit) -> Assert<Int>> =
             andLazyName.name to Assert<Int>::und
     }
+}
+
+fun foo(){
+    esGilt(listOf<Number>(1, 2)).contains(1)
 }

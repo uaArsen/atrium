@@ -184,7 +184,7 @@ abstract class AnyAssertionsSpec(
 
         context("subject is not null") {
             val subject: Int? = 1
-            val testee = verbs.checkNullable(1) as ReportingAssertionPlantNullable<Int?>
+            val testee = verbs.checkNullable(subject) as ReportingAssertionPlantNullable<Int?>
             val expectFun = verbs.checkException {
                 testee.toBeNullFun()
             }

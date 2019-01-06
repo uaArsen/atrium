@@ -28,7 +28,7 @@ import ch.tutteli.atrium.assertions.iterable.contains.checkers.IterableContainsE
     "Use the abstract class from package creating; will be removed with 1.0.0",
     ReplaceWith("ch.tutteli.atrium.creating.iterable.contains.IterableContainsExactlyCheckerBuilderBase")
 )
-abstract class IterableContainsExactlyCheckerBuilderBase<out E, out T : Iterable<E>, out S : SearchBehaviour>(
+abstract class IterableContainsExactlyCheckerBuilderBase<out E, T : Iterable<E>, out S : SearchBehaviour>(
     val times: Int,
     override val containsBuilder: IterableContainsBuilder<E, T, S>,
     nameContainsNotFun: String,

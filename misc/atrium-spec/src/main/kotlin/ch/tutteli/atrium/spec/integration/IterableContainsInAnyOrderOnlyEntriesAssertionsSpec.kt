@@ -12,8 +12,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableContainsInAnyOrderOnlyEntriesAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsInAnyOrderOnlyEntriesPair: Pair<String, Assert<Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Assert<Iterable<Double>>>,
-    containsInAnyOrderOnlyNullableEntriesPair: Pair<String, Assert<Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<Iterable<Double?>>>,
+    containsInAnyOrderOnlyEntriesPair: Pair<String, Assert<out Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Assert<out Iterable<Double>>>,
+    containsInAnyOrderOnlyNullableEntriesPair: Pair<String, Assert<out Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<out Iterable<Double?>>>,
     rootBulletPoint: String,
     successfulBulletPoint: String,
     failingBulletPoint: String,
@@ -33,11 +33,11 @@ abstract class IterableContainsInAnyOrderOnlyEntriesAssertionsSpec(
         checkingTriple(containsInAnyOrderOnlyNullableEntriesPair.first, { containsInAnyOrderOnlyNullableEntriesPair.second(this, { toBe(1.0) }, arrayOf()) }, listOf(1.0).asIterable(), listOf(1.2))
     ) {})
 
-    val assert: (Iterable<Double>) -> Assert<Iterable<Double>> = verbs::checkImmediately
+    val assert: (Iterable<Double>) -> Assert<out Iterable<Double>> = verbs::checkImmediately
     val expect = verbs::checkException
 
     val (containsInAnyOrderOnlyNullableEntries, containsInAnyOrderOnlyNullableEntriesArr) = containsInAnyOrderOnlyNullableEntriesPair
-    fun Assert<Iterable<Double?>>.containsInAnyOrderOnlyNullableEntriesFun(t: (Assert<Double>.() -> Unit)?, vararg tX: (Assert<Double>.() -> Unit)?)
+    fun Assert<out Iterable<Double?>>.containsInAnyOrderOnlyNullableEntriesFun(t: (Assert<Double>.() -> Unit)?, vararg tX: (Assert<Double>.() -> Unit)?)
         = containsInAnyOrderOnlyNullableEntriesArr(t, tX)
 
     val indentBulletPoint = " ".repeat(rootBulletPoint.length)
@@ -52,7 +52,7 @@ abstract class IterableContainsInAnyOrderOnlyEntriesAssertionsSpec(
         containsInAnyOrderOnlyEntriesPair,
         containsInAnyOrderOnlyNullableEntriesPair
     ) { containsEntriesFunArr ->
-        fun Assert<Iterable<Double>>.containsEntriesFun(t: Assert<Double>.() -> Unit, vararg tX: Assert<Double>.() -> Unit)
+        fun Assert<out Iterable<Double>>.containsEntriesFun(t: Assert<Double>.() -> Unit, vararg tX: Assert<Double>.() -> Unit)
             = containsEntriesFunArr(t, tX)
 
         context("empty collection") {
@@ -282,7 +282,7 @@ abstract class IterableContainsInAnyOrderOnlyEntriesAssertionsSpec(
         describeFun(containsInAnyOrderOnlyNullableEntries) {
             val list = listOf(null, 1.0, null, 3.0)
             val fluent = verbs.checkImmediately(list)
-            absentSubjectTests(verbs, Assert<Iterable<Double?>>::containsInAnyOrderOnlyNullableEntriesFun)
+            absentSubjectTests(verbs, Assert<out Iterable<Double?>>::containsInAnyOrderOnlyNullableEntriesFun)
 
             context("iterable $list") {
                 context("happy cases (do not throw)") {

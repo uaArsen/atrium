@@ -11,7 +11,7 @@ import ch.tutteli.atrium.reporting.translating.TranslatableWithArgs
 import ch.tutteli.atrium.translations.DescriptionThrowableAssertion
 import kotlin.reflect.KClass
 
-class ThrowableThrownFailureHandler<out TExpected : Throwable>(
+class ThrowableThrownFailureHandler<TExpected : Throwable>(
     private val throwable: Throwable?,
     private val expectedType: KClass<TExpected>
 ) : ExplanatoryFailureHandlerBase<Throwable, TExpected>() {

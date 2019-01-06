@@ -8,7 +8,7 @@ import ch.tutteli.atrium.creating.AssertionPlant
 import ch.tutteli.atrium.domain.builders.AssertImpl
 import ch.tutteli.atrium.domain.creating.iterable.contains.searchbehaviours.InOrderOnlyGroupedSearchBehaviour
 
-class InOrderOnlyGroupedEntriesAssertionCreator<E : Any, in T : Iterable<E?>>(
+class InOrderOnlyGroupedEntriesAssertionCreator<E : Any, T : Iterable<E?>>(
     searchBehaviour: InOrderOnlyGroupedSearchBehaviour
 ) : InOrderOnlyGroupedAssertionCreator<E?, T, (AssertionPlant<E>.() -> Unit)?>(searchBehaviour),
     InOrderOnlyMatcher<E?, (AssertionPlant<E>.() -> Unit)?> by InOrderOnlyEntriesMatcher()

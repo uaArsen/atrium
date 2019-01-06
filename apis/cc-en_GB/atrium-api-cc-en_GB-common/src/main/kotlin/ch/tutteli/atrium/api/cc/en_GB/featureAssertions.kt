@@ -32,7 +32,7 @@ fun <T : Any, TProperty : Any> CollectingAssertionPlant<T>.property(property: KP
  *
  * @return An [AssertionPlant] for the given [property].
  */
-fun <T : Any, TProperty : Any> Assert<T>.property(property: KProperty1<T, TProperty>): AssertionPlant<TProperty>
+fun <T : Any, TProperty : Any> Assert<out T>.property(property: KProperty1<T, TProperty>): AssertionPlant<TProperty>
     = AssertImpl.feature.property(this, property)
 
 
@@ -64,7 +64,7 @@ fun <T : Any, TProperty : Any> CollectingAssertionPlant<T>.property(property: KP
  * @throws AssertionError Might throw an [AssertionError] if an additionally created [Assertion]
  *   (by calling [assertionCreator]) does not hold.
  */
-fun <T : Any, TProperty : Any> Assert<T>.property(property: KProperty1<T, TProperty>, assertionCreator: Assert<TProperty>.() -> Unit): AssertionPlant<TProperty>
+fun <T : Any, TProperty : Any> Assert<out T>.property(property: KProperty1<T, TProperty>, assertionCreator: Assert<TProperty>.() -> Unit): AssertionPlant<TProperty>
     = AssertImpl.feature.property(this, property, assertionCreator)
 
 
@@ -88,7 +88,7 @@ fun <T : Any, TProperty : Any?> CollectingAssertionPlant<T>.property(property: K
  *
  * @return An [AssertionPlantNullable] for the given [property].
  */
-fun <T : Any, TProperty : Any?> Assert<T>.property(property: KProperty1<T, TProperty>): AssertionPlantNullable<TProperty>
+fun <T : Any, TProperty : Any?> Assert<out T>.property(property: KProperty1<T, TProperty>): AssertionPlantNullable<TProperty>
     = AssertImpl.feature.property(this, property)
 
 

@@ -27,7 +27,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.checkers.checkerF
  * @param butAtMostCall The name of the function which was called and created this builder.
  * @param exactlyCall The name of the function which represents a `CharSequence contains exactly` assertion.
  */
-abstract class ButAtMostCheckerOptionBase<out T : CharSequence, out S : SearchBehaviour>(
+abstract class ButAtMostCheckerOptionBase<T : CharSequence, out S : SearchBehaviour>(
     final override val times: Int,
     atLeastBuilder: WithTimesCheckerOption<T, S>,
     final override val containsBuilder: CharSequenceContains.Builder<T, S>,

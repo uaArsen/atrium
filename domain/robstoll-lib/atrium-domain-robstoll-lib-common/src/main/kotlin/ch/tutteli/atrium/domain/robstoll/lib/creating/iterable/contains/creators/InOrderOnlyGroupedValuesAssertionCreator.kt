@@ -7,7 +7,7 @@ import ch.tutteli.atrium.creating.Assert
 import ch.tutteli.atrium.domain.builders.AssertImpl
 import ch.tutteli.atrium.domain.creating.iterable.contains.searchbehaviours.InOrderOnlyGroupedSearchBehaviour
 
-class InOrderOnlyGroupedValuesAssertionCreator<E, in T : Iterable<E>>(
+class InOrderOnlyGroupedValuesAssertionCreator<E, T : Iterable<E>>(
     searchBehaviour: InOrderOnlyGroupedSearchBehaviour
 ) : InOrderOnlyGroupedAssertionCreator<E, T, E>(searchBehaviour),
     InOrderOnlyMatcher<E, E> by InOrderOnlyValueMatcher()

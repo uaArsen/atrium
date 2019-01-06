@@ -27,7 +27,7 @@ import ch.tutteli.atrium.translations.DescriptionIterableAssertion
  * @param searchBehaviour The chosen search behaviour.
  * @param checkers The [Contains.Checker]s which shall be applied to the search result.
  */
-abstract class ContainsObjectsAssertionCreator<in T : Any, in SC, S : Contains.SearchBehaviour, C : Contains.Checker>(
+abstract class ContainsObjectsAssertionCreator<T : Any, in SC, S : Contains.SearchBehaviour, C : Contains.Checker>(
     searchBehaviour: S,
     checkers: List<C>
 ) : ContainsAssertionCreator<T, SC, C>(searchBehaviour, checkers) {

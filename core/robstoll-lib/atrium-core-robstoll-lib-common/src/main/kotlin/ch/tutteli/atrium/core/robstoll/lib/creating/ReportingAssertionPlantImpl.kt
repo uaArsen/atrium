@@ -18,7 +18,7 @@ import ch.tutteli.atrium.creating.ReportingAssertionPlant
  *
  * This class is not thread-safe, but is also not intended for long-running procedures.
  */
-class ReportingAssertionPlantImpl<out T : Any>(
+class ReportingAssertionPlantImpl<T : Any>(
     commonFields: AssertionPlantWithCommonFields.CommonFields<T>
 ) : MutableListBasedReportingAssertionPlant<T, AssertionPlant<T>>(commonFields),
     ReportingAssertionPlant<T> {

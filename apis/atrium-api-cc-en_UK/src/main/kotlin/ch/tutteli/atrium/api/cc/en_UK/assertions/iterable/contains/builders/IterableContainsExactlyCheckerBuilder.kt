@@ -24,7 +24,7 @@ import ch.tutteli.atrium.domain.creating.iterable.contains.searchbehaviours.InAn
         "ch.tutteli.atrium.api.cc.en_GB.creating.iterable.contains.builders.ExactlyCheckerOption"
     )
 )
-open class IterableContainsExactlyCheckerBuilder<out E, out T : Iterable<E>>(
+open class IterableContainsExactlyCheckerBuilder<out E, T : Iterable<E>>(
     times: Int,
     containsBuilder: IterableContains.Builder<E, T, InAnyOrderSearchBehaviour>
 ) : ch.tutteli.atrium.api.cc.en_UK.creating.iterable.contains.builders.ExactlyCheckerOptionImpl<E, T, InAnyOrderSearchBehaviour>(

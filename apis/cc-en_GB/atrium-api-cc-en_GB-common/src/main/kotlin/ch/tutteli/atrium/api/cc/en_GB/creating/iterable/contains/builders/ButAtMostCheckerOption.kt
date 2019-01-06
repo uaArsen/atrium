@@ -10,5 +10,5 @@ import ch.tutteli.atrium.domain.creating.iterable.contains.IterableContains
  * @param T The input type of the search.
  * @param S The search behaviour which should be applied for the input of the search.
  */
-interface ButAtMostCheckerOption<out E, out T : Iterable<E>, out S : IterableContains.SearchBehaviour>
+interface ButAtMostCheckerOption<E, T : Iterable<E>, out S : IterableContains.SearchBehaviour>
     : WithTimesCheckerOption<E, T, S>

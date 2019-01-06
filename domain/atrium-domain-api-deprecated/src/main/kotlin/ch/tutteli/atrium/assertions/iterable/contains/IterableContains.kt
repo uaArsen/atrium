@@ -38,7 +38,7 @@ interface IterableContains {
         "Use the interface from package domain.creating; will be removed with 1.0.0",
         ReplaceWith("ch.tutteli.atrium.domain.creating.iterable.contains.IterableContains.Creator")
     )
-    interface Creator<in T : Iterable<*>, in S> : Contains.Creator<T, S>, IterableContains.Creator<T, S>
+    interface Creator<T : Iterable<*>, in S> : Contains.Creator<T, S>, IterableContains.Creator<T, S>
 
     /**
      * Represents a check for the search result such as: the object is contained exactly once in the input of the search.

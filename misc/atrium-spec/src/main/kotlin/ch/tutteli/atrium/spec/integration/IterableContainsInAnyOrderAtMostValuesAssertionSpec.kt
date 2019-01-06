@@ -12,7 +12,7 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableContainsInAnyOrderAtMostValuesAssertionSpec(
     verbs: AssertionVerbFactory,
-    containsAtMostTriple: Triple<String, (String, String) -> String, Assert<Iterable<Double>>.(Int, Double, Array<out Double>) -> Assert<Iterable<Double>>>,
+    containsAtMostTriple: Triple<String, (String, String) -> String, Assert<out Iterable<Double>>.(Int, Double, Array<out Double>) -> Assert<out Iterable<Double>>>,
     containsNotPair: Pair<String, (Int) -> String>,
     exactlyPair: Pair<String, (Int) -> String>,
     rootBulletPoint: String,
@@ -30,12 +30,12 @@ abstract class IterableContainsInAnyOrderAtMostValuesAssertionSpec(
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)
 
-    val assert: (Iterable<Double>) -> Assert<Iterable<Double>> = verbs::checkImmediately
+    val assert: (Iterable<Double>) -> Assert<out Iterable<Double>> = verbs::checkImmediately
     val expect = verbs::checkException
     val fluent = assert(oneToSeven)
 
     val (containsAtMost, containsAtMostTest, containsAtMostFunArr) = containsAtMostTriple
-    fun Assert<Iterable<Double>>.containsAtMostFun(atLeast: Int, a: Double, vararg aX: Double)
+    fun Assert<out Iterable<Double>>.containsAtMostFun(atLeast: Int, a: Double, vararg aX: Double)
         = containsAtMostFunArr(atLeast, a, aX.toTypedArray())
 
     val (containsNot, errorMsgContainsNot) = containsNotPair

@@ -14,7 +14,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.checkers.checkerF
  * @constructor The base class for builders which create a `contains at least` check within the fluent API of a
  *   sophisticated `contains` assertion for [CharSequence].
  */
-abstract class NotCheckerOptionBase<out T : CharSequence, out S : SearchBehaviour>(
+abstract class NotCheckerOptionBase<T : CharSequence, out S : SearchBehaviour>(
     override val containsBuilder: CharSequenceContains.Builder<T, S>
 ) : CharSequenceContains.CheckerOption<T, S> {
 

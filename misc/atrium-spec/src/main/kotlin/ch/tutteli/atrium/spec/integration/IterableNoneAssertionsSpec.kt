@@ -10,8 +10,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableNoneAssertionsSpec(
     verbs: AssertionVerbFactory,
-    nonePair: Pair<String, Assert<Iterable<Double>>.(Assert<Double>.() -> Unit) -> Assert<Iterable<Double>>>,
-    noneNullablePair: Pair<String, Assert<Iterable<Double?>>.((Assert<Double>.() -> Unit)?) -> Assert<Iterable<Double?>>>,
+    nonePair: Pair<String, Assert<out Iterable<Double>>.(Assert<Double>.() -> Unit) -> Assert<out Iterable<Double>>>,
+    noneNullablePair: Pair<String, Assert<out Iterable<Double?>>.((Assert<Double>.() -> Unit)?) -> Assert<out Iterable<Double?>>>,
     rootBulletPoint: String,
     successfulBulletPoint: String,
     failingBulletPoint: String,

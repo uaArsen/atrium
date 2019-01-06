@@ -18,7 +18,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceConta
  *   found in the input of the search.
  * @param containsBuilder The previously used [CharSequenceContains.Builder].
  */
-internal class ExactlyCheckerOptionImpl<out T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
+internal class ExactlyCheckerOptionImpl<T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
     times: Int,
     containsBuilder: CharSequenceContains.Builder<T, S>
 ) : ExactlyCheckerOptionBase<T, S>(

@@ -10,8 +10,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableAllAssertionsSpec(
     verbs: AssertionVerbFactory,
-    allPair: Pair<String, Assert<Iterable<Double>>.(Assert<Double>.() -> Unit) -> Assert<Iterable<Double>>>,
-    allNullablePair: Pair<String, Assert<Iterable<Double?>>.((Assert<Double>.() -> Unit)?) -> Assert<Iterable<Double?>>>,
+    allPair: Pair<String, Assert<out Iterable<Double>>.(Assert<Double>.() -> Unit) -> Assert<out Iterable<Double>>>,
+    allNullablePair: Pair<String, Assert<out Iterable<Double?>>.((Assert<Double>.() -> Unit)?) -> Assert<out Iterable<Double?>>>,
     rootBulletPoint: String,
     warningBulletPoint: String,
     listBulletPoint: String,
@@ -31,7 +31,7 @@ abstract class IterableAllAssertionsSpec(
         checkingTriple(allNullablePair.first, { allNullablePair.second(this) { isGreaterThan(2.5) } }, listOf(2.6, 3.0, 4.0).asIterable(), listOf(1.0, 2.5, 3.0))
     ) {})
 
-    val assert: (Iterable<Double>) -> Assert<Iterable<Double>> = verbs::checkImmediately
+    val assert: (Iterable<Double>) -> Assert<out Iterable<Double>> = verbs::checkImmediately
     val expect = verbs::checkException
 
     val (allOfNullable, allOfNullableFun) = allNullablePair

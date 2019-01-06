@@ -3,7 +3,7 @@ package ch.tutteli.atrium.domain.robstoll.lib.creating.any.typetransformation.fa
 import ch.tutteli.atrium.domain.builders.AssertImpl
 import ch.tutteli.atrium.reporting.translating.Translatable
 
-class ExplanatoryFailureHandler<in S : Any, out T : Any> : ExplanatoryFailureHandlerBase<S, T>() {
+class ExplanatoryFailureHandler<S : Any, T : Any> : ExplanatoryFailureHandlerBase<S, T>() {
 
     override fun createFailingAssertion(description: Translatable, representation: Any)
         = AssertImpl.builder.descriptive

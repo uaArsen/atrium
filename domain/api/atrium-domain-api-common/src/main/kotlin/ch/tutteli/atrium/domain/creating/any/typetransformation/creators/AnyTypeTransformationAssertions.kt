@@ -27,8 +27,8 @@ interface AnyTypeTransformationAssertions {
         assertionCreator: AssertionPlant<T>.() -> Unit
     )
 
-    fun <TSub : Any> isA(
-        plant: AssertionPlant<Any>,
+    fun <TSub: Any>  isA(
+        plant: AssertionPlant<out Any>,
         subType: KClass<TSub>,
         assertionCreator: AssertionPlant<TSub>.() -> Unit
     )

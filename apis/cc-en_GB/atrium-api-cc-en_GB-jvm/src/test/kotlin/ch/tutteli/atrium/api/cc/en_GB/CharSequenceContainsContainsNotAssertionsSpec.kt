@@ -11,16 +11,16 @@ class CharSequenceContainsContainsNotAssertionsSpec : ch.tutteli.atrium.spec.int
     "◆ ", "⚬ ", "▶ "
 ) {
     companion object : CharSequenceContainsSpecBase() {
-        private val containsFun: KFunction3<Assert<CharSequence>, Any, Array<out Any>, Assert<CharSequence>> = Assert<CharSequence>::contains
+        private val containsFun: KFunction3<Assert<out CharSequence>, Any, Array<out Any>, Assert<out CharSequence>> = Assert<out CharSequence>::contains
         fun getContainsPair() = containsFun.name to Companion::containsShortcut
 
-        private fun containsShortcut(plant: Assert<CharSequence>, a: Any, aX: Array<out Any>)
+        private fun containsShortcut(plant: Assert<out CharSequence>, a: Any, aX: Array<out Any>)
             = plant.contains(a, *aX)
 
-        private val containsNotFun: KFunction3<Assert<CharSequence>, Any, Array<out Any>, Assert<CharSequence>> = Assert<CharSequence>::containsNot
+        private val containsNotFun: KFunction3<Assert<out CharSequence>, Any, Array<out Any>, Assert<out CharSequence>> = Assert<out CharSequence>::containsNot
         private fun getContainsNotPair() = containsNotFun.name to Companion::containsNotShortcut
 
-        private fun containsNotShortcut(plant: Assert<CharSequence>, a: Any, aX: Array<out Any>)
+        private fun containsNotShortcut(plant: Assert<out CharSequence>, a: Any, aX: Array<out Any>)
             = plant.containsNot(a, *aX)
     }
 }

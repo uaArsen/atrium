@@ -11,8 +11,8 @@ import org.jetbrains.spek.api.include
 
 abstract class CharSequenceContainsExactlyAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsExactlyTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, Any, Array<out Any>) -> Assert<CharSequence>>,
-    containsExactlyIgnoringCaseTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, Any, Array<out Any>) -> Assert<CharSequence>>,
+    containsExactlyTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, Any, Array<out Any>) -> Assert<out CharSequence>>,
+    containsExactlyIgnoringCaseTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, Any, Array<out Any>) -> Assert<out CharSequence>>,
     containsNotPair: Pair<String, (Int) -> String>,
     rootBulletPoint: String,
     listBulletPoint: String,
@@ -32,17 +32,17 @@ abstract class CharSequenceContainsExactlyAssertionsSpec(
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)
 
-    val assert: (CharSequence) -> Assert<CharSequence> = verbs::checkImmediately
+    val assert: (CharSequence) -> Assert<out CharSequence> = verbs::checkImmediately
     val expect = verbs::checkException
     val fluent = assert(text)
     val fluentHelloWorld = assert(helloWorld)
 
     val (containsExactly, containsExactlyTest, containsExactlyFunArr) = containsExactlyTriple
-    fun Assert<CharSequence>.containsExactlyFun(atLeast: Int, a: Any, vararg aX: Any)
+    fun Assert<out CharSequence>.containsExactlyFun(atLeast: Int, a: Any, vararg aX: Any)
         = containsExactlyFunArr(atLeast, a, aX)
 
     val (_, containsExactlyIgnoringCase, containsExactlyIgnoringCaseFunArr) = containsExactlyIgnoringCaseTriple
-    fun Assert<CharSequence>.containsExactlyIgnoringCaseFun(atLeast: Int, a: Any, vararg aX: Any)
+    fun Assert<out CharSequence>.containsExactlyIgnoringCaseFun(atLeast: Int, a: Any, vararg aX: Any)
         = containsExactlyIgnoringCaseFunArr(atLeast, a, aX)
 
     val (containsNot, errorMsgContainsNot) = containsNotPair

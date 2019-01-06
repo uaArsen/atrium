@@ -41,7 +41,7 @@ inline fun <reified T : Any> AssertionPlantNullable<T?>.notToBeNull(noinline ass
  *
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
  */
-inline fun <reified TSub : Any> Assert<Any>.isA(noinline assertionCreator: AssertionPlant<TSub>.() -> Unit) {
+inline fun <reified TSub : Any> Assert<out Any>.isA(noinline assertionCreator: AssertionPlant<TSub>.() -> Unit) {
     AssertImpl.any.typeTransformation.isA(this, TSub::class, assertionCreator)
 }
 

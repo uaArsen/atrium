@@ -8,22 +8,22 @@ class CharSequenceAssertionsSpec : ch.tutteli.atrium.spec.integration.CharSequen
     AssertionVerbFactory,
     "containsDefaultTranslationOf no longer in this API" to Companion::containsDefaultTranslationOf,
     "containsNotDefaultTranslationOf no longer in this API" to Companion::containsNotDefaultTranslationOf,
-    Assert<CharSequence>::isEmpty.name to Assert<CharSequence>::isEmpty,
-    Assert<CharSequence>::isNotEmpty.name to Assert<CharSequence>::isNotEmpty,
-    Assert<CharSequence>::isNotBlank.name to Assert<CharSequence>::isNotBlank,
-    Assert<CharSequence>::startsWith.name to Assert<CharSequence>::startsWith,
-    Assert<CharSequence>::startsNotWith.name to Assert<CharSequence>::startsNotWith,
-    Assert<CharSequence>::endsWith.name to Assert<CharSequence>::endsWith,
-    Assert<CharSequence>::endsNotWith.name to Assert<CharSequence>::endsNotWith,
+    Assert<out CharSequence>::isEmpty.name to Assert<out CharSequence>::isEmpty,
+    Assert<out CharSequence>::isNotEmpty.name to Assert<out CharSequence>::isNotEmpty,
+    Assert<out CharSequence>::isNotBlank.name to Assert<out CharSequence>::isNotBlank,
+    Assert<out CharSequence>::startsWith.name to Assert<out CharSequence>::startsWith,
+    Assert<out CharSequence>::startsNotWith.name to Assert<out CharSequence>::startsNotWith,
+    Assert<out CharSequence>::endsWith.name to Assert<out CharSequence>::endsWith,
+    Assert<out CharSequence>::endsNotWith.name to Assert<out CharSequence>::endsNotWith,
     "◆ ", "⚬ "
 ){
     companion object{
 
-        fun containsDefaultTranslationOf(plant: Assert<CharSequence>, translatable: Translatable, arrayOfTranslatables: Array<out Translatable>): Assert<CharSequence> {
+        fun containsDefaultTranslationOf(plant: Assert<out CharSequence>, translatable: Translatable, arrayOfTranslatables: Array<out Translatable>): Assert<out CharSequence> {
             return plant.contains(translatable.getDefault(), *arrayOfTranslatables.map { it.getDefault() }.toTypedArray())
         }
 
-        fun containsNotDefaultTranslationOf(plant: Assert<CharSequence>, translatable: Translatable, arrayOfTranslatables: Array<out Translatable>): Assert<CharSequence> {
+        fun containsNotDefaultTranslationOf(plant: Assert<out CharSequence>, translatable: Translatable, arrayOfTranslatables: Array<out Translatable>): Assert<out CharSequence> {
             return plant.containsNot(translatable.getDefault(), *arrayOfTranslatables.map { it.getDefault() }.toTypedArray())
         }
     }

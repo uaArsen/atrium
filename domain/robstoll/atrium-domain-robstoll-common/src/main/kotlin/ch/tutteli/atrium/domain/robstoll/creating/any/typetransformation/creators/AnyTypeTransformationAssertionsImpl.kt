@@ -25,8 +25,8 @@ class AnyTypeTransformationAssertionsImpl : AnyTypeTransformationAssertions {
         _isNotNull(plant, type, assertionCreator)
     }
 
-    override fun <TSub : Any> isA(
-        plant: AssertionPlant<Any>,
+    override fun <TSub: Any> isA(
+        plant: AssertionPlant<out Any>,
         subType: KClass<TSub>,
         assertionCreator: AssertionPlant<TSub>.() -> Unit
     ) {

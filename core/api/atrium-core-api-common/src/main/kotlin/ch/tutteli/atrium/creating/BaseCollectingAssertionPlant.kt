@@ -14,7 +14,7 @@ import ch.tutteli.atrium.assertions.Assertion
  * @param C A subtype of [BaseCollectingAssertionPlant] which is used in the fluent style API and as self type.
  */
 interface BaseCollectingAssertionPlant<
-    out T,
+    T,
     out A : BaseAssertionPlant<T, A>,
     out C : BaseCollectingAssertionPlant<T, A, C>
     > : BaseAssertionPlant<T, A> {

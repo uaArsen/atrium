@@ -28,7 +28,7 @@ import ch.tutteli.atrium.translations.DescriptionCharSequenceAssertion
  * @param searcher The search method which is used to search for given objects.
  * @param checkers The checkers which create assertions based on the search result.
  */
-class CharSequenceContainsAssertionCreator<in T : CharSequence, in SC: Any, S : SearchBehaviour>(
+class CharSequenceContainsAssertionCreator<T : CharSequence, in SC: Any, S : SearchBehaviour>(
     searchBehaviour: S,
     private val searcher: Searcher<S>,
     checkers: List<Checker>,

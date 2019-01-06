@@ -10,8 +10,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableContainsInAnyOrderAtLeast1EntriesAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsInAnyOrderEntriesPair: Pair<String, Assert<Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Assert<Iterable<Double>>>,
-    containsInAnyOrderNullableEntriesPair: Pair<String, Assert<Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<Iterable<Double?>>>,
+    containsInAnyOrderEntriesPair: Pair<String, Assert<out Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Assert<out Iterable<Double>>>,
+    containsInAnyOrderNullableEntriesPair: Pair<String, Assert<out Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<out Iterable<Double?>>>,
     rootBulletPoint: String,
     describePrefix: String = "[Atrium] "
 ) : IterableContainsEntriesSpecBase(verbs, {
@@ -26,11 +26,11 @@ abstract class IterableContainsInAnyOrderAtLeast1EntriesAssertionsSpec(
         checkingTriple(containsInAnyOrderNullableEntriesPair.first, { containsInAnyOrderNullableEntriesPair.second(this, { toBe(2.5) }, arrayOf()) }, listOf(2.5).asIterable(), listOf())
     ) {})
 
-    val assert: (Iterable<Double>) -> Assert<Iterable<Double>> = verbs::checkImmediately
+    val assert: (Iterable<Double>) -> Assert<out Iterable<Double>> = verbs::checkImmediately
     val expect = verbs::checkException
 
     val (containsInAnyOrderNullableEntries, containsInAnyOrderNullableEntriesFunArr) = containsInAnyOrderNullableEntriesPair
-    fun Assert<Iterable<Double?>>.containsInAnyOrderNullableEntriesFun(t: (Assert<Double>.() -> Unit)?, vararg tX: (Assert<Double>.() -> Unit)?)
+    fun Assert<out Iterable<Double?>>.containsInAnyOrderNullableEntriesFun(t: (Assert<Double>.() -> Unit)?, vararg tX: (Assert<Double>.() -> Unit)?)
         = containsInAnyOrderNullableEntriesFunArr(t, tX)
 
     nonNullableCases(
@@ -39,7 +39,7 @@ abstract class IterableContainsInAnyOrderAtLeast1EntriesAssertionsSpec(
         containsInAnyOrderNullableEntriesPair
     ) { containsEntriesFunArr ->
 
-        fun Assert<Iterable<Double>>.containsEntriesFun(t: Assert<Double>.() -> Unit, vararg tX: Assert<Double>.() -> Unit)
+        fun Assert<out Iterable<Double>>.containsEntriesFun(t: Assert<Double>.() -> Unit, vararg tX: Assert<Double>.() -> Unit)
             = containsEntriesFunArr(t, tX)
 
         context("empty collection") {
@@ -132,7 +132,7 @@ abstract class IterableContainsInAnyOrderAtLeast1EntriesAssertionsSpec(
     nullableCases(describePrefix) {
 
         describeFun(containsInAnyOrderNullableEntries) {
-            absentSubjectTests(verbs, Assert<Iterable<Double?>>::containsInAnyOrderNullableEntriesFun)
+            absentSubjectTests(verbs, Assert<out Iterable<Double?>>::containsInAnyOrderNullableEntriesFun)
 
             val list = listOf(null, 1.0, null, 3.0)
             val fluent = verbs.checkImmediately(list)

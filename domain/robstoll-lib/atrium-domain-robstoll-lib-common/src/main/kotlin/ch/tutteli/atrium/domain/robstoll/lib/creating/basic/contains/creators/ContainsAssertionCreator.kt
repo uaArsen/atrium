@@ -21,7 +21,7 @@ import ch.tutteli.atrium.translations.DescriptionIterableAssertion
  * @constructor Represents the base class for [Contains.Creator]s, providing a template to fulfill its job.
  * @param checkers The [Contains.Checker]s which shall be applied to the search result.
  */
-abstract class ContainsAssertionCreator<in T : Any, in SC, C : Contains.Checker>(
+abstract class ContainsAssertionCreator<T : Any, in SC, C : Contains.Checker>(
     protected val searchBehaviour: Contains.SearchBehaviour,
     private val checkers: List<C>
 ) : Contains.Creator<T, SC> {

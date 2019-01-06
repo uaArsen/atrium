@@ -12,8 +12,8 @@ import org.jetbrains.spek.api.include
 
 abstract class CharSequenceContainsContainsNotAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsPair: Pair<String, Assert<CharSequence>.(String, Array<out String>) -> Assert<CharSequence>>,
-    containsNotPair: Pair<String, Assert<CharSequence>.(String, Array<out String>) -> Assert<CharSequence>>,
+    containsPair: Pair<String, Assert<out CharSequence>.(String, Array<out String>) -> Assert<out CharSequence>>,
+    containsNotPair: Pair<String, Assert<out CharSequence>.(String, Array<out String>) -> Assert<out CharSequence>>,
     rootBulletPoint: String,
     listBulletPoint: String,
     featureArrow: String,
@@ -33,16 +33,16 @@ abstract class CharSequenceContainsContainsNotAssertionsSpec(
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)
 
-    val assert: (CharSequence) -> Assert<CharSequence> = verbs::checkImmediately
+    val assert: (CharSequence) -> Assert<out CharSequence> = verbs::checkImmediately
     val expect = verbs::checkException
     val fluent = assert(text)
 
     val (containsFunName, containsFunArr) = containsPair
-    fun Assert<CharSequence>.containsFun(t: String, vararg tX: String)
+    fun Assert<out CharSequence>.containsFun(t: String, vararg tX: String)
         = containsFunArr(t, tX)
 
     val (containsNot, containsNotFunArr) = containsNotPair
-    fun Assert<CharSequence>.containsNotFun(t: String, vararg tX: String)
+    fun Assert<out CharSequence>.containsNotFun(t: String, vararg tX: String)
         = containsNotFunArr(t, tX)
 
     val indentBulletPoint = " ".repeat(rootBulletPoint.length)

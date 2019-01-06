@@ -19,7 +19,7 @@ class CharSequenceContainsExactlyAssertionsSpec : ch.tutteli.atrium.spec.integra
             Companion::containsExactly
         )
 
-        private fun containsExactly(plant: Assert<CharSequence>, exactly: Int, a: Any, aX: Array<out Any>)
+        private fun containsExactly(plant: Assert<out CharSequence>, exactly: Int, a: Any, aX: Array<out Any>)
             = plant.contains.exactly(exactly).values(a, *aX)
 
         private fun getExactlyIgnoringCaseTriple() = Triple(
@@ -28,7 +28,7 @@ class CharSequenceContainsExactlyAssertionsSpec : ch.tutteli.atrium.spec.integra
             Companion::containsExactlyIgnoringCase
         )
 
-        private fun containsExactlyIgnoringCase(plant: Assert<CharSequence>, exactly: Int, a: Any, aX: Array<out Any>)
+        private fun containsExactlyIgnoringCase(plant: Assert<out CharSequence>, exactly: Int, a: Any, aX: Array<out Any>)
             = plant.contains.ignoringCase.exactly(exactly).values(a, *aX)
 
 

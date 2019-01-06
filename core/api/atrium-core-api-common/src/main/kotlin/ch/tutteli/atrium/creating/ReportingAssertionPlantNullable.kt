@@ -10,5 +10,5 @@ import ch.tutteli.atrium.assertions.Assertion
  *
  * @param T The type of the [subject] of this [AssertionPlant].
  */
-interface ReportingAssertionPlantNullable<out T>
+interface ReportingAssertionPlantNullable<T>
     : AssertionPlantNullable<T>, BaseReportingAssertionPlant<T, AssertionPlantNullable<T>>

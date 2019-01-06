@@ -24,7 +24,7 @@ import ch.tutteli.atrium.domain.creating.iterable.contains.searchbehaviours.InAn
         "ch.tutteli.atrium.api.cc.en_GB.creating.iterable.contains.builders.NotOrAtMostCheckerOption"
     )
 )
-open class IterableContainsNotOrAtMostCheckerBuilder<out E, out T : Iterable<E>>(
+open class IterableContainsNotOrAtMostCheckerBuilder<out E, T : Iterable<E>>(
     times: Int,
     containsBuilder: IterableContains.Builder<E, T, InAnyOrderSearchBehaviour>
 ) : ch.tutteli.atrium.api.cc.en_UK.creating.iterable.contains.builders.NotOrAtMostCheckerOptionImpl<E, T, InAnyOrderSearchBehaviour>(

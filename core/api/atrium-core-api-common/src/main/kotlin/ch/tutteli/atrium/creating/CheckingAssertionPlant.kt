@@ -11,7 +11,7 @@ import ch.tutteli.atrium.assertions.Assertion
  *
  * @param T The type of the [subject] of this [AssertionPlant].
  */
-interface CheckingAssertionPlant<out T : Any> : AssertionPlant<T> {
+interface CheckingAssertionPlant<T : Any> : AssertionPlant<T> {
 
     override fun addAssertionsCreatedBy(assertionCreator: AssertionPlant<T>.() -> Unit): CheckingAssertionPlant<T>
 

@@ -10,5 +10,5 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceConta
  * @param T The input type of the search.
  * @param S The search behaviour which should be applied for the input of the search.
  */
-interface AtLeastCheckerOption<out T : CharSequence, out S : CharSequenceContains.SearchBehaviour>
+interface AtLeastCheckerOption<T : CharSequence, out S : CharSequenceContains.SearchBehaviour>
     : WithTimesCheckerOption<T, S>

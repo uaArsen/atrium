@@ -3,7 +3,7 @@ package ch.tutteli.atrium.core.robstoll.lib.creating
 import ch.tutteli.atrium.creating.AssertionPlant
 import ch.tutteli.atrium.creating.CheckingAssertionPlant
 
-class CheckingAssertionPlantImpl<out T : Any>(
+class CheckingAssertionPlantImpl<T : Any>(
     subjectProvider: () -> T
 ) : MutableListBasedAssertionPlant<T, AssertionPlant<T>>(subjectProvider),
     CheckingAssertionPlant<T> {

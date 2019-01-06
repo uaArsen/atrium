@@ -22,7 +22,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceConta
         "ch.tutteli.atrium.api.cc.de_CH.creating.charsequence.contains.builders.NotCheckerOption"
     )
 )
-open class CharSequenceContainsNotCheckerBuilder<out T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
+open class CharSequenceContainsNotCheckerBuilder<T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
     containsBuilder: CharSequenceContains.Builder<T, S>
 ) : ch.tutteli.atrium.api.cc.de_CH.creating.charsequence.contains.builders.impl.NotCheckerOptionImpl<T, S>(
     containsBuilder

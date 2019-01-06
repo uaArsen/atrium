@@ -21,7 +21,7 @@ class IterableContainsInAnyOrderAtLeastValuesAssertionsSpec : ch.tutteli.atrium.
             Companion::containsAtLeast
         )
 
-        private fun containsAtLeast(plant: Assert<Iterable<Double>>, atLeast: Int, a: Double, aX: Array<out Double>): Assert<Iterable<Double>> {
+        private fun containsAtLeast(plant: Assert<out Iterable<Double>>, atLeast: Int, a: Double, aX: Array<out Double>): Assert<out Iterable<Double>> {
             return if (aX.isEmpty()) {
                 plant.contains.inAnyOrder.atLeast(atLeast).value(a)
             } else {
@@ -35,7 +35,7 @@ class IterableContainsInAnyOrderAtLeastValuesAssertionsSpec : ch.tutteli.atrium.
             Companion::containsAtLeastButAtMost
         )
 
-        private fun containsAtLeastButAtMost(plant: Assert<Iterable<Double>>, atLeast: Int, butAtMost: Int, a: Double, aX: Array<out Double>)
+        private fun containsAtLeastButAtMost(plant: Assert<out Iterable<Double>>, atLeast: Int, butAtMost: Int, a: Double, aX: Array<out Double>)
             = plant.contains.inAnyOrder.atLeast(atLeast).butAtMost(butAtMost).values(a, *aX)
 
         private fun getContainsNotPair() = containsNot to Companion::getErrorMsgContainsNot

@@ -16,8 +16,8 @@ class IterableAnyAssertionsSpec : Spek({
 }) {
     object PredicateSpec : ch.tutteli.atrium.spec.integration.IterableAnyAssertionsSpec(
         AssertionVerbFactory,
-        Assert<Iterable<Double>>::any.name to Assert<Iterable<Double>>::any,
-        Assert<Iterable<Double?>>::anyOfNullable.name to Assert<Iterable<Double?>>::anyOfNullable,
+        Assert<out Iterable<Double>>::any.name to Assert<out Iterable<Double>>::any,
+        Assert<out Iterable<Double?>>::anyOfNullable.name to Assert<out Iterable<Double?>>::anyOfNullable,
         "◆ ",
         "[Atrium][Predicate] "
     )
@@ -50,38 +50,38 @@ class IterableAnyAssertionsSpec : Spek({
         fun getContainsPair()
             = "$contains.$inAnyOrder.$atLeast(1).$inAnyOrderEntries" to Companion::containsInAnyOrderEntries
 
-        private fun containsInAnyOrderEntries(plant: Assert<Iterable<Double>>, a: Assert<Double>.() -> Unit)
+        private fun containsInAnyOrderEntries(plant: Assert<out Iterable<Double>>, a: Assert<Double>.() -> Unit)
             = plant.contains.inAnyOrder.atLeast(1).entry(a)
 
         fun getContainsNullablePair()
             = "$contains.$inAnyOrder.$atLeast(1).$inAnyOrderEntries nullable" to Companion::containsNullableEntries
 
-        private fun containsNullableEntries(plant: Assert<Iterable<Double?>>, a: (Assert<Double>.() -> Unit)?)
+        private fun containsNullableEntries(plant: Assert<out Iterable<Double?>>, a: (Assert<Double>.() -> Unit)?)
             = plant.contains.inAnyOrder.atLeast(1).nullableEntry(a)
 
-        private val containsShortcutFun : KFunction3<Assert<Iterable<Double>>, Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>, Assert<Iterable<Double>>> = Assert<Iterable<Double>>::contains
+        private val containsShortcutFun : KFunction3<Assert<out Iterable<Double>>, Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>, Assert<out Iterable<Double>>> = Assert<out Iterable<Double>>::contains
         fun getContainsShortcutPair() = containsShortcutFun.name to Companion::containsInAnyOrderEntriesShortcut
 
-        private fun containsInAnyOrderEntriesShortcut(plant: Assert<Iterable<Double>>, a: Assert<Double>.() -> Unit)
+        private fun containsInAnyOrderEntriesShortcut(plant: Assert<out Iterable<Double>>, a: Assert<Double>.() -> Unit)
             = plant.contains(a)
 
-        private val containsShortcutNullableFun: KFunction2<Assert<Iterable<Double?>>, (Assert<Double>.() -> Unit)?, Assert<Iterable<Double?>>> = Assert<Iterable<Double?>>::containsNullableEntry
+        private val containsShortcutNullableFun: KFunction2<Assert<out Iterable<Double?>>, (Assert<Double>.() -> Unit)?, Assert<out Iterable<Double?>>> = Assert<out Iterable<Double?>>::containsNullableEntry
         fun getContainsNullableShortcutPair() = containsShortcutNullableFun.name to Companion::containsNullableEntriesShortcut
 
-        private fun containsNullableEntriesShortcut(plant: Assert<Iterable<Double?>>, a: (Assert<Double>.() -> Unit)?)
+        private fun containsNullableEntriesShortcut(plant: Assert<out Iterable<Double?>>, a: (Assert<Double>.() -> Unit)?)
             = plant.containsNullableEntry(a)
 
 
         private fun getContainsSequencePair()
             = "asSequence().${Sequence<*>::asIterable.name}().${containsShortcutFun.name}" to Companion::containsInAnyOrderEntriesSequence
 
-        private fun containsInAnyOrderEntriesSequence(plant: Assert<Iterable<Double>>, a: Assert<Double>.() -> Unit)
+        private fun containsInAnyOrderEntriesSequence(plant: Assert<out Iterable<Double>>, a: Assert<Double>.() -> Unit)
             = AssertImpl.changeSubject(plant) { plant.subject.asSequence() }.asIterable().contains(a)
 
         fun getContainsNullableSequencePair()
             = "asSequence().${Sequence<*>::asIterable.name}().${containsShortcutNullableFun.name}" to Companion::containsNullableEntriesSequence
 
-        private fun containsNullableEntriesSequence(plant: Assert<Iterable<Double?>>, a: (Assert<Double>.() -> Unit)?)
+        private fun containsNullableEntriesSequence(plant: Assert<out Iterable<Double?>>, a: (Assert<Double>.() -> Unit)?)
             =  AssertImpl.changeSubject(plant) { plant.subject.asSequence() }.asIterable().containsNullableEntry(a)
     }
 }

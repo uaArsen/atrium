@@ -18,11 +18,11 @@ abstract class MapAssertionsSpec(
     verbs: AssertionVerbFactory,
     containsPair: Pair<String, Assert<Map<String, Int>>.(Pair<String, Int>, Array<out Pair<String, Int>>) -> Assert<Map<String, Int>>>,
     containsNullablePair: Pair<String, Assert<Map<String?, Int?>>.(Pair<String?, Int?>, Array<out Pair<String?, Int?>>) -> Assert<Map<String?, Int?>>>,
-    containsKeyPair: Pair<String, Assert<Map<String, *>>.(String) -> Assert<Map<*, *>>>,
-    containsNullableKeyPair: Pair<String, Assert<Map<String?, *>>.(String?) -> Assert<Map<String?, *>>>,
-    hasSizePair: Pair<String, Assert<Map<*, *>>.(Int) -> Assert<Map<*, *>>>,
-    isEmptyPair: Pair<String, Assert<Map<*, *>>.() -> Assert<Map<*, *>>>,
-    isNotEmptyPair: Pair<String, Assert<Map<*, *>>.() -> Assert<Map<*, *>>>,
+    containsKeyPair: Pair<String, Assert<out Map<String, *>>.(String) -> Assert<out Map<String, *>>>,
+    containsNullableKeyPair: Pair<String, Assert<out Map<String?, *>>.(String?) -> Assert<out Map<String?, *>>>,
+    hasSizePair: Pair<String, Assert<Map<String, Int>>.(Int) -> Assert<Map<String, Int>>>,
+    isEmptyPair: Pair<String, Assert<Map<String, Int>>.() -> Assert<Map<String, Int>>>,
+    isNotEmptyPair: Pair<String, Assert<Map<String, Int>>.() -> Assert<Map<String, Int>>>,
     describePrefix: String = "[Atrium] "
 ) : Spek({
 
@@ -172,12 +172,12 @@ abstract class MapAssertionsSpec(
 
     describeFun(containsNullableKey) {
         it("does not throw if the map contains the key") {
-            verbs.checkImmediately(mapOf("a" to 1, null to 2)).containsNullableKeyFun(null)
+            verbs.checkImmediately(mapOf("a" to 1, null to null)).containsNullableKeyFun(null)
         }
 
         it("throws an AssertionError if the map does not contain the key") {
             expect {
-                verbs.checkImmediately(mapOf<String?, Int>("a" to 1, "b" to 2)).containsNullableKeyFun(null)
+                verbs.checkImmediately(mapOf<String?, Int?>("a" to 1, "b" to 2)).containsNullableKeyFun(null)
             }.toThrow<AssertionError> { messageContains("$containsKeyDescr: null")}
         }
     }

@@ -8,7 +8,7 @@ import ch.tutteli.atrium.domain.creating.any.typetransformation.AnyTypeTransform
 import ch.tutteli.atrium.domain.creating.any.typetransformation.AnyTypeTransformation.ParameterObject
 import ch.tutteli.atrium.reporting.translating.Translatable
 
-abstract class ExplanatoryFailureHandlerBase<in S : Any, out T : Any> : AnyTypeTransformation.FailureHandler<S, T> {
+abstract class ExplanatoryFailureHandlerBase<S : Any, T : Any> : AnyTypeTransformation.FailureHandler<S, T> {
 
     override fun createAndAddAssertionToPlant(parameterObject: ParameterObject<S, T>) {
         val explanatoryAssertions = collectAssertions(parameterObject.warningTransformationFailed, parameterObject.assertionCreator)

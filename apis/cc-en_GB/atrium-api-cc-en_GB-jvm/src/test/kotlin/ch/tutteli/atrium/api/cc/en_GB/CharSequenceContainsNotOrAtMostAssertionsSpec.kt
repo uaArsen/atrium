@@ -19,7 +19,7 @@ class CharSequenceContainsNotOrAtMostAssertionsSpec : ch.tutteli.atrium.spec.int
             Companion::containsNotOrAtMost
         )
 
-        private fun containsNotOrAtMost(plant: Assert<CharSequence>, atMost: Int, a: Any, aX: Array<out Any>)
+        private fun containsNotOrAtMost(plant: Assert<out CharSequence>, atMost: Int, a: Any, aX: Array<out Any>)
             = plant.contains.notOrAtMost(atMost).values(a, *aX)
 
         private fun getNotOrAtMostIgnoringCaseTriple() = Triple(
@@ -28,7 +28,7 @@ class CharSequenceContainsNotOrAtMostAssertionsSpec : ch.tutteli.atrium.spec.int
             Companion::containsNotOrAtMostIgnoringCase
         )
 
-        private fun containsNotOrAtMostIgnoringCase(plant: Assert<CharSequence>, atMost: Int, a: Any, aX: Array<out Any>)
+        private fun containsNotOrAtMostIgnoringCase(plant: Assert<out CharSequence>, atMost: Int, a: Any, aX: Array<out Any>)
             = plant.contains.ignoringCase.notOrAtMost(atMost).values(a, *aX)
 
 

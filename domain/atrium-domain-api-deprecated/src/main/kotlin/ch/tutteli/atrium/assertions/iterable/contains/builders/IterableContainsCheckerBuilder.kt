@@ -21,6 +21,6 @@ import ch.tutteli.atrium.domain.creating.iterable.contains.IterableContains
         "ch.tutteli.atrium.domain.creating.iterable.contains.IterableContains"
     )
 )
-interface IterableContainsCheckerBuilder<out E, out T : Iterable<E>, out S : IterableContains.SearchBehaviour>
+interface IterableContainsCheckerBuilder<out E, T : Iterable<E>, out S : IterableContains.SearchBehaviour>
     : ContainsCheckerBuilder<T, S, IterableContains.Checker, IterableContains.Builder<E, T, S>>,
     IterableContains.CheckerOption<E, T, S>

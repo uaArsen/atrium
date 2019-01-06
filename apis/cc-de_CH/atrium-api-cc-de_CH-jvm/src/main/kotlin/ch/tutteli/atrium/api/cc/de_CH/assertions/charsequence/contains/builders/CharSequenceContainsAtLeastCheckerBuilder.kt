@@ -24,7 +24,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceConta
         "ch.tutteli.atrium.api.cc.de_CH.creating.charsequence.contains.builders.AtLeastCheckerOption"
     )
 )
-open class CharSequenceContainsAtLeastCheckerBuilder<out T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
+open class CharSequenceContainsAtLeastCheckerBuilder<T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
     times: Int,
     containsBuilder: CharSequenceContains.Builder<T, S>
 ) : ch.tutteli.atrium.api.cc.de_CH.creating.charsequence.contains.builders.impl.AtLeastCheckerOptionImpl<T, S>(

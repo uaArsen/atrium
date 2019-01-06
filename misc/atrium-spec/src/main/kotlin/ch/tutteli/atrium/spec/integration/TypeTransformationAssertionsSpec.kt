@@ -25,7 +25,7 @@ abstract class TypeTransformationAssertionsSpec(
     isAStringFun: Assert<String>.(assertionCreator: Assert<String>.() -> Unit) -> Unit,
     isACharSequenceFun: Assert<String>.(assertionCreator: Assert<CharSequence>.() -> Unit) -> Unit,
     isASubTypeFun: Assert<SuperType>.(assertionCreator: Assert<SubType>.() -> Unit) -> Unit,
-    isAIntLessFun: Assert<Number>.(Int) -> Unit,
+    isAIntLessFun: Assert<out Number>.(Int) -> Unit,
     describePrefix: String = "[Atrium] "
 ) : Spek({
 

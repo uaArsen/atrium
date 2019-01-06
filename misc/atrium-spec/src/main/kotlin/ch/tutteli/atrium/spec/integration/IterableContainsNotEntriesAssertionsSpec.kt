@@ -11,8 +11,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableContainsNotEntriesAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsNotValuesPair: Pair<String, Assert<Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Assert<Iterable<Double>>>,
-    containsNotNullableValuesPair: Pair<String, Assert<Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<Iterable<Double?>>>,
+    containsNotValuesPair: Pair<String, Assert<out Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Assert<out Iterable<Double>>>,
+    containsNotNullableValuesPair: Pair<String, Assert<out Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<out Iterable<Double?>>>,
     rootBulletPoint: String,
     successfulBulletPoint: String,
     failingBulletPoint: String,
@@ -39,7 +39,7 @@ abstract class IterableContainsNotEntriesAssertionsSpec(
     val expect = verbs::checkException
 
     val (containsNotNullable, containsNotNullableFunArr) = containsNotNullableValuesPair
-    fun Assert<Iterable<Double?>>.containsNotNullableFun(a: (Assert<Double>.() -> Unit)?, vararg aX: (Assert<Double>.() -> Unit)?)
+    fun Assert<out Iterable<Double?>>.containsNotNullableFun(a: (Assert<Double>.() -> Unit)?, vararg aX: (Assert<Double>.() -> Unit)?)
         = containsNotNullableFunArr(a, aX)
 
     val containsNotDescr = DescriptionIterableAssertion.CONTAINS_NOT.getDefault()
@@ -63,7 +63,7 @@ abstract class IterableContainsNotEntriesAssertionsSpec(
         containsNotNullableValuesPair
     ) {containsNotFunArr ->
 
-        fun Assert<Iterable<Double>>.containsNotFun(a: Assert<Double>.() -> Unit, vararg aX: Assert<Double>.() -> Unit)
+        fun Assert<out Iterable<Double>>.containsNotFun(a: Assert<Double>.() -> Unit, vararg aX: Assert<Double>.() -> Unit)
             = containsNotFunArr(a, aX)
 
         context("empty collection") {

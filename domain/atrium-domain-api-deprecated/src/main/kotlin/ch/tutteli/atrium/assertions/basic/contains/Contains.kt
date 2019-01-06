@@ -31,5 +31,5 @@ interface Contains {
         "Use the interface from package domain.creating; will be removed with 1.0.0",
         ReplaceWith("ch.tutteli.atrium.domain.creating.basic.contains.Contains.Creator")
     )
-    interface Creator<in T : Any, in SC> : ch.tutteli.atrium.domain.creating.basic.contains.Contains.Creator<T, SC>
+    interface Creator<T : Any, in SC> : ch.tutteli.atrium.domain.creating.basic.contains.Contains.Creator<T, SC>
 }

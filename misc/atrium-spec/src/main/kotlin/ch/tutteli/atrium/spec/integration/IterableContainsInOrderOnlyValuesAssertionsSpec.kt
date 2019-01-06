@@ -12,8 +12,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableContainsInOrderOnlyValuesAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsInOrderOnlyValuesPair: Pair<String, Assert<Iterable<Double>>.(Double, Array<out Double>) -> Assert<Iterable<Double>>>,
-    containsInOrderOnlyNullableValuesPair: Pair<String, Assert<Iterable<Double?>>.(Double?, Array<out Double?>) -> Assert<Iterable<Double?>>>,
+    containsInOrderOnlyValuesPair: Pair<String, Assert<out Iterable<Double>>.(Double, Array<out Double>) -> Assert<out Iterable<Double>>>,
+    containsInOrderOnlyNullableValuesPair: Pair<String, Assert<out Iterable<Double?>>.(Double?, Array<out Double?>) -> Assert<out Iterable<Double?>>>,
     rootBulletPoint: String,
     successfulBulletPoint: String,
     failingBulletPoint: String,
@@ -34,11 +34,11 @@ abstract class IterableContainsInOrderOnlyValuesAssertionsSpec(
         checkingTriple(containsInOrderOnlyNullableValuesPair.first, { containsInOrderOnlyNullableValuesPair.second(this, 2.5, arrayOf(1.2)) }, listOf(2.5, 1.2).asIterable(), listOf(2.5, 2.2))
     ) {})
 
-    val assert: (Iterable<Double>) -> Assert<Iterable<Double>> = verbs::checkImmediately
+    val assert: (Iterable<Double>) -> Assert<out Iterable<Double>> = verbs::checkImmediately
     val expect = verbs::checkException
 
     val (containsInOrderOnlyNullableValues, containsInOrderOnlyNullableValuesFunArr) = containsInOrderOnlyNullableValuesPair
-    fun Assert<Iterable<Double?>>.containsInOrderOnlyNullableValuesFun(t: Double?, vararg tX: Double?)
+    fun Assert<out Iterable<Double?>>.containsInOrderOnlyNullableValuesFun(t: Double?, vararg tX: Double?)
         = containsInOrderOnlyNullableValuesFunArr(t, tX)
 
     val indentBulletPoint = " ".repeat(rootBulletPoint.length)
@@ -53,15 +53,15 @@ abstract class IterableContainsInOrderOnlyValuesAssertionsSpec(
     fun entry(index: Int)
         = String.format(entryWithIndex, index)
 
-    fun Assert<CharSequence>.entrySuccess(index: Int, expected: String): Assert<CharSequence> {
+    fun Assert<out CharSequence>.entrySuccess(index: Int, expected: String): Assert<out CharSequence> {
         return this.contains.exactly(1).regex(
             "\\Q$successfulBulletPoint$featureArrow${entry(index)}: $expected\\E.*$separator" +
                 "$toBeAfterSuccess: $expected")
     }
 
-    fun Assert<CharSequence>.entrySuccess(index: Int, expected: Double)= entrySuccess(index, expected.toString())
+    fun Assert<out CharSequence>.entrySuccess(index: Int, expected: Double)= entrySuccess(index, expected.toString())
 
-    fun Assert<CharSequence>.entryFailing(index: Int, actual: Any, expected: Double): Assert<CharSequence> {
+    fun Assert<out CharSequence>.entryFailing(index: Int, actual: Any, expected: Double): Assert<out CharSequence> {
         return this.contains.exactly(1).regex(
             "\\Q$failingBulletPoint$featureArrow${entry(index)}: $actual\\E.*$separator" +
                 "$toBeAfterFailing: $expected")
@@ -72,7 +72,7 @@ abstract class IterableContainsInOrderOnlyValuesAssertionsSpec(
         containsInOrderOnlyNullableValuesPair
     ) { containsValuesFunArr ->
 
-        fun Assert<Iterable<Double>>.containsFun(t: Double, vararg tX: Double) =
+        fun Assert<out Iterable<Double>>.containsFun(t: Double, vararg tX: Double) =
             containsValuesFunArr(t, tX.toTypedArray())
 
         context("empty collection") {

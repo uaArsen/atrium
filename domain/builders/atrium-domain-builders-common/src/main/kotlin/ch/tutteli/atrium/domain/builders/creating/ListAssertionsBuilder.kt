@@ -15,13 +15,13 @@ import ch.tutteli.atrium.domain.creating.listAssertions
 object ListAssertionsBuilder : ListAssertions {
 
     override inline fun <T: Any> get(
-        plant: AssertionPlant<List<T>>,
+        plant: AssertionPlant<out List<T>>,
         index: Int,
         noinline assertionCreator: AssertionPlant<T>.() -> Unit
     ) = listAssertions.get(plant, index, assertionCreator)
 
     override inline fun <T> getNullable(
-        plant: AssertionPlant<List<T>>,
+        plant: AssertionPlant<out List<T>>,
         index: Int,
         noinline assertionCreator: AssertionPlantNullable<T>.() -> Unit
     ) = listAssertions.getNullable(plant, index, assertionCreator)

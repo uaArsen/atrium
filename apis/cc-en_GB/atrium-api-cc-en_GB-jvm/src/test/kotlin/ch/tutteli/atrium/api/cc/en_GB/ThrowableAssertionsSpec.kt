@@ -14,27 +14,27 @@ class ThrowableAssertionsSpec : ch.tutteli.atrium.spec.integration.ThrowableAsse
 
     companion object {
 
-        private fun getToThrowTriple(): Triple<String, ThrowableThrown.Builder.() -> Unit, ThrowableThrown.Builder.(assertionCreator: Assert<Throwable>.() -> Unit) -> Unit>
+        private fun getToThrowTriple(): Triple<String, ThrowableThrown.Builder.() -> Unit, ThrowableThrown.Builder.(assertionCreator: Assert<out Throwable>.() -> Unit) -> Unit>
             = Triple("toThrow", Companion::toThrowImmediate, Companion::toThrowLazy)
 
         private fun toThrowImmediate(builder: ThrowableThrown.Builder) {
             builder.toThrow<IllegalArgumentException>{}
         }
 
-        private fun toThrowLazy(builder: ThrowableThrown.Builder, assertionCreator: Assert<Throwable>.() -> Unit) {
+        private fun toThrowLazy(builder: ThrowableThrown.Builder, assertionCreator: Assert<out Throwable>.() -> Unit) {
             builder.toThrow<IllegalArgumentException>(assertionCreator)
         }
 
         private fun getMessagePair()
-            = Assert<Throwable>::message.name to Assert<Throwable>::message
+            = Assert<out Throwable>::message.name to Assert<out Throwable>::message
 
-        private fun messageWithContainsFun(plant: Assert<Throwable>, expected: Any)
+        private fun messageWithContainsFun(plant: Assert<out Throwable>, expected: Any)
             = plant.message { contains(expected) }
 
         private fun getMessageContainsPair()
-            = Assert<Throwable>::messageContains.name to Companion::messageContains
+            = Assert<out Throwable>::messageContains.name to Companion::messageContains
 
-        private fun messageContains(plant: Assert<Throwable>, expected: Any, otherExpected: Array<out Any>)
+        private fun messageContains(plant: Assert<out Throwable>, expected: Any, otherExpected: Array<out Any>)
             = plant.messageContains(expected, *otherExpected)
     }
 }

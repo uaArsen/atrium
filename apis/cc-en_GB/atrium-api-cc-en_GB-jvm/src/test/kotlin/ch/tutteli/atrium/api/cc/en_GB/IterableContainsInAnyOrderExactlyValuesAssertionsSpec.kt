@@ -18,7 +18,7 @@ class IterableContainsInAnyOrderExactlyValuesAssertionsSpec : ch.tutteli.atrium.
             Companion::containsExactly
         )
 
-        private fun containsExactly(plant: Assert<Iterable<Double>>, exactly: Int, a: Double, aX: Array<out Double>): Assert<Iterable<Double>> {
+        private fun containsExactly(plant: Assert<out Iterable<Double>>, exactly: Int, a: Double, aX: Array<out Double>): Assert<out Iterable<Double>> {
             return if (aX.isEmpty()) {
                 plant.contains.inAnyOrder.exactly(exactly).value(a)
             } else {

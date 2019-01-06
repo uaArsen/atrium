@@ -10,5 +10,5 @@ import ch.tutteli.atrium.assertions.Assertion
  * @param T The type of the [subject] of this [AssertionPlant].
  * @param A A subtype of [BaseAssertionPlant] which is used in the fluent style API.
  */
-interface BaseReportingAssertionPlant<out T : Any?, out A : BaseAssertionPlant<T, A>>
+interface BaseReportingAssertionPlant<T : Any?, out A : BaseAssertionPlant<T, A>>
     : BaseAssertionPlant<T, A>, AssertionPlantWithCommonFields<T>

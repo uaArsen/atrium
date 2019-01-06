@@ -11,8 +11,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableAnyAssertionsSpec(
     verbs: AssertionVerbFactory,
-    anyPair: Pair<String, Assert<Iterable<Double>>.(Assert<Double>.() -> Unit) -> Assert<Iterable<Double>>>,
-    anyNullablePair: Pair<String, Assert<Iterable<Double?>>.((Assert<Double>.() -> Unit)?) -> Assert<Iterable<Double?>>>,
+    anyPair: Pair<String, Assert<out Iterable<Double>>.(Assert<Double>.() -> Unit) -> Assert<out Iterable<Double>>>,
+    anyNullablePair: Pair<String, Assert<out Iterable<Double?>>.((Assert<Double>.() -> Unit)?) -> Assert<out Iterable<Double?>>>,
     rootBulletPoint: String,
     describePrefix: String = "[Atrium] "
 ) : IterablePredicateSpecBase(verbs, {
@@ -27,7 +27,7 @@ abstract class IterableAnyAssertionsSpec(
         checkingTriple(anyNullablePair.first, { anyNullablePair.second(this, { toBe(2.5) }) }, listOf(2.5).asIterable(), listOf())
     ) {})
 
-    val assert: (Iterable<Double>) -> Assert<Iterable<Double>> = verbs::checkImmediately
+    val assert: (Iterable<Double>) -> Assert<out Iterable<Double>> = verbs::checkImmediately
     val expect = verbs::checkException
 
     val (anyOfNullable, anyOfNullableFun) = anyNullablePair

@@ -17,7 +17,7 @@ import ch.tutteli.atrium.reporting.translating.Translatable
  * @param searchBehaviour The search behaviour -- in this case representing `in any order only` which is used to
  *   decorate the description (a [Translatable]) which is used for the [AssertionGroup].
  */
-class InOrderOnlyValuesAssertionCreator<E, in T : Iterable<E>>(
+class InOrderOnlyValuesAssertionCreator<E, T : Iterable<E>>(
     searchBehaviour: InOrderOnlySearchBehaviour
 ) : InOrderOnlyAssertionCreator<E, T, E>(searchBehaviour),
     //TODO use protected visibility once https://youtrack.jetbrains.com/issue/KT-24328 is implemented

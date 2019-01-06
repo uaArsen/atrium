@@ -23,7 +23,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.checkers.checkerF
  * @param nameContainsNotFun The name of the function which represents a `CharSequence contains not` assertion.
  * @param atLeastCall The name of the function which was called and created this builder.
  */
-abstract class AtLeastCheckerOptionBase<out T : CharSequence, out S : SearchBehaviour>(
+abstract class AtLeastCheckerOptionBase<T : CharSequence, out S : SearchBehaviour>(
     final override val times: Int,
     final override  val containsBuilder: CharSequenceContains.Builder<T, S>,
     nameContainsNotFun: String,

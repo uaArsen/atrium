@@ -39,7 +39,7 @@ private fun <T> toBeWithErrorToleranceOfFloatOrDouble(
 }
 
 internal fun <T> createToBeWithErrorToleranceExplained(
-    plant: AssertionPlant<T>,
+    plant: AssertionPlant<out T>,
     expected: T,
     absDiff: () -> T,
     tolerance: T

@@ -19,11 +19,11 @@ class IterableContainsInOrderOnlyGroupedEntriesAssertionsSpec : ch.tutteli.atriu
             = "$contains.$inOrder.$only.$grouped.$within.$withinInAnyOrder" to Companion::containsInOrderOnlyGroupedInAnyOrderEntries
 
         private fun containsInOrderOnlyGroupedInAnyOrderEntries(
-            plant: Assert<Iterable<Double>>,
+            plant: Assert<out Iterable<Double>>,
             a1: GroupWithoutNullableEntries<Assert<Double>.() -> Unit>,
             a2: GroupWithoutNullableEntries<Assert<Double>.() -> Unit>,
             aX: Array<out GroupWithoutNullableEntries<Assert<Double>.() -> Unit>>
-        ): Assert<Iterable<Double>> {
+        ): Assert<out Iterable<Double>> {
             return plant.contains.inOrder.only.grouped.within.inAnyOrder(a1, a2, *aX)
         }
 
@@ -39,11 +39,11 @@ class IterableContainsInOrderOnlyGroupedEntriesAssertionsSpec : ch.tutteli.atriu
             = "$contains.$inOrder.$only.$inOrderOnlyEntries.$within.$withinInAnyOrder" to Companion::containsInOrderOnlyGroupedNullableEntriesPair
 
         private fun containsInOrderOnlyGroupedNullableEntriesPair(
-            plant: Assert<Iterable<Double?>>,
+            plant: Assert<out Iterable<Double?>>,
             a1: GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>,
             a2: GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>,
             aX: Array<out GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>>
-        ): Assert<Iterable<Double?>> {
+        ): Assert<out Iterable<Double?>> {
             return plant.contains.inOrder.only.grouped.within.inAnyOrder(a1, a2, *aX)
         }
 

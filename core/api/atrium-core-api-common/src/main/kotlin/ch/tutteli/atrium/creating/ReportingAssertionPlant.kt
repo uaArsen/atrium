@@ -10,4 +10,4 @@ import ch.tutteli.atrium.assertions.Assertion
  *
  * @param T The type of the [subject] of this [AssertionPlant].
  */
-interface ReportingAssertionPlant<out T : Any> : AssertionPlant<T>, BaseReportingAssertionPlant<T, AssertionPlant<T>>
+interface ReportingAssertionPlant<T : Any> : AssertionPlant<T>, BaseReportingAssertionPlant<T, AssertionPlant<T>>

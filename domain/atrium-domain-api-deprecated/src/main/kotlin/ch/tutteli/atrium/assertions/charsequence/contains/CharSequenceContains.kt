@@ -38,7 +38,7 @@ interface CharSequenceContains {
         "Use the interface from package domain.creating; will be removed with 1.0.0",
         ReplaceWith("ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceContains.Creator")
     )
-    interface Creator<in T : CharSequence, in SC> : Contains.Creator<T, SC>,
+    interface Creator<T : CharSequence, in SC> : Contains.Creator<T, SC>,
         ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceContains.Creator<T, SC>
 
     /**

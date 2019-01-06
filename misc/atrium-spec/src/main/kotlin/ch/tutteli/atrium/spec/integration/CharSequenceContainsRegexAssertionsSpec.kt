@@ -14,10 +14,10 @@ import java.util.regex.PatternSyntaxException
 abstract class CharSequenceContainsRegexAssertionsSpec(
     verbs: AssertionVerbFactory,
     containsRegex: String,
-    containsAtLeastTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, String, Array<out String>) -> Assert<CharSequence>>,
-    containsShortcutTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(String, Array<out String>) -> Assert<CharSequence>>,
-    containsAtMostTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, String, Array<out String>) -> Assert<CharSequence>>,
-    containsAtMostIgnoringCaseTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, String, Array<out String>) -> Assert<CharSequence>>,
+    containsAtLeastTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, String, Array<out String>) -> Assert<out CharSequence>>,
+    containsShortcutTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(String, Array<out String>) -> Assert<out CharSequence>>,
+    containsAtMostTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, String, Array<out String>) -> Assert<out CharSequence>>,
+    containsAtMostIgnoringCaseTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, String, Array<out String>) -> Assert<out CharSequence>>,
     rootBulletPoint: String,
     listBulletPoint: String,
     describePrefix: String = "[Atrium] "
@@ -40,7 +40,7 @@ abstract class CharSequenceContainsRegexAssertionsSpec(
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)
 
-    val assert: (CharSequence) -> Assert<CharSequence> = verbs::checkImmediately
+    val assert: (CharSequence) -> Assert<out CharSequence> = verbs::checkImmediately
     val expect = verbs::checkException
 
     val text = "Hello my name is Robert"
@@ -49,19 +49,19 @@ abstract class CharSequenceContainsRegexAssertionsSpec(
     val fluent = assert(text)
 
     val (containsAtLeast, containsAtLeastTest, containsAtLeastFunArr) = containsAtLeastTriple
-    fun Assert<CharSequence>.containsAtLeastFun(atLeast: Int, a: String, vararg aX: String)
+    fun Assert<out CharSequence>.containsAtLeastFun(atLeast: Int, a: String, vararg aX: String)
         = containsAtLeastFunArr(atLeast, a, aX)
 
     val (containsShortcut, containsShortcutTest, containsShortcutLeastFunArr) = containsShortcutTriple
-    fun Assert<CharSequence>.containsShortcutFun(a: String, vararg aX: String)
+    fun Assert<out CharSequence>.containsShortcutFun(a: String, vararg aX: String)
         = containsShortcutLeastFunArr(a, aX)
 
     val (containsAtMost, containsAtMostTest, containsAtMostFunArr) = containsAtMostTriple
-    fun Assert<CharSequence>.containsAtMostFun(atLeast: Int, a: String, vararg aX: String)
+    fun Assert<out CharSequence>.containsAtMostFun(atLeast: Int, a: String, vararg aX: String)
         = containsAtMostFunArr(atLeast, a, aX)
 
     val (containsAtMostIgnoringCase, containsAtMostIgnoringCaseTest, containsAtMostIgnoringCaseFunArr) = containsAtMostIgnoringCaseTriple
-    fun Assert<CharSequence>.containsAtMostIgnoringCaseFun(atLeast: Int, a: String, vararg aX: String)
+    fun Assert<out CharSequence>.containsAtMostIgnoringCaseFun(atLeast: Int, a: String, vararg aX: String)
         = containsAtMostIgnoringCaseFunArr(atLeast, a, aX)
 
     val indentBulletPoint = " ".repeat(rootBulletPoint.length)

@@ -13,8 +13,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableContainsNotValuesAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsNotValuesPair: Pair<String, Assert<Iterable<Double>>.(Double, Array<out Double>) -> Assert<Iterable<Double>>>,
-    containsNotNullableValuesPair: Pair<String, Assert<Iterable<Double?>>.(Double?, Array<out Double?>) -> Assert<Iterable<Double?>>>,
+    containsNotValuesPair: Pair<String, Assert<out Iterable<Double>>.(Double, Array<out Double>) -> Assert<out Iterable<Double>>>,
+    containsNotNullableValuesPair: Pair<String, Assert<out Iterable<Double?>>.(Double?, Array<out Double?>) -> Assert<out Iterable<Double?>>>,
     rootBulletPoint: String,
     successfulBulletPoint: String,
     failingBulletPoint: String,
@@ -40,7 +40,7 @@ abstract class IterableContainsNotValuesAssertionsSpec(
     val expect = verbs::checkException
 
     val (containsNotNullable, containsNotNullableFunArr) = containsNotNullableValuesPair
-    fun Assert<Iterable<Double?>>.containsNotNullableFun(a: Double?, vararg aX: Double?) =
+    fun Assert<out Iterable<Double?>>.containsNotNullableFun(a: Double?, vararg aX: Double?) =
         containsNotNullableFunArr(a, aX)
 
     val containsNotDescr = DescriptionIterableAssertion.CONTAINS_NOT.getDefault()
@@ -65,7 +65,7 @@ abstract class IterableContainsNotValuesAssertionsSpec(
         containsNotNullableValuesPair
     ) {containsNotFunArr ->
 
-        fun Assert<Iterable<Double>>.containsNotFun(a: Double, vararg aX: Double)
+        fun Assert<out Iterable<Double>>.containsNotFun(a: Double, vararg aX: Double)
             = containsNotFunArr(a, aX.toTypedArray())
 
         context("empty collection") {

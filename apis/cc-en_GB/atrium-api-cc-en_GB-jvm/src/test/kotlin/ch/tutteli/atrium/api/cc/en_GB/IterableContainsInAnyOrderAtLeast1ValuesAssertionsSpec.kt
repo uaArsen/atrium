@@ -30,9 +30,9 @@ class IterableContainsInAnyOrderAtLeast1ValuesAssertionsSpec : Spek({
         fun getContainsPair()
             = "$contains.$inAnyOrder.$atLeast(1).$inAnyOrderValues" to Companion::containsValues
 
-        private fun containsValues(plant: Assert<Iterable<Double>>, a: Double, aX: Array<out Double>): Assert<Iterable<Double>> {
+        private fun containsValues(plant: Assert<out Iterable<Double>>, a: Double, aX: Array<out Double>): Assert<out Iterable<Double>> {
             return if (aX.isEmpty()) {
-                plant.contains.inAnyOrder.atLeast(1).value(a)
+                plant.contains.inAnyOrder.atLeast(1).value(null)
             } else {
                 plant.contains.inAnyOrder.atLeast(1).values(a, *aX)
             }
@@ -41,7 +41,7 @@ class IterableContainsInAnyOrderAtLeast1ValuesAssertionsSpec : Spek({
         fun getContainsNullablePair()
             = "$contains.$inAnyOrder.$atLeast(1).$inAnyOrderValues nullable" to Companion::containsNullableValues
 
-        private fun containsNullableValues(plant: Assert<Iterable<Double?>>, a: Double?, aX: Array<out Double?>): Assert<Iterable<Double?>> {
+        private fun containsNullableValues(plant: Assert<out Iterable<Double?>>, a: Double?, aX: Array<out Double?>): Assert<out Iterable<Double?>> {
             return if (aX.isEmpty()) {
                 plant.contains.inAnyOrder.atLeast(1).nullableValue(a)
             } else {
@@ -50,16 +50,16 @@ class IterableContainsInAnyOrderAtLeast1ValuesAssertionsSpec : Spek({
         }
 
 
-        private val containsFun: KFunction3<Assert<Iterable<Double>>, Double, Array<out Double>, Assert<Iterable<Double>>> = Assert<Iterable<Double>>::contains
+        private val containsFun: KFunction3<Assert<out Iterable<Double>>, Double, Array<out Double>, Assert<out Iterable<Double>>> = Assert<out Iterable<Double>>::contains
         fun getContainsShortcutPair() = containsFun.name to Companion::containsValuesShortcut
 
-        private fun containsValuesShortcut(plant: Assert<Iterable<Double>>, a: Double, aX: Array<out Double>)
+        private fun containsValuesShortcut(plant: Assert<out Iterable<Double>>, a: Double, aX: Array<out Double>)
             = plant.contains(a, *aX)
 
-        private val containsNullableFun: KFunction3<Assert<Iterable<Double?>>, Double, Array<out Double?>, Assert<Iterable<Double?>>> = Assert<Iterable<Double?>>::containsNullableValues
+        private val containsNullableFun: KFunction3<Assert<out Iterable<Double?>>, Double, Array<out Double?>, Assert<out Iterable<Double?>>> = Assert<out Iterable<Double?>>::containsNullableValues
         fun getContainsNullableShortcutPair() = containsNullableFun.name to Companion::containsNullableValuesShortcut
 
-        private fun containsNullableValuesShortcut(plant: Assert<Iterable<Double?>>, a: Double?, aX: Array<out Double?>): Assert<Iterable<Double?>> {
+        private fun containsNullableValuesShortcut(plant: Assert<out Iterable<Double?>>, a: Double?, aX: Array<out Double?>): Assert<out Iterable<Double?>> {
             return if (aX.isEmpty()) {
                 plant.containsNullableValue(a)
             } else {

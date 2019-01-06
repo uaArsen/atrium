@@ -5,7 +5,7 @@ import ch.tutteli.atrium.creating.Assert
 
 class IterableAllAssertionsSpec: ch.tutteli.atrium.spec.integration.IterableAllAssertionsSpec(
     AssertionVerbFactory,
-    Assert<Iterable<Double>>::all.name to Assert<Iterable<Double>>::all,
-    Assert<Iterable<Double?>>::allOfNullable.name to Assert<Iterable<Double?>>::allOfNullable,
+    Assert<out Iterable<Double>>::all.name to Assert<out Iterable<Double>>::all,
+    Assert<out Iterable<Double?>>::allOfNullable.name to Assert<out Iterable<Double?>>::allOfNullable,
     "◆ ", "❗❗ ", "⚬ ", "» ", "▶ ", "◾ "
 )

@@ -11,10 +11,10 @@ import org.jetbrains.spek.api.include
 
 abstract class CharSequenceContainsAtLeastAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsAtLeastTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, Any, Array<out Any>) -> Assert<CharSequence>>,
-    containsAtLeastIgnoringCaseTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, Any, Array<out Any>) -> Assert<CharSequence>>,
-    containsAtLeastButAtMostTriple: Triple<String, (String, String, String) -> String, Assert<CharSequence>.(Int, Int, Any, Array<out Any>) -> Assert<CharSequence>>,
-    containsAtLeastButAtMostIgnoringCaseTriple: Triple<String, (String, String, String) -> String, Assert<CharSequence>.(Int, Int, Any, Array<out Any>) -> Assert<CharSequence>>,
+    containsAtLeastTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, Any, Array<out Any>) -> Assert<out CharSequence>>,
+    containsAtLeastIgnoringCaseTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, Any, Array<out Any>) -> Assert<out CharSequence>>,
+    containsAtLeastButAtMostTriple: Triple<String, (String, String, String) -> String, Assert<out CharSequence>.(Int, Int, Any, Array<out Any>) -> Assert<out CharSequence>>,
+    containsAtLeastButAtMostIgnoringCaseTriple: Triple<String, (String, String, String) -> String, Assert<out CharSequence>.(Int, Int, Any, Array<out Any>) -> Assert<out CharSequence>>,
     containsNotPair: Pair<String, (Int) -> String>,
     exactlyPair: Pair<String, (Int) -> String>,
     errorMsgAtLeastButAtMost: (Int, Int) -> String,
@@ -40,25 +40,25 @@ abstract class CharSequenceContainsAtLeastAssertionsSpec(
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)
 
-    val assert: (CharSequence) -> Assert<CharSequence> = verbs::checkImmediately
+    val assert: (CharSequence) -> Assert<out CharSequence> = verbs::checkImmediately
     val expect = verbs::checkException
     val fluent = assert(text)
     val fluentHelloWorld = assert(helloWorld)
 
     val (containsAtLeast, containsAtLeastTest, containsAtLeastFunArr) = containsAtLeastTriple
-    fun Assert<CharSequence>.containsAtLeastFun(atLeast: Int, a: Any, vararg aX: Any)
+    fun Assert<out CharSequence>.containsAtLeastFun(atLeast: Int, a: Any, vararg aX: Any)
         = containsAtLeastFunArr(atLeast, a, aX)
 
     val (_, containsAtLeastIgnoringCase, containsAtLeastIgnoringCaseFunArr) = containsAtLeastIgnoringCaseTriple
-    fun Assert<CharSequence>.containsAtLeastIgnoringCaseFun(atLeast: Int, a: Any, vararg aX: Any)
+    fun Assert<out CharSequence>.containsAtLeastIgnoringCaseFun(atLeast: Int, a: Any, vararg aX: Any)
         = containsAtLeastIgnoringCaseFunArr(atLeast, a, aX)
 
     val (containsAtLeastButAtMost, containsAtLeastButAtMostTest, containsAtLeastButAtMostFunArr) = containsAtLeastButAtMostTriple
-    fun Assert<CharSequence>.containsAtLeastButAtMostFun(atLeast: Int, atMost: Int, a: Any, vararg aX: Any)
+    fun Assert<out CharSequence>.containsAtLeastButAtMostFun(atLeast: Int, atMost: Int, a: Any, vararg aX: Any)
         = containsAtLeastButAtMostFunArr(atLeast, atMost, a, aX)
 
     val (_, containsAtLeastButAtMostIgnoringCase, containsAtLeastButAtMostIgnoringCaseFunArr) = containsAtLeastButAtMostIgnoringCaseTriple
-    fun Assert<CharSequence>.containsAtLeastButAtMostIgnoringCaseFun(atLeast: Int, atMost: Int, a: Any, vararg aX: Any)
+    fun Assert<out CharSequence>.containsAtLeastButAtMostIgnoringCaseFun(atLeast: Int, atMost: Int, a: Any, vararg aX: Any)
         = containsAtLeastButAtMostIgnoringCaseFunArr(atLeast, atMost, a, aX)
 
     val (containsNot, errorMsgContainsNot) = containsNotPair

@@ -23,7 +23,7 @@ class CharSequenceContainsAtLeastAssertionsSpec : ch.tutteli.atrium.spec.integra
             Companion::containsAtLeast
         )
 
-        private fun containsAtLeast(plant: Assert<CharSequence>, atLeast: Int, a: Any, aX: Array<out Any>): Assert<CharSequence> {
+        private fun containsAtLeast(plant: Assert<out CharSequence>, atLeast: Int, a: Any, aX: Array<out Any>): Assert<out CharSequence> {
             return if (aX.isEmpty()) {
                 plant.contains.atLeast(atLeast).value(a)
             } else {
@@ -37,7 +37,7 @@ class CharSequenceContainsAtLeastAssertionsSpec : ch.tutteli.atrium.spec.integra
             Companion::containsAtLeastIgnoringCase
         )
 
-        private fun containsAtLeastIgnoringCase(plant: Assert<CharSequence>, atLeast: Int, a: Any, aX: Array<out Any>): Assert<CharSequence> {
+        private fun containsAtLeastIgnoringCase(plant: Assert<out CharSequence>, atLeast: Int, a: Any, aX: Array<out Any>): Assert<out CharSequence> {
             return if (aX.isEmpty()) {
                 plant.contains.ignoringCase.atLeast(atLeast).value(a)
             } else {
@@ -51,7 +51,7 @@ class CharSequenceContainsAtLeastAssertionsSpec : ch.tutteli.atrium.spec.integra
             Companion::containsAtLeastButAtMost
         )
 
-        private fun containsAtLeastButAtMost(plant: Assert<CharSequence>, atLeast: Int, butAtMost: Int, a: Any, aX: Array<out Any>)
+        private fun containsAtLeastButAtMost(plant: Assert<out CharSequence>, atLeast: Int, butAtMost: Int, a: Any, aX: Array<out Any>)
             = plant.contains.atLeast(atLeast).butAtMost(butAtMost).values(a, *aX)
 
         private fun getAtLeastBustAtMostIgnoringCaseTriple() = Triple(
@@ -60,7 +60,7 @@ class CharSequenceContainsAtLeastAssertionsSpec : ch.tutteli.atrium.spec.integra
             Companion::containsAtLeastButAtMostIgnoringCase
         )
 
-        private fun containsAtLeastButAtMostIgnoringCase(plant: Assert<CharSequence>, atLeast: Int, butAtMost: Int, a: Any, aX: Array<out Any>)
+        private fun containsAtLeastButAtMostIgnoringCase(plant: Assert<out CharSequence>, atLeast: Int, butAtMost: Int, a: Any, aX: Array<out Any>)
             = plant.contains.ignoringCase.atLeast(atLeast).butAtMost(butAtMost).values(a, *aX)
 
         private fun getContainsNotPair() = containsNot to Companion::getErrorMsgContainsNot

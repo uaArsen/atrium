@@ -39,12 +39,12 @@ abstract class IterableContainsEntriesSpecBase(verbs: AssertionVerbFactory, spec
 
         fun SpecBody.nonNullableCases(
             describePrefix: String,
-            containsPair: Pair<String, Assert<Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Assert<Iterable<Double>>>,
-            containsNullablePair: Pair<String, Assert<Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<Iterable<Double?>>>,
-            action: SpecBody.(Assert<Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Any) -> Unit
+            containsPair: Pair<String, Assert<out Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Assert<out Iterable<Double>>>,
+            containsNullablePair: Pair<String, Assert<out Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<out Iterable<Double?>>>,
+            action: SpecBody.(Assert<out Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Any) -> Unit
         ) {
             group("$describePrefix describe non-nullable cases") {
-                mapOf<String, Assert<Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Any>(
+                mapOf<String, Assert<out Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Any>(
                     containsPair.first to { a, aX -> containsPair.second(this, a, aX) },
                     containsNullablePair.first to { a, aX -> containsNullablePair.second(this, a, aX) }
                 ).forEach { (describe, containsEntriesFunArr) ->

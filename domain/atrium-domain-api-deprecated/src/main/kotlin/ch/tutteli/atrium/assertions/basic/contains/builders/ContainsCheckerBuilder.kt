@@ -26,5 +26,5 @@ import ch.tutteli.atrium.domain.creating.basic.contains.Contains
         "ch.tutteli.atrium.domain.creating.basic.contains.Contains"
     )
 )
-interface ContainsCheckerBuilder<out T : Any, out S : Contains.SearchBehaviour, out C : Contains.Checker, out B : Contains.Builder<T, S>>
+interface ContainsCheckerBuilder<T : Any, out S : Contains.SearchBehaviour, out C : Contains.Checker, out B : Contains.Builder<T, S>>
     : Contains.CheckerOption<T, S, C, B>

@@ -22,7 +22,7 @@ import ch.tutteli.atrium.domain.creating.iterable.contains.searchbehaviours.InAn
  *   found in the [Iterable].
  * @param containsBuilder The previously used [IterableContains.Builder].
  */
-internal class ButAtMostCheckerOptionImpl<out E, out T : Iterable<E>, out S : InAnyOrderSearchBehaviour>(
+internal class ButAtMostCheckerOptionImpl<E, T : Iterable<E>, out S : InAnyOrderSearchBehaviour>(
     times: Int,
     atLeastBuilder: AtLeastCheckerOption<E, T, S>,
     containsBuilder: IterableContains.Builder<E, T, S>

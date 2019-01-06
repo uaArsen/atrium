@@ -22,7 +22,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceConta
  *   found in the input of the search.
  * @param containsBuilder The previously used [CharSequenceContains.Builder].
  */
-internal class ButAtMostCheckerOptionImpl<out T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
+internal class ButAtMostCheckerOptionImpl<T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
     times: Int,
     atLeastBuilder: AtLeastCheckerOption<T, S>,
     containsBuilder: CharSequenceContains.Builder<T, S>

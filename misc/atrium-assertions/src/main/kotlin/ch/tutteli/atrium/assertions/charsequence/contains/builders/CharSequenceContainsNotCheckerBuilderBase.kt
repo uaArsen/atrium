@@ -18,7 +18,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceConta
     "Use the abstract class from package creating; will be removed with 1.0.0",
     ReplaceWith("ch.tutteli.atrium.creating.charsequence.contains.builders.CharSequenceContainsNotCheckerBuilderBase")
 )
-abstract class CharSequenceContainsNotCheckerBuilderBase<out T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
+abstract class CharSequenceContainsNotCheckerBuilderBase<T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
     override val containsBuilder: CharSequenceContains.Builder<T, S>
 ) : CharSequenceContainsCheckerBuilder<T, S> {
 

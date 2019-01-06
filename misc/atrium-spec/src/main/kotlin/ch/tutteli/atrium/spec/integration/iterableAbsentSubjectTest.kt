@@ -12,9 +12,9 @@ import kotlin.reflect.KFunction1
 
 fun SpecBody.absentSubjectTests(
     verbs: AssertionVerbFactory,
-    testeeFun: Assert<Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<Iterable<Double?>>
+    testeeFun: Assert<out Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<out Iterable<Double?>>
 ) {
-    val assert: (Iterable<Double?>) -> Assert<Iterable<Double?>> = verbs::checkImmediately
+    val assert: (Iterable<Double?>) -> Assert<out Iterable<Double?>> = verbs::checkImmediately
     val expect = verbs::checkException
     context("${IterableContainsEntriesSpecBase.returnValueOfFun}(...), absent subject and explanation required") {
         test("empty iterable, states that iterable was empty") {

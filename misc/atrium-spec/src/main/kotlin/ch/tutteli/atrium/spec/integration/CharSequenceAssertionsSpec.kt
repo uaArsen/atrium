@@ -24,15 +24,15 @@ import org.jetbrains.spek.api.include
 
 abstract class CharSequenceAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsDefaultTranslationOfPair: Pair<String, Assert<CharSequence>.(Translatable, Array<out Translatable>) -> Assert<CharSequence>>,
-    containsNotDefaultTranslationOfPair: Pair<String, Assert<CharSequence>.(Translatable, Array<out Translatable>) -> Assert<CharSequence>>,
-    isEmptyPair: Pair<String, Assert<CharSequence>.() -> Assert<CharSequence>>,
-    isNotEmptyPair: Pair<String, Assert<CharSequence>.() -> Assert<CharSequence>>,
-    isNotBlankPair: Pair<String, Assert<CharSequence>.() -> Assert<CharSequence>>,
-    startsWithPair: Pair<String, Assert<CharSequence>.(CharSequence) -> Assert<CharSequence>>,
-    startsNotWithPair: Pair<String, Assert<CharSequence>.(CharSequence) -> Assert<CharSequence>>,
-    endsWithPair: Pair<String, Assert<CharSequence>.(CharSequence) -> Assert<CharSequence>>,
-    endsNotWithPair: Pair<String, Assert<CharSequence>.(CharSequence) -> Assert<CharSequence>>,
+    containsDefaultTranslationOfPair: Pair<String, Assert<out CharSequence>.(Translatable, Array<out Translatable>) -> Assert<out CharSequence>>,
+    containsNotDefaultTranslationOfPair: Pair<String, Assert<out CharSequence>.(Translatable, Array<out Translatable>) -> Assert<out CharSequence>>,
+    isEmptyPair: Pair<String, Assert<out CharSequence>.() -> Assert<out CharSequence>>,
+    isNotEmptyPair: Pair<String, Assert<out CharSequence>.() -> Assert<out CharSequence>>,
+    isNotBlankPair: Pair<String, Assert<out CharSequence>.() -> Assert<out CharSequence>>,
+    startsWithPair: Pair<String, Assert<out CharSequence>.(CharSequence) -> Assert<out CharSequence>>,
+    startsNotWithPair: Pair<String, Assert<out CharSequence>.(CharSequence) -> Assert<out CharSequence>>,
+    endsWithPair: Pair<String, Assert<out CharSequence>.(CharSequence) -> Assert<out CharSequence>>,
+    endsNotWithPair: Pair<String, Assert<out CharSequence>.(CharSequence) -> Assert<out CharSequence>>,
     rootBulletPoint: String,
     listBulletPoint: String,
     describePrefix: String = "[Atrium] "
@@ -65,7 +65,7 @@ abstract class CharSequenceAssertionsSpec(
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)
 
-    val assert: (CharSequence) -> Assert<CharSequence> = verbs::checkImmediately
+    val assert: (CharSequence) -> Assert<out CharSequence> = verbs::checkImmediately
     val expect = verbs::checkException
     val fluent = assert(text)
 
@@ -79,10 +79,10 @@ abstract class CharSequenceAssertionsSpec(
     val (endsWith, endsWithFun) = endsWithPair
     val (endsNotWith, endsNotWithFun) = endsNotWithPair
 
-    fun Assert<CharSequence>.containsDefaultTranslationOfFun(t: Translatable, vararg tX: Translatable)
+    fun Assert<out CharSequence>.containsDefaultTranslationOfFun(t: Translatable, vararg tX: Translatable)
         = containsDefaultTranslationOfFunArr(t, tX)
 
-    fun Assert<CharSequence>.containsNotDefaultTranslationOfFun(t: Translatable, vararg tX: Translatable)
+    fun Assert<out CharSequence>.containsNotDefaultTranslationOfFun(t: Translatable, vararg tX: Translatable)
         = containsNotDefaultTranslationOfFunArr(t, tX)
 
     val containsNot = DescriptionCharSequenceAssertion.CONTAINS_NOT.getDefault()

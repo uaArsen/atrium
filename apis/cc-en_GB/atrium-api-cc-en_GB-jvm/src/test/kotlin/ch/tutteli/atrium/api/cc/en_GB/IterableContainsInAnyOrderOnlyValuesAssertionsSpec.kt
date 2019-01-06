@@ -13,7 +13,7 @@ class IterableContainsInAnyOrderOnlyValuesAssertionsSpec : ch.tutteli.atrium.spe
         fun getContainsPair()
             = "$contains.$inAnyOrder.$only.$inAnyOrderOnlyValues" to Companion::containsInAnyOrderOnlyValues
 
-        private fun containsInAnyOrderOnlyValues(plant: Assert<Iterable<Double>>, a: Double, aX: Array<out Double>): Assert<Iterable<Double>> {
+        private fun containsInAnyOrderOnlyValues(plant: Assert<out Iterable<Double>>, a: Double, aX: Array<out Double>): Assert<out Iterable<Double>> {
             return if (aX.isEmpty()) {
                 plant.contains.inAnyOrder.only.value(a)
             } else {
@@ -24,7 +24,7 @@ class IterableContainsInAnyOrderOnlyValuesAssertionsSpec : ch.tutteli.atrium.spe
         fun getContainsNullablePair() =
             "$contains.$inAnyOrder.$only.$inAnyOrderOnlyValues nullable" to Companion::containsInAnyOrderOnlyNullableValues
 
-        private fun containsInAnyOrderOnlyNullableValues(plant: Assert<Iterable<Double?>>, a: Double?, aX: Array<out Double?>): Assert<Iterable<Double?>> {
+        private fun containsInAnyOrderOnlyNullableValues(plant: Assert<out Iterable<Double?>>, a: Double?, aX: Array<out Double?>): Assert<out Iterable<Double?>> {
             return if (aX.isEmpty()) {
                 plant.contains.inAnyOrder.only.nullableValue(a)
             } else {

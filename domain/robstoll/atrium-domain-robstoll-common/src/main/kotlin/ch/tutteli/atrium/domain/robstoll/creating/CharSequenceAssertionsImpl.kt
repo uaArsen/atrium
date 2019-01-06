@@ -24,24 +24,24 @@ class CharSequenceAssertionsImpl: CharSequenceAssertions {
         = _containsNotBuilder(plant)
 
 
-    override fun startsWith(plant: AssertionPlant<CharSequence>, expected: CharSequence)
+    override fun startsWith(plant: AssertionPlant<out CharSequence>, expected: CharSequence)
         = _startsWith(plant, expected)
 
-    override fun startsNotWith(plant: AssertionPlant<CharSequence>, expected: CharSequence)
+    override fun startsNotWith(plant: AssertionPlant<out CharSequence>, expected: CharSequence)
         = _startsNotWith(plant, expected)
 
-    override fun endsWith(plant: AssertionPlant<CharSequence>, expected: CharSequence)
+    override fun endsWith(plant: AssertionPlant<out CharSequence>, expected: CharSequence)
         = _endsWith(plant, expected)
 
-    override fun endsNotWith(plant: AssertionPlant<CharSequence>, expected: CharSequence)
+    override fun endsNotWith(plant: AssertionPlant<out CharSequence>, expected: CharSequence)
         = _endsNotWith(plant, expected)
 
-    override fun isEmpty(plant: AssertionPlant<CharSequence>)
+    override fun isEmpty(plant: AssertionPlant<out CharSequence>)
         = _isEmpty(plant)
 
-    override fun isNotEmpty(plant: AssertionPlant<CharSequence>)
+    override fun isNotEmpty(plant: AssertionPlant<out CharSequence>)
         = _isNotEmpty(plant)
 
-    override fun isNotBlank(plant: AssertionPlant<CharSequence>)
+    override fun isNotBlank(plant: AssertionPlant<out CharSequence>)
         = _isNotBlank(plant)
 }

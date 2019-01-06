@@ -31,7 +31,7 @@ interface AnyTypeTransformation {
         "Use the interface from package domain.creating; will be removed with 1.0.0",
         ReplaceWith("ch.tutteli.atrium.domain.creating.any.typetransformation.AnyTypeTransformation.TypeTransformationFailureHandler")
     )
-    interface TypeTransformationFailureHandler<in T : Any, out TSub : Any> {
+    interface TypeTransformationFailureHandler<in T : Any, TSub : Any> {
 
         /**
          * Makes something with the given [assertionCreator] lambda; might add assertions to [subjectPlant].

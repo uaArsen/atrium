@@ -12,13 +12,13 @@ import ch.tutteli.atrium.domain.robstoll.lib.creating._getNullable
 class ListAssertionsImpl : ListAssertions {
 
     override fun <T : Any> get(
-        plant: AssertionPlant<List<T>>,
+        plant: AssertionPlant<out List<T>>,
         index: Int,
         assertionCreator: AssertionPlant<T>.() -> Unit
     ) = _get(plant, index, assertionCreator)
 
     override fun <T> getNullable(
-        plant: AssertionPlant<List<T>>,
+        plant: AssertionPlant<out List<T>>,
         index: Int,
         assertionCreator: AssertionPlantNullable<T>.() -> Unit
     ) = _getNullable(plant, index, assertionCreator)

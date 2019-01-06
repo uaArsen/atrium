@@ -12,8 +12,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableContainsInOrderOnlyEntriesAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsInOrderOnlyEntriesPair: Pair<String, Assert<Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Assert<Iterable<Double>>>,
-    containsInOrderOnlyNullableEntriesPair: Pair<String, Assert<Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<Iterable<Double?>>>,
+    containsInOrderOnlyEntriesPair: Pair<String, Assert<out Iterable<Double>>.(Assert<Double>.() -> Unit, Array<out Assert<Double>.() -> Unit>) -> Assert<out Iterable<Double>>>,
+    containsInOrderOnlyNullableEntriesPair: Pair<String, Assert<out Iterable<Double?>>.((Assert<Double>.() -> Unit)?, Array<out (Assert<Double>.() -> Unit)?>) -> Assert<out Iterable<Double?>>>,
     rootBulletPoint: String,
     successfulBulletPoint: String,
     failingBulletPoint: String,
@@ -38,11 +38,11 @@ abstract class IterableContainsInOrderOnlyEntriesAssertionsSpec(
     fun SpecBody.describeFun(funName: String, body: SpecBody.() -> Unit)
         = group("fun `$funName`", body = body)
 
-    val assert: (Iterable<Double>) -> Assert<Iterable<Double>> = verbs::checkImmediately
+    val assert: (Iterable<Double>) -> Assert<out Iterable<Double>> = verbs::checkImmediately
     val expect = verbs::checkException
 
     val (containsInOrderOnlyNullableEntries, containsInOrderOnlyNullableEntriesArr) = containsInOrderOnlyNullableEntriesPair
-    fun Assert<Iterable<Double?>>.containsInOrderOnlyNullableEntriesFun(t: (Assert<Double>.() -> Unit)?, vararg tX: (Assert<Double>.() -> Unit)?)
+    fun Assert<out Iterable<Double?>>.containsInOrderOnlyNullableEntriesFun(t: (Assert<Double>.() -> Unit)?, vararg tX: (Assert<Double>.() -> Unit)?)
         = containsInOrderOnlyNullableEntriesArr(t, tX)
 
     val indentBulletPoint = " ".repeat(rootBulletPoint.length)
@@ -61,13 +61,13 @@ abstract class IterableContainsInOrderOnlyEntriesAssertionsSpec(
     fun entry(index: Int)
         = String.format(entryWithIndex, index)
 
-    fun Assert<CharSequence>.entrySuccess(index: Int, actual: Any, expected: String): Assert<CharSequence> {
+    fun Assert<out CharSequence>.entrySuccess(index: Int, actual: Any, expected: String): Assert<out CharSequence> {
         return this.contains.exactly(1).regex(
             "\\Q$successfulBulletPoint$featureArrow${entry(index)}: $actual\\E.*$separator" +
                 "$indentBulletPoint$indentSuccessfulBulletPoint$anEntryAfterSuccess$expected")
     }
 
-    fun Assert<CharSequence>.entryFailing(index: Int, actual: Any, expected: String): Assert<CharSequence> {
+    fun Assert<out CharSequence>.entryFailing(index: Int, actual: Any, expected: String): Assert<out CharSequence> {
         return this.contains.exactly(1).regex(
             "\\Q$failingBulletPoint$featureArrow${entry(index)}: $actual\\E.*$separator" +
                 "$indentBulletPoint$indentFailingBulletPoint$anEntryAfterFailing$expected")
@@ -78,7 +78,7 @@ abstract class IterableContainsInOrderOnlyEntriesAssertionsSpec(
         containsInOrderOnlyNullableEntriesPair
     ) { containsEntriesFunArr ->
 
-        fun Assert<Iterable<Double>>.containsEntriesFun(t: Assert<Double>.() -> Unit, vararg tX: Assert<Double>.() -> Unit)
+        fun Assert<out Iterable<Double>>.containsEntriesFun(t: Assert<Double>.() -> Unit, vararg tX: Assert<Double>.() -> Unit)
             = containsEntriesFunArr(t, tX)
 
         context("empty collection") {
@@ -252,7 +252,7 @@ abstract class IterableContainsInOrderOnlyEntriesAssertionsSpec(
     nullableCases(describePrefix) {
 
         describeFun(containsInOrderOnlyNullableEntries) {
-            absentSubjectTests(verbs, Assert<Iterable<Double?>>::containsInOrderOnlyNullableEntriesFun)
+            absentSubjectTests(verbs, Assert<out Iterable<Double?>>::containsInOrderOnlyNullableEntriesFun)
 
             val list = listOf(null, 1.0, null, 3.0)
             val fluent = verbs.checkImmediately(list)

@@ -10,8 +10,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableContainsInAnyOrderAtLeast1ValuesAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsInAnyOrderValuesPair: Pair<String, Assert<Iterable<Double>>.(Double, Array<out Double>) -> Assert<Iterable<Double>>>,
-    containsInAnyOrderNullableValuesPair: Pair<String, Assert<Iterable<Double?>>.(Double?, Array<out Double?>) -> Assert<Iterable<Double?>>>,
+    containsInAnyOrderValuesPair: Pair<String, Assert<out Iterable<Double>>.(Double, Array<out Double>) -> Assert<out Iterable<Double>>>,
+    containsInAnyOrderNullableValuesPair: Pair<String, Assert<out Iterable<Double?>>.(Double?, Array<out Double?>) -> Assert<out Iterable<Double?>>>,
     rootBulletPoint: String,
     describePrefix: String = "[Atrium] "
 ) : IterableContainsSpecBase({
@@ -26,11 +26,11 @@ abstract class IterableContainsInAnyOrderAtLeast1ValuesAssertionsSpec(
         checkingTriple(containsInAnyOrderNullableValuesPair.first, { containsInAnyOrderNullableValuesPair.second(this, 1.2, arrayOf()) }, listOf(1.2).asIterable(), listOf())
     ) {})
 
-    val assert: (Iterable<Double>) -> Assert<Iterable<Double>> = verbs::checkImmediately
+    val assert: (Iterable<Double>) -> Assert<out Iterable<Double>> = verbs::checkImmediately
     val expect = verbs::checkException
 
     val (containsInAnyOrderNullableValues, containsInAnyOrderNullableValuesFunArr) = containsInAnyOrderNullableValuesPair
-    fun Assert<Iterable<Double?>>.containsInAnyOrderNullableValuesFun(t: Double?, vararg tX: Double?)
+    fun Assert<out Iterable<Double?>>.containsInAnyOrderNullableValuesFun(t: Double?, vararg tX: Double?)
         = containsInAnyOrderNullableValuesFunArr(t, tX)
 
     nonNullableCases(
@@ -38,7 +38,7 @@ abstract class IterableContainsInAnyOrderAtLeast1ValuesAssertionsSpec(
         containsInAnyOrderValuesPair,
         containsInAnyOrderNullableValuesPair
     ) { containsValuesFunArr ->
-        fun Assert<Iterable<Double>>.containsFun(t: Double, vararg tX: Double) =
+        fun Assert<out Iterable<Double>>.containsFun(t: Double, vararg tX: Double) =
             containsValuesFunArr(t, tX.toTypedArray())
 
 

@@ -27,25 +27,25 @@ object CharSequenceAssertionsBuilder : CharSequenceAssertions {
     override inline fun <T : CharSequence> containsNotBuilder(plant: AssertionPlant<T>)
         = charSequenceAssertions.containsNotBuilder(plant)
 
-    override inline fun startsWith(plant: AssertionPlant<CharSequence>, expected: CharSequence)
+    override inline fun startsWith(plant: AssertionPlant<out CharSequence>, expected: CharSequence)
         = charSequenceAssertions.startsWith(plant, expected)
 
-    override inline fun startsNotWith(plant: AssertionPlant<CharSequence>, expected: CharSequence)
+    override inline fun startsNotWith(plant: AssertionPlant<out CharSequence>, expected: CharSequence)
         = charSequenceAssertions.startsNotWith(plant, expected)
 
-    override inline fun endsWith(plant: AssertionPlant<CharSequence>, expected: CharSequence)
+    override inline fun endsWith(plant: AssertionPlant<out CharSequence>, expected: CharSequence)
         = charSequenceAssertions.endsWith(plant, expected)
 
-    override inline fun endsNotWith(plant: AssertionPlant<CharSequence>, expected: CharSequence)
+    override inline fun endsNotWith(plant: AssertionPlant<out CharSequence>, expected: CharSequence)
         = charSequenceAssertions.endsNotWith(plant, expected)
 
-    override inline fun isEmpty(plant: AssertionPlant<CharSequence>)
+    override inline fun isEmpty(plant: AssertionPlant<out CharSequence>)
         = charSequenceAssertions.isEmpty(plant)
 
-    override inline fun isNotEmpty(plant: AssertionPlant<CharSequence>)
+    override inline fun isNotEmpty(plant: AssertionPlant<out CharSequence>)
         = charSequenceAssertions.isNotEmpty(plant)
 
-    override inline fun isNotBlank(plant: AssertionPlant<CharSequence>)
+    override inline fun isNotBlank(plant: AssertionPlant<out CharSequence>)
         = charSequenceAssertions.isNotBlank(plant)
 
     /**

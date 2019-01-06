@@ -15,7 +15,7 @@ import ch.tutteli.atrium.reporting.translating.TranslatableWithArgs
 import ch.tutteli.atrium.translations.DescriptionIterableAssertion
 import ch.tutteli.kbox.ifWithinBound
 
-abstract class InOrderOnlyGroupedAssertionCreator<E, in T : Iterable<E>, SC>(
+abstract class InOrderOnlyGroupedAssertionCreator<E, T : Iterable<E>, SC>(
     private val searchBehaviour: InOrderOnlyGroupedSearchBehaviour
 ) : IterableContains.Creator<T, List<SC>>,
     InOrderOnlyMatcher<E, SC> {

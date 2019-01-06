@@ -26,12 +26,12 @@ interface CharSequenceContains {
      * The [searchBehaviour] might me modified in which case it is recommended that a new [Builder] is created (retain
      * immutability).
      */
-    interface Builder<out T : CharSequence, out S : SearchBehaviour> : Contains.Builder<T, S>
+    interface Builder<T : CharSequence, out S : SearchBehaviour> : Contains.Builder<T, S>
 
     /**
      * The step of choosing/defining [Checker]s.
      */
-    interface CheckerOption<out T : CharSequence, out S : SearchBehaviour>
+    interface CheckerOption<T : CharSequence, out S : SearchBehaviour>
         : Contains.CheckerOption<T, S, Checker, Builder<T, S>>
 
     /**
@@ -47,7 +47,7 @@ interface CharSequenceContains {
      * @param T The type of the [AssertionPlant.subject].
      * @param SC The type of the search criteria.
      */
-    interface Creator<in T : CharSequence, in SC> : Contains.Creator<T, SC>
+    interface Creator<T : CharSequence, in SC> : Contains.Creator<T, SC>
 
     /**
      * Represents a check for the search result such as: the object is contained exactly once in the input of the

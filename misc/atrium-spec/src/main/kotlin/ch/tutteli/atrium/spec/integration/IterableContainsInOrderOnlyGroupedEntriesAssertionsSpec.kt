@@ -14,9 +14,9 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableContainsInOrderOnlyGroupedEntriesAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsInOrderOnlyGroupedEntriesPair: Pair<String, Assert<Iterable<Double>>.(GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, Array<out GroupWithoutNullableEntries<Assert<Double>.() -> Unit>>) -> Assert<Iterable<Double>>>,
+    containsInOrderOnlyGroupedEntriesPair: Pair<String, Assert<out Iterable<Double>>.(GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, Array<out GroupWithoutNullableEntries<Assert<Double>.() -> Unit>>) -> Assert<out Iterable<Double>>>,
     groupFactory: (Array<out Assert<Double>.() -> Unit>) -> GroupWithoutNullableEntries<Assert<Double>.() -> Unit>,
-    containsInOrderOnlyGroupedNullableEntriesPair: Pair<String, Assert<Iterable<Double?>>.(GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>, GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>, Array<out GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>>) -> Assert<Iterable<Double?>>>,
+    containsInOrderOnlyGroupedNullableEntriesPair: Pair<String, Assert<out Iterable<Double?>>.(GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>, GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>, Array<out GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>>) -> Assert<out Iterable<Double?>>>,
     nullableGroupFactory: (Array<out (Assert<Double>.() -> Unit)?>) -> GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>,
     rootBulletPoint: String,
     successfulBulletPoint: String,
@@ -42,12 +42,12 @@ abstract class IterableContainsInOrderOnlyGroupedEntriesAssertionsSpec(
         checkingTriple(containsInOrderOnlyGroupedNullableEntriesPair.first, { containsInOrderOnlyGroupedNullableEntriesPair.second(this, nullableGroup({ toBe(2.5) }), nullableGroup({ toBe(1.2) }, { toBe(2.2) }), arrayOf()) }, listOf(2.5, 2.2, 1.2).asIterable(), listOf(2.2, 1.2, 2.5))
     ) {})
 
-    val assert: (Iterable<Double>) -> Assert<Iterable<Double>> = verbs::checkImmediately
+    val assert: (Iterable<Double>) -> Assert<out Iterable<Double>> = verbs::checkImmediately
     val expect = verbs::checkException
 
     val (containsInOrderOnlyGroupedEntries, containsInOrderOnlyGroupedEntriesFunArr) = containsInOrderOnlyGroupedEntriesPair
     val (containsInOrderOnlyGroupedNullableEntries, containsInOrderOnlyGroupedNullableEntriesFunArr) = containsInOrderOnlyGroupedNullableEntriesPair
-    fun Assert<Iterable<Double?>>.containsInOrderOnlyGroupedNullableEntriesFun(t1: GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>, t2: GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>, vararg tX: GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>)
+    fun Assert<out Iterable<Double?>>.containsInOrderOnlyGroupedNullableEntriesFun(t1: GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>, t2: GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>, vararg tX: GroupWithNullableEntries<(Assert<Double>.() -> Unit)?>)
         = containsInOrderOnlyGroupedNullableEntriesFunArr(t1, t2, tX)
 
     val indentBulletPoint = " ".repeat(rootBulletPoint.length)
@@ -109,14 +109,14 @@ abstract class IterableContainsInOrderOnlyGroupedEntriesAssertionsSpec(
         = size(afterSuccess, successfulBulletPoint, size, size)
 
 
-    fun Assert<CharSequence>.indexSuccess(index: Int, actual: Any, expected: String): Assert<CharSequence> {
+    fun Assert<out CharSequence>.indexSuccess(index: Int, actual: Any, expected: String): Assert<out CharSequence> {
         return this.contains.exactly(1).regex(
             "\\Q$successfulBulletPoint$featureArrow${index(index)}: $actual\\E.*$separator" +
                 "$indentBulletPoint$indentSuccessfulBulletPoint$indentFeatureArrow$featureBulletPoint$anEntryWhich: $separator" +
                 "$afterSuccess$indentListBulletPoint$explanatoryBulletPoint$expected")
     }
 
-    fun Assert<CharSequence>.indexSuccess(fromIndex: Int, toIndex: Int, actual: List<Double?>, vararg expected: String): Assert<CharSequence> {
+    fun Assert<out CharSequence>.indexSuccess(fromIndex: Int, toIndex: Int, actual: List<Double?>, vararg expected: String): Assert<out CharSequence> {
         return this.contains.exactly(1).regex(
             "\\Q$successfulBulletPoint$featureArrow${index(fromIndex, toIndex)}: $actual\\E.*$separator" +
                 "$indentBulletPoint$indentFailingBulletPoint$indentFeatureArrow$featureBulletPoint$containsInAnyOrderOnly: $separator" +
@@ -125,14 +125,14 @@ abstract class IterableContainsInOrderOnlyGroupedEntriesAssertionsSpec(
         )
     }
 
-    fun Assert<CharSequence>.indexFail(index: Int, actual: Any, expected: String): Assert<CharSequence> {
+    fun Assert<out CharSequence>.indexFail(index: Int, actual: Any, expected: String): Assert<out CharSequence> {
         return this.contains.exactly(1).regex(
             "\\Q$failingBulletPoint$featureArrow${index(index)}: $actual\\E.*$separator" +
                 "$indentBulletPoint$indentFailingBulletPoint$indentFeatureArrow$featureBulletPoint$anEntryWhich: $separator" +
                 "$afterFail$indentListBulletPoint$explanatoryBulletPoint$expected")
     }
 
-    fun Assert<CharSequence>.indexFail(fromIndex: Int, toIndex: Int, actual: List<Double?>, vararg expected: String): Assert<CharSequence> {
+    fun Assert<out CharSequence>.indexFail(fromIndex: Int, toIndex: Int, actual: List<Double?>, vararg expected: String): Assert<out CharSequence> {
         return this.contains.exactly(1).regex(
             "\\Q$failingBulletPoint$featureArrow${index(fromIndex, toIndex)}: $actual\\E.*$separator" +
                 "$indentBulletPoint$indentFailingBulletPoint$indentFeatureArrow$featureBulletPoint$containsInAnyOrderOnly: $separator" +
@@ -144,12 +144,12 @@ abstract class IterableContainsInOrderOnlyGroupedEntriesAssertionsSpec(
 
 
     group("$describePrefix describe non-nullable cases") {
-        mapOf<String, Assert<Iterable<Double>>.(GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, Array<out GroupWithoutNullableEntries<Assert<Double>.() -> Unit>>) -> Any>(
+        mapOf<String, Assert<out Iterable<Double>>.(GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, Array<out GroupWithoutNullableEntries<Assert<Double>.() -> Unit>>) -> Any>(
             containsInOrderOnlyGroupedEntries to { g1, g2, gX -> containsInOrderOnlyGroupedEntriesFunArr(this, g1, g2, gX) },
             containsInOrderOnlyGroupedNullableEntries to { g1, g2, gX -> containsInOrderOnlyGroupedNullableEntriesFunArr(this, groupToNullableGroup(g1), groupToNullableGroup(g2), gX.map { groupToNullableGroup(it)}.toTypedArray()) }
         ).forEach { (describe, containsFunArr) ->
 
-            fun Assert<Iterable<Double>>.containsFun(t1: GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, t2: GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, vararg tX: GroupWithoutNullableEntries<Assert<Double>.() -> Unit>)
+            fun Assert<out Iterable<Double>>.containsFun(t1: GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, t2: GroupWithoutNullableEntries<Assert<Double>.() -> Unit>, vararg tX: GroupWithoutNullableEntries<Assert<Double>.() -> Unit>)
                 = containsFunArr(t1,t2, tX)
 
             describeFun(describe) {

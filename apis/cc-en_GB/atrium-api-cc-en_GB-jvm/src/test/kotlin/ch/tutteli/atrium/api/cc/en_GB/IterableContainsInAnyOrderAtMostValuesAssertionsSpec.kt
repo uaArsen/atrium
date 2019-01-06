@@ -19,7 +19,7 @@ class IterableContainsInAnyOrderAtMostValuesAssertionsSpec : ch.tutteli.atrium.s
             Companion::containsAtMost
         )
 
-        private fun containsAtMost(plant: Assert<Iterable<Double>>, atMost: Int, a: Double, aX: Array<out Double>)
+        private fun containsAtMost(plant: Assert<out Iterable<Double>>, atMost: Int, a: Double, aX: Array<out Double>)
             = plant.contains.inAnyOrder.atMost(atMost).values(a, *aX)
 
 

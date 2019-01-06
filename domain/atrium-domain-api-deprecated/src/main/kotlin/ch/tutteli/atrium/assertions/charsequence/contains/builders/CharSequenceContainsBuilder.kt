@@ -26,7 +26,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceConta
         "ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceContains"
     )
 )
-class CharSequenceContainsBuilder<out T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
+class CharSequenceContainsBuilder<T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
     plant: AssertionPlant<T>, searchBehaviour: S
 ) : ContainsBuilder<T, S>(plant, searchBehaviour),
     CharSequenceContains.Builder<T, S>

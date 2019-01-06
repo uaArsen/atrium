@@ -88,7 +88,7 @@ abstract class ListFeatureAssertionsSpec(
             }
             test("throws if no assertion is made") {
                 expect {
-                    fluent.getNullableFun(1) { }
+                    fluentNullable.getNullableFun(1) { }
                 }.toThrow<IllegalStateException> { messageContains("There was not any assertion created") }
             }
         }

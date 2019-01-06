@@ -12,8 +12,8 @@ import org.jetbrains.spek.api.include
 
 abstract class IterableContainsInAnyOrderAtLeastValuesAssertionSpec(
     verbs: AssertionVerbFactory,
-    containsAtLeastTriple: Triple<String, (String, String) -> String, Assert<Iterable<Double>>.(Int, Double, Array<out Double>) -> Assert<Iterable<Double>>>,
-    containsAtLeastButAtMostTriple: Triple<String, (String, String, String) -> String, Assert<Iterable<Double>>.(Int, Int, Double, Array<out Double>) -> Assert<Iterable<Double>>>,
+    containsAtLeastTriple: Triple<String, (String, String) -> String, Assert<out Iterable<Double>>.(Int, Double, Array<out Double>) -> Assert<out Iterable<Double>>>,
+    containsAtLeastButAtMostTriple: Triple<String, (String, String, String) -> String, Assert<out Iterable<Double>>.(Int, Int, Double, Array<out Double>) -> Assert<out Iterable<Double>>>,
     containsNotPair: Pair<String, (Int) -> String>,
     exactlyPair: Pair<String, (Int) -> String>,
     errorMsgAtLeastButAtMost: (Int, Int) -> String,
@@ -34,16 +34,16 @@ abstract class IterableContainsInAnyOrderAtLeastValuesAssertionSpec(
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)
 
-    val assert: (Iterable<Double>) -> Assert<Iterable<Double>> = verbs::checkImmediately
+    val assert: (Iterable<Double>) -> Assert<out Iterable<Double>> = verbs::checkImmediately
     val expect = verbs::checkException
     val fluent = assert(oneToSeven)
 
     val (containsAtLeast, containsAtLeastTest, containsAtLeastFunArr) = containsAtLeastTriple
-    fun Assert<Iterable<Double>>.containsAtLeastFun(atLeast: Int, a: Double, vararg aX: Double)
+    fun Assert<out Iterable<Double>>.containsAtLeastFun(atLeast: Int, a: Double, vararg aX: Double)
         = containsAtLeastFunArr(atLeast, a, aX.toTypedArray())
 
     val (containsAtLeastButAtMost, containsAtLeastButAtMostTest, containsAtLeastButAtMostFunArr) = containsAtLeastButAtMostTriple
-    fun Assert<Iterable<Double>>.containsAtLeastButAtMostFun(atLeast: Int, atMost: Int, a: Double, vararg aX: Double)
+    fun Assert<out Iterable<Double>>.containsAtLeastButAtMostFun(atLeast: Int, atMost: Int, a: Double, vararg aX: Double)
         = containsAtLeastButAtMostFunArr(atLeast, atMost, a, aX.toTypedArray())
 
     val (containsNot, errorMsgContainsNot) = containsNotPair

@@ -5,7 +5,7 @@ import ch.tutteli.atrium.assertions.builders.invisibleGroup
 import ch.tutteli.atrium.domain.builders.AssertImpl
 import ch.tutteli.atrium.reporting.translating.Translatable
 
-class ExplanatoryFailureHandlerWithHint<in S : Any, out T : Any>(
+class ExplanatoryFailureHandlerWithHint<S : Any, T : Any>(
     private val showHint: () -> Boolean,
     private val failureHintFactory: () -> Assertion
 ) : ExplanatoryFailureHandlerBase<S, T>() {

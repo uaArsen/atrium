@@ -12,7 +12,7 @@ import ch.tutteli.kbox.glue
  * @param assertionCreator The identification lambda identifying the entry where an entry is considered
  *   to be identified if it holds all [Assertion]s the lambda might create.
  */
-class Eintrag<in T : Any>(
+class Eintrag<T : Any>(
     val assertionCreator: Assert<T>.() -> Unit
 ) : GroupWithoutNullableEntries<Assert<T>.() -> Unit> {
     override fun toList(): List<Assert<T>.() -> Unit> = listOf(assertionCreator)
@@ -28,7 +28,7 @@ class Eintrag<in T : Any>(
  *   to be identified if it holds all [Assertion]s the lambda might create or if it is `null` in case
  *   [assertionCreator] is defined as `null`.
  */
-class NullableEintrag<in T : Any>(
+class NullableEintrag<T : Any>(
     val assertionCreator: (Assert<T>.() -> Unit)?
 ) : GroupWithNullableEntries<(Assert<T>.() -> Unit)?> {
     override fun toList(): List<(Assert<T>.() -> Unit)?> = listOf(assertionCreator)
@@ -41,7 +41,7 @@ class NullableEintrag<in T : Any>(
  *   to be identified if it holds all [Assertion]s the lambda might create.
  * @param otherAssertionCreators A variable amount of additional identification lambdas.
  */
-class Eintraege<in T : Any>(
+class Eintraege<T : Any>(
     val assertionCreator: Assert<T>.() -> Unit,
     vararg val otherAssertionCreators: Assert<T>.() -> Unit
 ) : GroupWithoutNullableEntries<Assert<T>.() -> Unit> {
@@ -59,7 +59,7 @@ class Eintraege<in T : Any>(
  *   [assertionCreatorOrNull] is defined as `null`.
  * @param otherAssertionCreatorsOrNulls A variable amount of additional identification lambdas or `null`s.
  */
-class NullableEintraege<in T : Any>(
+class NullableEintraege<T : Any>(
     val assertionCreatorOrNull: (Assert<T>.() -> Unit)?,
     vararg val otherAssertionCreatorsOrNulls: (Assert<T>.() -> Unit)?
 ) : GroupWithNullableEntries<(Assert<T>.() -> Unit)?> {

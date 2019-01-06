@@ -54,7 +54,7 @@ object AnyTypeTransformationAssertionsBuilder: AnyTypeTransformationAssertions {
     override inline fun <T : Any> isNotNull(plant: AssertionPlantNullable<T?>, type: KClass<T>, noinline assertionCreator: AssertionPlant<T>.() -> Unit)
         = anyTypeTransformationAssertions.isNotNull(plant, type, assertionCreator)
 
-    override inline fun <TSub : Any> isA(plant: AssertionPlant<Any>, subType: KClass<TSub>, noinline assertionCreator: AssertionPlant<TSub>.() -> Unit)
+    override inline fun <TSub: Any> isA(plant: AssertionPlant<out Any>, subType: KClass<TSub>, noinline assertionCreator: AssertionPlant<TSub>.() -> Unit)
         = anyTypeTransformationAssertions.isA(plant, subType, assertionCreator)
 
     override inline fun <T : Any, TSub : T> downCast(description: Translatable, subType: KClass<TSub>, subjectPlant: BaseAssertionPlant<T?, *>, noinline assertionCreator: AssertionPlant<TSub>.() -> Unit, failureHandler: AnyTypeTransformation.FailureHandler<T, TSub>)

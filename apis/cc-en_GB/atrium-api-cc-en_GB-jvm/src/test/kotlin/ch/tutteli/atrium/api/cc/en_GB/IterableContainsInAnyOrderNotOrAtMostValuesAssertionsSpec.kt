@@ -18,7 +18,7 @@ class IterableContainsInAnyOrderNotOrAtMostValuesAssertionsSpec : ch.tutteli.atr
             Companion::containsNotOrAtMost
         )
 
-        private fun containsNotOrAtMost(plant: Assert<Iterable<Double>>, atMost: Int, a: Double, aX: Array<out Double>)
+        private fun containsNotOrAtMost(plant: Assert<out Iterable<Double>>, atMost: Int, a: Double, aX: Array<out Double>)
             = plant.contains.inAnyOrder.notOrAtMost(atMost).values(a, *aX)
 
         private fun getContainsNotPair() = containsNot to Companion::getErrorMsgContainsNot

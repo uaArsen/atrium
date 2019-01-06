@@ -15,7 +15,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceConta
  *   `contains` assertion for [CharSequence].
  * @param containsBuilder The previously used [CharSequenceContains.Builder].
  */
-internal class NotCheckerOptionImpl<out T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
+internal class NotCheckerOptionImpl<T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
     containsBuilder: CharSequenceContains.Builder<T, S>
 ) : NotCheckerOptionBase<T, S>(containsBuilder),
     NotCheckerOption<T, S>

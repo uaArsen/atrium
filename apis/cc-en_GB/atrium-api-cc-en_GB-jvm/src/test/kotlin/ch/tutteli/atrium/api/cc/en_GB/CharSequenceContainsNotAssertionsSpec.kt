@@ -18,7 +18,7 @@ class CharSequenceContainsNotAssertionsSpec : ch.tutteli.atrium.spec.integration
             Companion::containsNotFun
         )
 
-        private fun containsNotFun(plant: Assert<CharSequence>, a: Any, aX: Array<out Any>)
+        private fun containsNotFun(plant: Assert<out CharSequence>, a: Any, aX: Array<out Any>)
             = plant.containsNot.values(a, *aX)
 
         private fun getContainsNotIgnoringCaseTriple() = Triple(
@@ -27,7 +27,7 @@ class CharSequenceContainsNotAssertionsSpec : ch.tutteli.atrium.spec.integration
             Companion::containsNotIgnoringCase
         )
 
-        private fun containsNotIgnoringCase(plant: Assert<CharSequence>, a: Any, aX: Array<out Any>)
+        private fun containsNotIgnoringCase(plant: Assert<out CharSequence>, a: Any, aX: Array<out Any>)
             = plant.containsNot.ignoringCase.values(a, *aX)
     }
 }

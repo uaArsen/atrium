@@ -9,7 +9,7 @@ import ch.tutteli.atrium.domain.creating.feature.extract.FeatureExtractor
 import ch.tutteli.atrium.translations.DescriptionListAssertion
 
 fun <T : Any> _get(
-    plant: AssertionPlant<List<T>>,
+    plant: AssertionPlant<out List<T>>,
     index: Int,
     assertionCreator: CollectingAssertionPlant<T>.() -> Unit
 ): Assertion = extractorForGetCall(index)
@@ -17,7 +17,7 @@ fun <T : Any> _get(
     .extractAndAssertIt(assertionCreator)
 
 fun <T> _getNullable(
-    plant: AssertionPlant<List<T>>,
+    plant: AssertionPlant<out List<T>>,
     index: Int,
     assertionCreator: CollectingAssertionPlantNullable<T>.() -> Unit
 ): Assertion = extractorForGetCall(index)
@@ -27,7 +27,7 @@ fun <T> _getNullable(
 private fun extractorForGetCall(index: Int) = AssertImpl.feature.extractor.methodCall("get", index)
 
 private fun <T> createGetParameterObject(
-    plant: AssertionPlant<List<T>>,
+    plant: AssertionPlant<out List<T>>,
     index: Int
 ): FeatureExtractor.ParameterObject<T> = FeatureExtractor.ParameterObject(
     extractionNotSuccessful = DescriptionListAssertion.INDEX_OUT_OF_BOUNDS,

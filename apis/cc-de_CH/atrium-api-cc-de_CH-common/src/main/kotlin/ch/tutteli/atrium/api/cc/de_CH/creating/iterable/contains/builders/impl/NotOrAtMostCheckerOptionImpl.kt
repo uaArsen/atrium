@@ -19,7 +19,7 @@ import ch.tutteli.atrium.domain.creating.iterable.contains.searchbehaviours.InAn
  * @param containsBuilder The previously used [IterableContains.Builder].
  */
 @Deprecated("Do not rely on this type; will be made internal with 1.0.0", ReplaceWith("NotOrAtMostCheckerBuilder"))
-open class NotOrAtMostCheckerOptionImpl<out E, out T : Iterable<E>, out S : InAnyOrderSearchBehaviour>(
+open class NotOrAtMostCheckerOptionImpl<out E, T : Iterable<E>, out S : InAnyOrderSearchBehaviour>(
     times: Int,
     containsBuilder: IterableContains.Builder<E, T, S>
 ) : NotOrAtMostCheckerOptionBase<E, T, S>(

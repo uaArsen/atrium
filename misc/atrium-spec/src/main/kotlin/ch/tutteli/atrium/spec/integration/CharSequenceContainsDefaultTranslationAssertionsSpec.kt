@@ -18,9 +18,9 @@ import org.jetbrains.spek.api.include
 abstract class CharSequenceContainsDefaultTranslationAssertionsSpec(
     verbs: AssertionVerbFactory,
     containsDefaultTranslationOf: String,
-    containsAtLeastTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, Translatable, Array<out Translatable>) -> Assert<CharSequence>>,
-    containsAtMostTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, Translatable, Array<out Translatable>) -> Assert<CharSequence>>,
-    containsAtMostIgnoringCaseTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, Translatable, Array<out Translatable>) -> Assert<CharSequence>>,
+    containsAtLeastTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, Translatable, Array<out Translatable>) -> Assert<out CharSequence>>,
+    containsAtMostTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, Translatable, Array<out Translatable>) -> Assert<out CharSequence>>,
+    containsAtMostIgnoringCaseTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, Translatable, Array<out Translatable>) -> Assert<out CharSequence>>,
     describePrefix: String = "[Atrium] "
 ) : Spek({
 
@@ -39,22 +39,22 @@ abstract class CharSequenceContainsDefaultTranslationAssertionsSpec(
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)
 
-    val assert: (CharSequence) -> Assert<CharSequence> = verbs::checkImmediately
+    val assert: (CharSequence) -> Assert<out CharSequence> = verbs::checkImmediately
     val expect = verbs::checkException
 
     val text = "Assert - assert, assert, assert - ASSERT; expect the thrown exception"
     val fluent = assert(text)
 
     val (_, containsAtLeastTest, containsAtLeastFunArr) = containsAtLeastTriple
-    fun Assert<CharSequence>.containsAtLeastFun(atLeast: Int, a: Translatable, vararg aX: Translatable)
+    fun Assert<out CharSequence>.containsAtLeastFun(atLeast: Int, a: Translatable, vararg aX: Translatable)
         = containsAtLeastFunArr(atLeast, a, aX)
 
     val (_, containsAtMostTest, containsAtMostFunArr) = containsAtMostTriple
-    fun Assert<CharSequence>.containsAtMostFun(atLeast: Int, a: Translatable, vararg aX: Translatable)
+    fun Assert<out CharSequence>.containsAtMostFun(atLeast: Int, a: Translatable, vararg aX: Translatable)
         = containsAtMostFunArr(atLeast, a, aX)
 
     val (_, containsAtMostIgnoringCase, containsAtMostIgnoringCaseFunArr) = containsAtMostIgnoringCaseTriple
-    fun Assert<CharSequence>.containsAtMostIgnoringCaseFun(atLeast: Int, a: Translatable, vararg aX: Translatable)
+    fun Assert<out CharSequence>.containsAtMostIgnoringCaseFun(atLeast: Int, a: Translatable, vararg aX: Translatable)
         = containsAtMostIgnoringCaseFunArr(atLeast, a, aX)
 
     describeFun(containsDefaultTranslationOf) {

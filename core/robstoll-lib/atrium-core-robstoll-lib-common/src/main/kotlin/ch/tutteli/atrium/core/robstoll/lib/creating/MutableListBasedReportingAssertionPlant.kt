@@ -5,7 +5,7 @@ import ch.tutteli.atrium.creating.AssertionPlantWithCommonFields
 import ch.tutteli.atrium.creating.BaseAssertionPlant
 import ch.tutteli.atrium.creating.BaseReportingAssertionPlant
 
-abstract class MutableListBasedReportingAssertionPlant<out T : Any?, out A : BaseAssertionPlant<T, A>>(
+abstract class MutableListBasedReportingAssertionPlant<T : Any?, out A : BaseAssertionPlant<T, A>>(
     override val commonFields: AssertionPlantWithCommonFields.CommonFields<T>
 ) : MutableListBasedAssertionPlant<T, A>(commonFields.subjectProvider),
     BaseReportingAssertionPlant<T, A> {

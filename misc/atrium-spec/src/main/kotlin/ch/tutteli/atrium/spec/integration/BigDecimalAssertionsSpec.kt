@@ -16,9 +16,9 @@ import java.math.BigDecimal
 abstract class BigDecimalAssertionsSpec(
     verbs: AssertionVerbFactory,
     toBePair: Pair<String, Assert<BigDecimal>.(BigDecimal) -> Assert<BigDecimal>>,
-    toBeAnyFun: Assert<Any>.(Any) -> Assert<Any>,
+    toBeAnyFun: Assert<out Any>.(Any) -> Assert<out Any>,
     notToBePair: Pair<String, Assert<BigDecimal>.(BigDecimal) -> Assert<BigDecimal>>,
-    notToBeAnyFun: Assert<Any>.(Any) -> Assert<Any>,
+    notToBeAnyFun: Assert<out Any>.(Any) -> Assert<out Any>,
     isNumericallyEqualToPair: Pair<String, Assert<BigDecimal>.(BigDecimal) -> Assert<BigDecimal>>,
     isNotNumericallyEqualToPair: Pair<String, Assert<BigDecimal>.(BigDecimal) -> Assert<BigDecimal>>,
     isEqualIncludingScalePair: Pair<String, Assert<BigDecimal>.(BigDecimal) -> Assert<BigDecimal>>,

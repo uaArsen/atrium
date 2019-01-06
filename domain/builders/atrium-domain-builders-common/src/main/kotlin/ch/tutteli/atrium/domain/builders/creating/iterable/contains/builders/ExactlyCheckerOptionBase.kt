@@ -23,7 +23,7 @@ import ch.tutteli.atrium.domain.creating.iterable.contains.checkers.checkerFacto
  * @param nameContainsNotFun The name of the function which represents a `Iterable contains not` assertion.
  * @param exactlyCall The name of the function which was called and created this builder.
  */
-abstract class ExactlyCheckerOptionBase<out E, out T : Iterable<E>, out S : SearchBehaviour>(
+abstract class ExactlyCheckerOptionBase<out E, T : Iterable<E>, out S : SearchBehaviour>(
     final override val times: Int,
     final override  val containsBuilder: IterableContains.Builder<E, T, S>,
     nameContainsNotFun: String,

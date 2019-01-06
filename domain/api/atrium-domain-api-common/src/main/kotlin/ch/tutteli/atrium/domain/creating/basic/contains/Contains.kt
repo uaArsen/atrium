@@ -22,7 +22,7 @@ interface Contains {
      * The [searchBehaviour] might me modified in which case it is recommended that a new [Builder] is created (retain
      * immutability).
      */
-    interface Builder<out T : Any, out S : Contains.SearchBehaviour> {
+    interface Builder<T : Any, out S : Contains.SearchBehaviour> {
         /**
          * The [AssertionPlant] from which this building process started and to which the resulting [Assertion]
          * should be added.
@@ -38,7 +38,7 @@ interface Contains {
     /**
      * The step of choosing/defining [Checker]s.
      */
-    interface CheckerOption<out T : Any, out S : Contains.SearchBehaviour, out C : Contains.Checker, out B : Contains.Builder<T, S>> {
+    interface CheckerOption<T : Any, out S : Contains.SearchBehaviour, out C : Contains.Checker, out B : Contains.Builder<T, S>> {
         /**
          * The previously chosen [Builder], containing inter alia the [AssertionPlant] to which the resulting
          * [Assertion] shall be added.
@@ -89,7 +89,7 @@ interface Contains {
      * @param T The type of the [AssertionPlant.subject].
      * @param SC The type of the search criteria.
      */
-    interface Creator<in T : Any, in SC> {
+    interface Creator<T : Any, in SC> {
         /**
          * Creates an [AssertionGroup] representing the sophisticated `contains` assertion for the given [plant] based
          * on the given [searchCriteria].

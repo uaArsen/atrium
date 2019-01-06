@@ -19,6 +19,8 @@ import ch.tutteli.kbox.glue
  * @return This plant to support a fluent API.
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
  */
+
+class Pair<K, V>(val k: K, val v: V)
 fun <K, V : Any, T: Map<K, V>> Assert<T>.contains(entry: Pair<K, V>, vararg otherEntries: Pair<K, V>)
     = addAssertion(AssertImpl.map.contains(this, entry glue otherEntries))
 
@@ -34,8 +36,8 @@ fun <K, V : Any, T: Map<K, V>> Assert<T>.contains(entry: Pair<K, V>, vararg othe
  * @return This plant to support a fluent API.
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
  */
-inline fun <K, reified V: Any, T: Map<K, V?>> Assert<T>.containsNullable(entry: Pair<K, V?>, vararg otherEntries: Pair<K, V?>)
-    = addAssertion(AssertImpl.map.containsNullable(this, V::class, entry glue otherEntries))
+inline fun <K, reified V: Any, T: Map<K, V?>> Assert<T>.contains(entry: Pair<K, V?>, vararg otherEntries: Pair<K, V?>): Assert<T> = TODO()
+//    = addAssertion(AssertImpl.map.containsNullable(this, V::class, entry glue otherEntries))
 
 /**
  * Makes the assertion that [AssertionPlant.subject] contains the given [key].
@@ -43,7 +45,7 @@ inline fun <K, reified V: Any, T: Map<K, V?>> Assert<T>.containsNullable(entry: 
  * @return This plant to support a fluent API.
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
  */
-fun <K> Assert<Map<K, *>>.containsKey(key: K)
+fun <K> Assert<out Map<K, *>>.containsKey(key: K)
     = addAssertion(AssertImpl.map.containsKey(this, key))
 
 /**
@@ -110,7 +112,7 @@ fun <T : Map<*, *>> Assert<T>.isNotEmpty()
  *
  * @return The newly created [AssertionPlant].
  */
-val <K> Assert<Map<K, *>>.keys get() : Assert<Set<K>> = property(Map<K, *>::keys)
+val <K> Assert<out Map<K, *>>.keys get() : Assert<Set<K>> = property(Map<K, *>::keys)
 
 /**
  * Makes the assertion that [AssertionPlant.subject]'s property [keys][Map.keys] holds all assertions the given
@@ -133,7 +135,7 @@ fun <K, V, T: Map<K, V>> Assert<T>.keys(assertionCreator: Assert<Set<K>>.() -> U
  *
  * @return The newly created [AssertionPlant].
  */
-val <V> Assert<Map<*, V>>.values get() : Assert<Collection<V>> = property(Map<*, V>::values)
+val <V> Assert<out Map<*, V>>.values get() : Assert<Collection<V>> = property(Map<*, V>::values)
 
 /**
  * Makes the assertion that [AssertionPlant.subject]'s property [values][Map.values] holds all assertions the given

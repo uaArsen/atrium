@@ -17,8 +17,8 @@ fun <T : Any> _isNotNull(
     _downCast(IS_A, type, plant, assertionCreator, ExplanatoryFailureHandler())
 }
 
-fun <TSub : Any> _isA(
-    plant: AssertionPlant<Any>,
+fun <T : Any, TSub : T> _isA(
+    plant: AssertionPlant<out T>,
     subType: KClass<TSub>,
     assertionCreator: AssertionPlant<TSub>.() -> Unit
 ) {

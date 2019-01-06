@@ -24,7 +24,7 @@ import ch.tutteli.atrium.domain.creating.charsequence.contains.CharSequenceConta
         "ch.tutteli.atrium.api.cc.en_GB.creating.charsequence.contains.builders.NotOrAtMostCheckerOption"
     )
 )
-open class CharSequenceContainsNotOrAtMostCheckerBuilder<out T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
+open class CharSequenceContainsNotOrAtMostCheckerBuilder<T : CharSequence, out S : CharSequenceContains.SearchBehaviour>(
     times: Int,
     containsBuilder: CharSequenceContains.Builder<T, S>
 ) : ch.tutteli.atrium.api.cc.en_UK.creating.charsequence.contains.builders.NotOrAtMostCheckerOptionImpl<T, S>(

@@ -176,7 +176,7 @@ abstract class MapFeatureAssertionsSpec(
             }
             test("throws if no assertion is made") {
                 expect {
-                    fluent.getExistingNullableFun("a") { }
+                    fluentNullable.getExistingNullableFun("a") { }
                 }.toThrow<IllegalStateException> { messageContains("There was not any assertion created") }
             }
         }

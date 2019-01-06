@@ -33,7 +33,7 @@ class IterableContainsNotValuesAssertionsSpec : Spek({
 
         private fun getContainsNotPair() = containsNot to Companion::containsNotFun
 
-        private fun containsNotFun(plant: Assert<Iterable<Double>>, a: Double, aX: Array<out Double>): Assert<Iterable<Double>> {
+        private fun containsNotFun(plant: Assert<out Iterable<Double>>, a: Double, aX: Array<out Double>): Assert<out Iterable<Double>> {
             return if (aX.isEmpty()) {
                 plant.containsNot.value(a)
             } else {
@@ -43,7 +43,7 @@ class IterableContainsNotValuesAssertionsSpec : Spek({
 
         private fun getContainsNotNullablePair() = "$containsNot nullable" to Companion::containsNotNullableFun
 
-        private fun containsNotNullableFun(plant: Assert<Iterable<Double?>>, a: Double?, aX: Array<out Double?>): Assert<Iterable<Double?>> {
+        private fun containsNotNullableFun(plant: Assert<out Iterable<Double?>>, a: Double?, aX: Array<out Double?>): Assert<out Iterable<Double?>> {
             return if (aX.isEmpty()) {
                 plant.containsNot.nullableValue(a)
             } else {
@@ -52,10 +52,10 @@ class IterableContainsNotValuesAssertionsSpec : Spek({
         }
 
 
-        private val containsNotShortcutFun : KFunction3<Assert<Iterable<Double>>, Double, Array<out Double>, Assert<Iterable<Double>>> = Assert<Iterable<Double>>::containsNot
+        private val containsNotShortcutFun : KFunction3<Assert<out Iterable<Double>>, Double, Array<out Double>, Assert<out Iterable<Double>>> = Assert<out Iterable<Double>>::containsNot
         private fun getContainsNotShortcutPair() = containsNotShortcutFun.name to Companion::containsNotShortcut
 
-        private fun containsNotShortcut(plant: Assert<Iterable<Double>>, a: Double, aX: Array<out Double>)
+        private fun containsNotShortcut(plant: Assert<out Iterable<Double>>, a: Double, aX: Array<out Double>)
             = plant.containsNot(a, *aX)
     }
 }

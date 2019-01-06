@@ -34,7 +34,7 @@ abstract class IterableContainsSpecBase(spec: Spec.() -> Unit) : Spek(spec) {
         val illegalArgumentException = IllegalArgumentException::class.simpleName
         val separator = System.getProperty("line.separator")!!
 
-        fun Assert<CharSequence>.containsSize(actual: Int, expected: Int)
+        fun Assert<out CharSequence>.containsSize(actual: Int, expected: Int)
             = contains.exactly(1).regex("size: $actual[^:]+: $expected")
 
         fun SpecBody.describeFun(funName: String, body: SpecBody.() -> Unit)
@@ -46,12 +46,12 @@ abstract class IterableContainsSpecBase(spec: Spec.() -> Unit) : Spek(spec) {
 
         fun SpecBody.nonNullableCases(
             describePrefix: String,
-            containsPair: Pair<String, Assert<Iterable<Double>>.(Double, Array<out Double>) -> Assert<Iterable<Double>>>,
-            containsNullablePair: Pair<String, Assert<Iterable<Double?>>.(Double?, Array<out Double?>) -> Assert<Iterable<Double?>>>,
-            action: SpecBody.(Assert<Iterable<Double>>.(Double, Array<out Double>) -> Any) -> Unit
+            containsPair: Pair<String, Assert<out Iterable<Double>>.(Double, Array<out Double>) -> Assert<out Iterable<Double>>>,
+            containsNullablePair: Pair<String, Assert<out Iterable<Double?>>.(Double?, Array<out Double?>) -> Assert<out Iterable<Double?>>>,
+            action: SpecBody.(Assert<out Iterable<Double>>.(Double, Array<out Double>) -> Any) -> Unit
         ) {
             group("$describePrefix describe non-nullable cases") {
-                mapOf<String, Assert<Iterable<Double>>.(Double, Array<out Double>) -> Any>(
+                mapOf<String, Assert<out Iterable<Double>>.(Double, Array<out Double>) -> Any>(
                     containsPair.first to { a, aX -> containsPair.second(this, a, aX) },
                     containsNullablePair.first to { a, aX -> containsNullablePair.second(this, a, aX) }
                 ).forEach { (describe, containsEntriesFunArr) ->

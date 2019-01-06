@@ -21,7 +21,7 @@ class CharSequenceContainsAtMostAssertionsSpec : ch.tutteli.atrium.spec.integrat
             Companion::containsAtMost
         )
 
-        private fun containsAtMost(plant: Assert<CharSequence>, atMost: Int, a: Any, aX: Array<out Any>)
+        private fun containsAtMost(plant: Assert<out CharSequence>, atMost: Int, a: Any, aX: Array<out Any>)
             = plant.contains.atMost(atMost).values(a, *aX)
 
         private fun getAtMostIgnoringCaseTriple() = Triple(
@@ -30,7 +30,7 @@ class CharSequenceContainsAtMostAssertionsSpec : ch.tutteli.atrium.spec.integrat
             Companion::containsAtMostIgnoringCase
         )
 
-        private fun containsAtMostIgnoringCase(plant: Assert<CharSequence>, atMost: Int, a: Any, aX: Array<out Any>)
+        private fun containsAtMostIgnoringCase(plant: Assert<out CharSequence>, atMost: Int, a: Any, aX: Array<out Any>)
             = plant.contains.ignoringCase.atMost(atMost).values(a, *aX)
 
 

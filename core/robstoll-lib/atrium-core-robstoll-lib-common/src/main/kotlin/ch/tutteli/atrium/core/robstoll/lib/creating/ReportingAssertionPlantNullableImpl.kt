@@ -13,7 +13,7 @@ import ch.tutteli.atrium.creating.ReportingAssertionPlantNullable
  * @constructor An [AssertionPlant] for nullable types.
  * @param commonFields The [AssertionPlantWithCommonFields.CommonFields] of this [AssertionPlant].
  */
-class ReportingAssertionPlantNullableImpl<out T : Any?>(
+class ReportingAssertionPlantNullableImpl<T : Any?>(
     commonFields: AssertionPlantWithCommonFields.CommonFields<T>
 ) : MutableListBasedReportingAssertionPlant<T, AssertionPlantNullable<T>>(commonFields),
     ReportingAssertionPlantNullable<T> {

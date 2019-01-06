@@ -13,12 +13,12 @@ import ch.tutteli.atrium.core.polyfills.loadSingleService
  */
 object CollectionAssertionsBuilder : CollectionAssertions {
 
-    override inline fun hasSize(plant: AssertionPlant<Collection<*>>, size: Int)
+    override inline fun hasSize(plant: AssertionPlant<out Collection<*>>, size: Int)
         = collectionAssertions.hasSize(plant, size)
 
-    override inline fun isEmpty(plant: AssertionPlant<Collection<*>>)
+    override inline fun isEmpty(plant: AssertionPlant<out Collection<*>>)
         = collectionAssertions.isEmpty(plant)
 
-    override inline fun isNotEmpty(plant: AssertionPlant<Collection<*>>)
+    override inline fun isNotEmpty(plant: AssertionPlant<out Collection<*>>)
         = collectionAssertions.isNotEmpty(plant)
 }

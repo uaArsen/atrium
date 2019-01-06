@@ -13,8 +13,8 @@ import org.jetbrains.spek.api.include
 
 abstract class CharSequenceContainsNotAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsNotTriple: Triple<String, (String) -> String, Assert<CharSequence>.(Any, Array<out Any>) -> Assert<CharSequence>>,
-    containsNotIgnoringCaseTriple: Triple<String, (String) -> String, Assert<CharSequence>.(Any, Array<out Any>) -> Assert<CharSequence>>,
+    containsNotTriple: Triple<String, (String) -> String, Assert<out CharSequence>.(Any, Array<out Any>) -> Assert<out CharSequence>>,
+    containsNotIgnoringCaseTriple: Triple<String, (String) -> String, Assert<out CharSequence>.(Any, Array<out Any>) -> Assert<out CharSequence>>,
     rootBulletPoint: String,
     listBulletPoint: String,
     describePrefix: String = "[Atrium] "
@@ -33,17 +33,17 @@ abstract class CharSequenceContainsNotAssertionsSpec(
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)
 
-    val assert: (CharSequence) -> Assert<CharSequence> = verbs::checkImmediately
+    val assert: (CharSequence) -> Assert<out CharSequence> = verbs::checkImmediately
     val expect = verbs::checkException
     val fluent = assert(text)
     val fluentHelloWorld = assert(helloWorld)
 
     val (containsNot, containsNotTest, containsNotFunArr) = containsNotTriple
-    fun Assert<CharSequence>.containsNotFun(a: Any, vararg aX: Any)
+    fun Assert<out CharSequence>.containsNotFun(a: Any, vararg aX: Any)
         = containsNotFunArr(a, aX)
 
     val (_, containsNotIgnoringCaseTest, containsNotIgnoringCaseFunArr) = containsNotIgnoringCaseTriple
-    fun Assert<CharSequence>.containsNotIgnoringCaseFun(a: Any, vararg aX: Any)
+    fun Assert<out CharSequence>.containsNotIgnoringCaseFun(a: Any, vararg aX: Any)
         = containsNotIgnoringCaseFunArr(a, aX)
 
     val containsNotDescr = DescriptionCharSequenceAssertion.CONTAINS_NOT.getDefault()

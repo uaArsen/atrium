@@ -26,12 +26,12 @@ interface IterableContains {
      * The [searchBehaviour] might me modified in which case it is recommended that a new [Builder] is created (retain
      * immutability).
      */
-    interface Builder<out E, out T : Iterable<E>, out S : SearchBehaviour> : Contains.Builder<T, S>
+    interface Builder<out E, T : Iterable<E>, out S : SearchBehaviour> : Contains.Builder<T, S>
 
     /**
      * The step of choosing/defining [Checker]s.
      */
-    interface CheckerOption<out E, out T : Iterable<E>, out S : SearchBehaviour>
+    interface CheckerOption<E, T : Iterable<E>, out S : SearchBehaviour>
         : Contains.CheckerOption<T, S, Checker, Builder<E, T, S>>
 
     /**
@@ -47,7 +47,7 @@ interface IterableContains {
      * @param T The type of the [AssertionPlant.subject].
      * @param SC The type of the search criteria.
      */
-    interface Creator<in T : Iterable<*>, in SC> : Contains.Creator<T, SC>
+    interface Creator<T : Iterable<*>, in SC> : Contains.Creator<T, SC>
 
     /**
      * Represents a check for the search result such as: the object is contained exactly once in the input of the search.

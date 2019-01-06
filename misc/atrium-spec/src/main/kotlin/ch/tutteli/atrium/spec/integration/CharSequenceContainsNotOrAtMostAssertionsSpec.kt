@@ -11,8 +11,8 @@ import org.jetbrains.spek.api.include
 
 abstract class CharSequenceContainsNotOrAtMostAssertionsSpec(
     verbs: AssertionVerbFactory,
-    containsNotOrAtMostTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, Any, Array<out Any>) -> Assert<CharSequence>>,
-    containsNotOrAtMostIgnoringCaseTriple: Triple<String, (String, String) -> String, Assert<CharSequence>.(Int, Any, Array<out Any>) -> Assert<CharSequence>>,
+    containsNotOrAtMostTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, Any, Array<out Any>) -> Assert<out CharSequence>>,
+    containsNotOrAtMostIgnoringCaseTriple: Triple<String, (String, String) -> String, Assert<out CharSequence>.(Int, Any, Array<out Any>) -> Assert<out CharSequence>>,
     containsNotPair: Pair<String, (Int) -> String>,
     rootBulletPoint: String,
     listBulletPoint: String,
@@ -32,17 +32,17 @@ abstract class CharSequenceContainsNotOrAtMostAssertionsSpec(
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)
 
-    val assert: (CharSequence) -> Assert<CharSequence> = verbs::checkImmediately
+    val assert: (CharSequence) -> Assert<out CharSequence> = verbs::checkImmediately
     val expect = verbs::checkException
     val fluent = assert(text)
     val fluentHelloWorld = assert(helloWorld)
 
     val (containsNotOrAtMost, containsNotOrAtMostTest, containsNotOrAtMostFunArr) = containsNotOrAtMostTriple
-    fun Assert<CharSequence>.containsNotOrAtMostFun(atLeast: Int, a: Any, vararg aX: Any)
+    fun Assert<out CharSequence>.containsNotOrAtMostFun(atLeast: Int, a: Any, vararg aX: Any)
         = containsNotOrAtMostFunArr(atLeast, a, aX)
 
     val (_, containsNotOrAtMostIgnoringCase, containsNotOrAtMostIgnoringCaseFunArr) = containsNotOrAtMostIgnoringCaseTriple
-    fun Assert<CharSequence>.containsNotOrAtMostIgnoringCaseFun(atLeast: Int, a: Any, vararg aX: Any)
+    fun Assert<out CharSequence>.containsNotOrAtMostIgnoringCaseFun(atLeast: Int, a: Any, vararg aX: Any)
         = containsNotOrAtMostIgnoringCaseFunArr(atLeast, a, aX)
 
     val (containsNot, errorMsgContainsNot) = containsNotPair

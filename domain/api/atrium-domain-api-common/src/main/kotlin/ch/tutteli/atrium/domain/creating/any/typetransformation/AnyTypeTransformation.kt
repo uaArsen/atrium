@@ -51,7 +51,7 @@ interface AnyTypeTransformation {
      * @param S The type of [AssertionPlant.subject].
      * @param T The target type to which [AssertionPlant.subject] should have been transformed to.
      */
-    interface FailureHandler<in S : Any, out T : Any> {
+    interface FailureHandler<S : Any, T : Any> {
 
         /**
          * Creates the failing assertion and adds it to the [ParameterObject.subjectPlant].
@@ -85,7 +85,7 @@ interface AnyTypeTransformation {
      * @param warningTransformationFailed Explains why the [subjectPlant]'s [subject][AssertionPlant.subject]
      *   could not be transformed to the desired type.
      */
-    data class ParameterObject<out S : Any, in T : Any>(
+    data class ParameterObject<S : Any, T : Any>(
         val description: Translatable,
         val representation: Any,
         val subjectPlant: BaseAssertionPlant<S?, *>,

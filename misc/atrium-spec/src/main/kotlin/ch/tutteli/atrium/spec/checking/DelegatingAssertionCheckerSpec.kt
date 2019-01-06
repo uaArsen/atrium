@@ -24,7 +24,7 @@ abstract class DelegatingAssertionCheckerSpec(
     describePrefix: String = "[Atrium] "
 ) : Spek({
 
-    val assert: (Assertion) -> AssertionPlant<Assertion> = verbs::checkImmediately
+    val assert: (Assertion) -> AssertionPlant<out Assertion> = verbs::checkImmediately
 
     fun describeFun(vararg funName: String, body: SpecBody.() -> Unit)
         = describeFun(describePrefix, funName, body = body)

@@ -27,7 +27,7 @@ fun <E, T : Iterable<E>> _containsNotBuilder(plant: AssertionPlant<T>): Iterable
     IterableContainsBuilder(plant, NotSearchBehaviourImpl())
 
 fun <E : Any> _iterableAll(
-    plant: AssertionPlant<Iterable<E?>>,
+    plant: AssertionPlant<out Iterable<E?>>,
     assertionCreator: (AssertionPlant<E>.() -> Unit)?
 ): Assertion {
     return LazyThreadUnsafeAssertionGroup {
