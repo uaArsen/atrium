@@ -17,6 +17,10 @@ abstract class MapAssertionsSpec(
     containsNullablePair: Pair<String, Assert<Map<String?, Int?>>.(Pair<String?, Int?>, Array<out Pair<String?, Int?>>) -> Assert<Map<String?, Int?>>>,
     containsKeyWithValueAssertionsPair: Pair<String, Assert<Map<String, Int>>.(Pair<String, Assert<Int>.() -> Unit>, Array<out Pair<String, Assert<Int>.() -> Unit>>) -> Assert<Map<String, Int>>>,
     containsKeyWithNullableValueAssertionsPair: Pair<String, Assert<Map<String?, Int?>>.(Pair<String?, (Assert<Int>.() -> Unit)?>, Array<out Pair<String?, (Assert<Int>.() -> Unit)?>>) -> Assert<Map<String?, Int?>>>,
+
+    containsInAnyOrderOnlyPair: Pair<String, Assert<Map<String, Int>>.(Pair<String, Int>, Array<out Pair<String, Int>>) -> Assert<Map<String, Int>>>,
+    containsInAnyOrderOnlyNullablePair: Pair<String, Assert<Map<String?, Int?>>.(Pair<String?, Int?>, Array<out Pair<String?, Int?>>) -> Assert<Map<String?, Int?>>>,
+
     containsKeyPair: Pair<String, Assert<Map<String, *>>.(String) -> Assert<Map<*, *>>>,
     containsNullableKeyPair: Pair<String, Assert<Map<String?, *>>.(String?) -> Assert<Map<String?, *>>>,
     containsNotKeyPair: Pair<String, Assert<Map<String, *>>.(String) -> Assert<Map<*, *>>>,
@@ -36,6 +40,7 @@ abstract class MapAssertionsSpec(
     include(object : SubjectLessAssertionSpec<Map<String, Int>>(describePrefix,
         containsPair.first to mapToCreateAssertion { containsPair.second(this, "key" to 1, arrayOf()) },
         containsKeyWithValueAssertionsPair.first to mapToCreateAssertion { containsKeyWithValueAssertionsPair.second(this, keyValue("a") { toBe(1) }, arrayOf(keyValue("a") { isLessOrEquals(2) })) },
+        containsInAnyOrderOnlyPair.first to mapToCreateAssertion { containsInAnyOrderOnlyPair.second(this, "key" to 1, arrayOf()) },
         containsKeyPair.first to mapToCreateAssertion{ containsKeyPair.second(this, "a") },
         containsNotKeyPair.first to mapToCreateAssertion{ containsKeyPair.second(this, "a") },
         hasSizePair.first to mapToCreateAssertion { hasSizePair.second(this, 2) },
@@ -45,6 +50,7 @@ abstract class MapAssertionsSpec(
     include(object : SubjectLessAssertionSpec<Map<String?, Int?>>("$describePrefix[nullable Key] ",
         containsNullablePair.first to mapToCreateAssertion{ containsNullablePair.second(this, null to 1, arrayOf("a" to null)) },
         containsKeyWithNullableValueAssertionsPair.first to mapToCreateAssertion { containsKeyWithNullableValueAssertionsPair.second(this, keyNullableValue(null) { toBe(1) }, arrayOf(keyNullableValue("a", null))) },
+        containsInAnyOrderOnlyNullablePair.first to mapToCreateAssertion{ containsInAnyOrderOnlyNullablePair.second(this, null to 1, arrayOf("a" to null)) },
         containsNullableKeyPair.first to mapToCreateAssertion{ containsNullableKeyPair.second(this, null) },
         containsNotNullableKeyPair.first to mapToCreateAssertion{ containsNotNullableKeyPair.second(this, null) }
     ) {})
@@ -55,6 +61,7 @@ abstract class MapAssertionsSpec(
             { containsKeyWithValueAssertionsPair.second(this, keyValue("a"){ isLessThan(2) }, arrayOf(keyValue("b") { isGreaterOrEquals(2) })) },
             mapOf("a" to 1, "b" to 2), mapOf("a" to 2, "b" to 3)
         ),
+        checkingTriple(containsInAnyOrderOnlyPair.first, { containsInAnyOrderOnlyPair.second(this, "a" to 1, arrayOf("b" to 2)) }, mapOf("a" to 1, "b" to 2), mapOf("a" to 1, "b" to 3, "c" to 4)),
         checkingTriple(containsKeyPair.first, {containsKeyPair.second(this, "a")}, mapOf("a" to 1), mapOf("b" to 1)),
         checkingTriple(containsNotKeyPair.first, {containsNotKeyPair.second(this, "b")}, mapOf("a" to 1), mapOf("b" to 1)),
         checkingTriple(hasSizePair.first, { hasSizePair.second(this, 1) }, mapOf("a" to 1), mapOf("a" to 1, "b" to 2)),
@@ -69,6 +76,10 @@ abstract class MapAssertionsSpec(
         checkingTriple(containsKeyWithNullableValueAssertionsPair.first,
             { containsKeyWithNullableValueAssertionsPair.second(this, keyNullableValue(null){ isLessThan(2) }, arrayOf(keyNullableValue("a", null))) },
             mapOf("a" to null, null to 1), mapOf("a" to null, "b" to 1, null to 3)
+        ),
+        checkingTriple(containsInAnyOrderOnlyNullablePair.first,
+            { containsInAnyOrderOnlyNullablePair.second(this, null to 1, arrayOf("a" to null))},
+            mapOf("a" to null, null to 1), mapOf("b" to 1, null to 2, "c" to 3)
         ),
         checkingTriple(containsNullableKeyPair.first,
             { containsNullableKeyPair.second(this, null)},
@@ -94,6 +105,10 @@ abstract class MapAssertionsSpec(
     val (containsNullable, containsNullableFun) = containsNullablePair
     val (containsKeyWithValueAssertions, containsKeyWithValueAssertionsFun) = containsKeyWithValueAssertionsPair
     val (containsKeyWithNullableValueAssertions, containsKeyWithNullableValueAssertionsFun) = containsKeyWithNullableValueAssertionsPair
+
+    val (containsInAnyOrderOnly, containsInAnyOrderOnlyFun) = containsInAnyOrderOnlyPair
+    val (containsInAnyOrderOnlyNullable, containsInAnyOrderOnlyNullableFun) = containsInAnyOrderOnlyNullablePair
+
     val (containsKey, containsKeyFun) = containsKeyPair
     val (containsNullableKey, containsNullableKeyFun) = containsNullableKeyPair
     val (containsNotKey, containsNotKeyFun) = containsNotKeyPair
@@ -110,6 +125,7 @@ abstract class MapAssertionsSpec(
     val toBeDescr = DescriptionAnyAssertion.TO_BE.getDefault()
     val keyDoesNotExist = DescriptionMapAssertion.KEY_DOES_NOT_EXIST.getDefault()
     val lessThanDescr = DescriptionComparableAssertion.IS_LESS_THAN.getDefault()
+    val notOnlyDescr = DescriptionMapAssertion.MAP_CONTAINS_ONLY.getDefault()
 
     fun entry(key: String): String
         = String.format(DescriptionMapAssertion.ENTRY_WITH_KEY.getDefault(), "\"$key\"")
@@ -278,6 +294,79 @@ abstract class MapAssertionsSpec(
                         )
                         containsNot(entry("a"))
                     }
+                }
+            }
+        }
+    }
+
+    describeFun(containsInAnyOrderOnly) {
+        context("map $map") {
+            listOf(
+                listOf("a" to 1, "b" to 2),
+                listOf("b" to 2, "a" to 1)
+            ).forEach {
+                test("$it does not throw") {
+                    fluent.containsInAnyOrderOnlyFun(it.first(), it.drop(1).toTypedArray())
+                }
+            }
+
+            test("{a to 1, b to 3, c to 4} throws AssertionError, reports b and c") {
+                expect {
+                    fluent.containsInAnyOrderOnlyFun("a" to 1, arrayOf("b" to 3, "c" to 4))
+                }.toThrow<AssertionError>{
+                    message {
+                        contains(
+                            entry("b", 2),
+                            "$toBeDescr: 3",
+                            entry("c", keyDoesNotExist),
+                            "$toBeDescr: 4"
+                        )
+                        containsNot(entry("a"))
+                    }
+                }
+            }
+            test("{a to 1} throws AssertionError, reports size mismatch") {
+                expect {
+                    fluent.containsInAnyOrderOnlyFun("a" to 1, arrayOf())
+                }.toThrow<AssertionError>{
+                    messageContains(notOnlyDescr)
+                }
+            }
+        }
+    }
+
+    describeFun(containsInAnyOrderOnlyNullable) {
+        context("map $nullableMap") {
+            listOf(
+                listOf(null to 1, "a" to null, "b" to 2),
+                listOf("b" to 2, null to 1, "a" to null)
+            ).forEach {
+                test("$it does not throw") {
+                    nullableFluent.containsInAnyOrderOnlyNullableFun(it.first(), it.drop(1).toTypedArray())
+                }
+            }
+
+            test("{a to null, null to 2, b to 3, c to 4} throws AssertionError, reports a, null, b and c") {
+                expect {
+                    nullableFluent.containsInAnyOrderOnlyNullableFun("a" to null, arrayOf(null to 2, "b" to 3, "c" to 4))
+                }.toThrow<AssertionError>{
+                    message {
+                        contains(
+                            entry("b", 2),
+                            "$toBeDescr: 3",
+                            entry("c", keyDoesNotExist)
+                            //TODO seems like notToBeNull is not subjectLess
+                            //"$toBeDescr: 4"
+                        )
+                        containsNot(entry("a"))
+                    }
+                }
+            }
+            test("{a to null, null to 2} throws AssertionError, reports size mismatch") {
+                expect {
+                    nullableFluent.containsInAnyOrderOnlyNullableFun("a" to null, arrayOf("null" to 2))
+                }.toThrow<AssertionError>{
+                    messageContains(notOnlyDescr)
                 }
             }
         }
