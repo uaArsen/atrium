@@ -35,7 +35,6 @@ infix fun <K, V : Any, T: Map<K, V>> Assert<T>.contains(keyValuePairs: Pairs<K, 
     = addAssertion(AssertImpl.map.contains(this, keyValuePairs.toList()))
 
 
-
 /**
  * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by [keyValuePair]'s [Pair.first]
  * with a corresponding value as defined by [keyValuePair]'s [Pair.second].
@@ -57,6 +56,7 @@ inline infix fun <K, reified V : Any, T: Map<K, V?>> Assert<T>.containsNullable(
  */
 inline infix fun <K, reified V : Any, T: Map<K, V?>> Assert<T>.containsNullable(keyValuePairs: Pairs<K, V?>)
     = addAssertion(AssertImpl.map.containsNullable(this, V::class, keyValuePairs.toList()))
+
 
 /**
  * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by [keyValue]'s [KeyValue.key]
@@ -82,6 +82,7 @@ infix fun <K, V : Any, T: Map<K, V>> Assert<T>.contains(keyValue: KeyValue<K, V>
  */
 infix fun <K, V : Any, T: Map<K, V>> Assert<T>.contains(keyValues: All<KeyValue<K, V>>)
     = addAssertion(AssertImpl.map.containsKeyWithValueAssertions(this, keyValues.toList().map { it.toPair() }))
+
 
 /**
  * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by [keyValue]'s [KeyNullableValue.key]
@@ -111,25 +112,32 @@ inline infix fun <K, reified V : Any, T: Map<K, V?>> Assert<T>.containsNullable(
 inline infix fun <K, reified V : Any, T: Map<K, V?>> Assert<T>.containsNullable(keyValues: All<KeyNullableValue<K, V>>)
     = addAssertion(AssertImpl.map.containsKeyWithNullableValueAssertions(this, V::class, keyValues.toList().map { it.toPair() }))
 
+
+//TODO uaArsen: add version which accepts Pair (see contains above)
+
 /**
- * Makes the assertion that [Assert.subject][AssertionPlant.subject] only contains keys as defined by [keyValuePairs]'s [Pair.first]
- * with a corresponding values as defined by [keyValuePairs]'s [Pair.second].
- *
+ * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains for each entry in [keyValuePairs],
+ * a key as defined by entry's [Pair.first] with a corresponding value as defined by entry's [Pair.second]
+ * and asserts that there are not any additional keys.
  *
  * @return This plant to support a fluent API.
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
  */
 infix fun <K, V : Any, T: Map<K, V>> Assert<T>.containsInAnyOrderOnly(keyValuePairs: Pairs<K, V>)
     = addAssertion(AssertImpl.map.containsInAnyOrderOnly(this, keyValuePairs.toList()))
+
+//TODO uaArsen: rename to containsNullableInAnyOrderOnly
 /**
- * Makes the assertion that [Assert.subject][AssertionPlant.subject] only contains keys as defined by [keyValuePairs]'s [Pair.first]
- * with a corresponding values as defined by [keyValuePairs]'s [Pair.second].
+ * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains for each entry in [keyValuePairs],
+ * a key as defined by entry's [Pair.first] with a corresponding nullablevalue as defined by entry's [Pair.second]
+ * and asserts that there are not any additional keys.
  *
  * @return This plant to support a fluent API.
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
  */
 inline infix fun <K, reified V : Any, T: Map<K, V?>> Assert<T>.containsInAnyOrderOnlyNullable(keyValuePairs: Pairs<K, V?>)
     = addAssertion(AssertImpl.map.containsInAnyOrderOnlyNullable(this, V::class, keyValuePairs.toList()))
+
 
 /**
  * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains the given [key].

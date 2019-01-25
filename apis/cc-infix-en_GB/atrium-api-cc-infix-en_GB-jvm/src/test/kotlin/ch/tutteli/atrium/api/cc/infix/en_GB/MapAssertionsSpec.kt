@@ -11,10 +11,12 @@ class MapAssertionsSpec : ch.tutteli.atrium.spec.integration.MapAssertionsSpec(
     AssertionVerbFactory,
     containsFun.name to Companion::contains,
     containsNullableFun.name to Companion::containsNullable,
-    Assert<Map<String, Int>>::containsInAnyOrderOnly.name to Companion::containsInAnyOrderOnly,
-    Assert<Map<String, Int?>>::containsInAnyOrderOnlyNullable.name to Companion::containsInAnyOrderOnlyNullable,
     "${containsKeyWithValueAssertionsFun.name} ${KeyValue::class.simpleName}" to Companion::containsKeyWithValueAssertions,
     "${containsKeyWithNullableValueAssertionsFun.name} ${KeyNullableValue::class.simpleName}" to Companion::containsKeyWithNullableValueAssertions,
+
+    Assert<Map<String, Int>>::containsInAnyOrderOnly.name to Companion::containsInAnyOrderOnly,
+    Assert<Map<String, Int?>>::containsInAnyOrderOnlyNullable.name to Companion::containsInAnyOrderOnlyNullable,
+
     Assert<Map<String, Int>>::containsKey.name to Companion::containsKey,
     "${Assert<Map<String?, *>>::containsKey.name} for nullable" to Companion::containsNullableKey,
     Assert<Map<String, Int>>::containsNotKey.name to Companion::containsNotKey,
@@ -42,12 +44,6 @@ class MapAssertionsSpec : ch.tutteli.atrium.spec.integration.MapAssertionsSpec(
             }
         }
 
-        private fun containsInAnyOrderOnly(plant: Assert<Map<String, Int>>, pair: Pair<String, Int>, otherPairs: Array<out Pair<String, Int>>)
-            = plant containsInAnyOrderOnly Pairs(pair, *otherPairs)
-
-        private fun containsInAnyOrderOnlyNullable(plant: Assert<Map<String?, Int?>>, pair: Pair<String?, Int?>, otherPairs: Array<out Pair<String?, Int?>>)
-            = plant containsInAnyOrderOnlyNullable  Pairs(pair, *otherPairs)
-
         private val containsKeyWithValueAssertionsFun : KFunction2<Assert<Map<String, Int>>, KeyValue<String, Int>, Assert<Map<String, Int>>> = Assert<Map<String, Int>>::contains
         private fun containsKeyWithValueAssertions(plant: Assert<Map<String, Int>>, keyValue: Pair<String, Assert<Int>.() -> Unit>, otherKeyValues: Array<out Pair<String, Assert<Int>.() -> Unit>>) : Assert<Map<String, Int>> {
             return if (otherKeyValues.isEmpty()) {
@@ -69,6 +65,28 @@ class MapAssertionsSpec : ch.tutteli.atrium.spec.integration.MapAssertionsSpec(
                 }
             }
         }
+
+        private fun containsInAnyOrderOnly(plant: Assert<Map<String, Int>>, pair: Pair<String, Int>, otherPairs: Array<out Pair<String, Int>>): Assert<Map<String, Int>> {
+            return if (otherPairs.isEmpty()) {
+                //TODO uaArsen: add function to API which allows that one can pass a single pair
+                //plant containsInAnyOrderOnly (pair.first to pair.second)
+                plant containsInAnyOrderOnly Pairs(pair)
+            } else {
+                plant containsInAnyOrderOnly Pairs(pair, *otherPairs)
+            }
+        }
+
+        //TODO uaArsen: rename to containsNullableInAnyOrderOnly
+        private fun containsInAnyOrderOnlyNullable(plant: Assert<Map<String?, Int?>>, pair: Pair<String?, Int?>, otherPairs: Array<out Pair<String?, Int?>>): Assert<Map<String?, Int?>> {
+            return if (otherPairs.isEmpty()) {
+                //TODO uaArsen: add function to API which allows that one can pass a single pair
+                //plant containsInAnyOrderOnlyNullable (pair.first to pair.second)
+                plant containsInAnyOrderOnlyNullable Pairs(pair)
+            } else {
+                plant containsInAnyOrderOnlyNullable Pairs(pair, *otherPairs)
+            }
+        }
+
 
         private fun containsKey(plant: Assert<Map<String, *>>, key: String)
             = plant containsKey key

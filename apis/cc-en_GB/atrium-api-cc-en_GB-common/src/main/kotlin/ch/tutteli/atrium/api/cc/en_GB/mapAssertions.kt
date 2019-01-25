@@ -8,9 +8,9 @@ import ch.tutteli.atrium.domain.builders.AssertImpl
 import ch.tutteli.kbox.glue
 
 /**
- * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by [keyValuePair]'s [Pair.first]
- * with a corresponding value as defined by [keyValuePair]'s [Pair.second] -- optionally the same assertions
- * are created for the [otherPairs].
+ * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by
+ * [keyValuePair]'s [Pair.first] with a corresponding value as defined by [keyValuePair]'s [Pair.second]
+ * -- optionally the same assertions are created for the [otherPairs].
  *
  * Notice, that it does not search for unique matches. Meaning, if the map is `mapOf('a' to 1)` and [keyValuePair] is
  * defined as `'a' to 1` and one of the [otherPairs] is defined as `'a' to 1` as well, then both match,
@@ -23,19 +23,19 @@ fun <K, V : Any, T: Map<K, V>> Assert<T>.contains(keyValuePair: Pair<K, V>, vara
     = addAssertion(AssertImpl.map.contains(this, keyValuePair glue otherPairs))
 
 /**
- * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by [keyNullableValuePair]'s [Pair.first]
- * with a corresponding value as defined by [keyNullableValuePair]'s [Pair.second] -- optionally the same assertions
- * are created for the [otherEntries].
+ * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by
+ * [keyValuePair]'s [Pair.first] with a corresponding value as defined by [keyValuePair]'s [Pair.second]
+ * -- optionally the same assertions are created for the [otherPairs].
  *
- * Notice, that it does not search for unique matches. Meaning, if the map is `mapOf('a' to 1)` and [keyNullableValuePair] is
- * defined as `'a' to 1` and one of the [otherEntries] is defined as `'a' to 1` as well, then both match,
+ * Notice, that it does not search for unique matches. Meaning, if the map is `mapOf('a' to 1)` and [keyValuePair] is
+ * defined as `'a' to 1` and one of the [otherPairs] is defined as `'a' to 1` as well, then both match,
  * even though they match the same entry.
  *
  * @return This plant to support a fluent API.
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
  */
-inline fun <K, reified V: Any, T: Map<K, V?>> Assert<T>.containsNullable(keyNullableValuePair: Pair<K, V?>, vararg otherEntries: Pair<K, V?>)
-    = addAssertion(AssertImpl.map.containsNullable(this, V::class, keyNullableValuePair glue otherEntries))
+inline fun <K, reified V: Any, T: Map<K, V?>> Assert<T>.containsNullable(keyValuePair: Pair<K, V?>, vararg otherPairs: Pair<K, V?>)
+    = addAssertion(AssertImpl.map.containsNullable(this, V::class, keyValuePair glue otherPairs))
 
 /**
  * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by [keyValue]'s [KeyValue.key]
@@ -69,11 +69,12 @@ fun <K, V : Any, T: Map<K, V>> Assert<T>.contains(keyValue: KeyValue<K, V>, vara
 inline fun <K, reified V : Any, T: Map<K, V?>> Assert<T>.containsNullable(keyValue: KeyNullableValue<K, V>, vararg otherKeyValues: KeyNullableValue<K, V>)
     = addAssertion(AssertImpl.map.containsKeyWithNullableValueAssertions(this, V::class, (keyValue glue otherKeyValues).map { it.toPair() }))
 
+
 /**
- * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by [keyValuePair]'s [Pair.first]
- * with a corresponding value as defined by [keyValuePair]'s [Pair.second] -- optionally the same assertions
- * are created for the [otherPairs] and asserts that [Assert.subject][AssertionPlant.subject] contains only keys defined
- * in [keyValuePair], [otherPairs]
+ * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by
+ * [keyValuePair]'s [Pair.first] with a corresponding value as defined by [keyValuePair]'s [Pair.second]
+ * and in the same way a key and value for each key/value pair in [otherPairs] (if defined)
+ * and asserts that there are not any additional keys.
  *
  * @return This plant to support a fluent API.
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
@@ -82,16 +83,17 @@ fun <K, V : Any, T: Map<K, V>> Assert<T>.containsInAnyOrderOnly(keyValuePair: Pa
     = addAssertion(AssertImpl.map.containsInAnyOrderOnly(this, keyValuePair glue otherPairs))
 
 /**
- * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by [keyValuePair]'s [Pair.first]
- * with a corresponding value as defined by [keyValuePair]'s [Pair.second] -- optionally the same assertions
- * are created for the [otherPairs] and asserts that [Assert.subject][AssertionPlant.subject] contains only keys defined
- * in [keyValuePair], [otherPairs]
+ * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains a key as defined by
+ * [keyValuePair]'s [Pair.first] with a corresponding nullable value as defined by [keyValuePair]'s [Pair.second]
+ * and in the same way a key and value for each key/value pair in [otherPairs] (if defined)
+ * and asserts that there are not any additional keys.
  *
  * @return This plant to support a fluent API.
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
  */
-inline fun <K, reified V: Any, T: Map<K, V?>> Assert<T>.containsInAnyOrderOnlyNullable(keyNullableValuePair: Pair<K, V?>, vararg otherEntries: Pair<K, V?>)
-    = addAssertion(AssertImpl.map.containsInAnyOrderOnlyNullable(this, V::class, keyNullableValuePair glue otherEntries))
+inline fun <K, reified V: Any, T: Map<K, V?>> Assert<T>.containsInAnyOrderOnlyNullable(keyValuePair: Pair<K, V?>, vararg otherPairs: Pair<K, V?>)
+    = addAssertion(AssertImpl.map.containsInAnyOrderOnlyNullable(this, V::class, keyValuePair glue otherPairs))
+
 
 /**
  * Makes the assertion that [Assert.subject][AssertionPlant.subject] contains the given [key].

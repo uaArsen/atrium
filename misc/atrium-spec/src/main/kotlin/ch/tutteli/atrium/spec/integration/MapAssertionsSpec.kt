@@ -125,7 +125,7 @@ abstract class MapAssertionsSpec(
     val toBeDescr = DescriptionAnyAssertion.TO_BE.getDefault()
     val keyDoesNotExist = DescriptionMapAssertion.KEY_DOES_NOT_EXIST.getDefault()
     val lessThanDescr = DescriptionComparableAssertion.IS_LESS_THAN.getDefault()
-    val onlyDescr = DescriptionMapAssertion.MAP_CONTAINS_ONLY.getDefault()
+    val onlyDescr = DescriptionMapAssertion.WARNING_MISMATCHES.getDefault()
     val keyMismatchDescr = DescriptionMapAssertion.MAP_KEYS_MISMATCH.getDefault()
 
     fun entry(key: String): String
@@ -211,7 +211,7 @@ abstract class MapAssertionsSpec(
 
     describeFun(containsKeyWithValueAssertions) {
         context("map $map") {
-            listOf<Pair<String, List<Pair<String, Assert<Int>.() -> Unit>>>>(
+            listOf(
                 "a{ toBe(1) }" to listOf(keyValue("a") { toBe(1) } ),
                 "b{ toBe(2) }" to listOf(keyValue("b") { toBe(2) } ),
                 "a{ toBe(1) }, b{ toBe(2) }" to listOf(keyValue("a") { toBe(1) }, keyValue("b"){ toBe(2) }) ,
@@ -246,7 +246,7 @@ abstract class MapAssertionsSpec(
 
     describeFun(containsKeyWithNullableValueAssertions) {
         context("map $nullableMap") {
-            listOf<Pair<String, List<Pair<String?, (Assert<Int>.() -> Unit)?>>>>(
+            listOf(
                 "(a, null)" to
                     listOf(keyNullableValue("a" , null)),
                 "a{ toBe(1) }" to
@@ -322,7 +322,7 @@ abstract class MapAssertionsSpec(
                             entry("c", keyDoesNotExist),
                             "$toBeDescr: 4"
                         )
-                        containsNot(entry("a"))
+                        containsNot(entry("aa"))
                     }
                 }
             }
@@ -379,7 +379,7 @@ abstract class MapAssertionsSpec(
                     nullableFluent.containsInAnyOrderOnlyNullableFun("a" to null, arrayOf("b" to 2))
                 }.toThrow<AssertionError>{
                     messageContains(onlyDescr)
-                    messageContains("$keyMismatchDescr: \"null\"")
+                    messageContains("$keyMismatchDescr: null")
                 }
             }
         }
@@ -399,7 +399,7 @@ abstract class MapAssertionsSpec(
 
     describeFun(containsNullableKey) {
         it("does not throw if the map contains the key") {
-            verbs.checkImmediately(mapOf("a" to 1, null to 2)).containsNullableKeyFun(null)
+            nullableFluent.containsNullableKeyFun(null)
         }
 
         it("throws an AssertionError if the map does not contain the key") {
@@ -407,10 +407,6 @@ abstract class MapAssertionsSpec(
                 verbs.checkImmediately(mapOf<String?, Int>("a" to 1, "b" to 2)).containsNullableKeyFun(null)
             }.toThrow<AssertionError> { messageContains("$containsKeyDescr: null")}
         }
-    }
-
-    it("does not throw if null is passed and the map contains null as key") {
-        fluent.containsKeyFun("a")
     }
 
     describeFun(containsNotKey) {
@@ -432,7 +428,7 @@ abstract class MapAssertionsSpec(
 
         it("throws an AssertionError if the map contains the key") {
             expect {
-                verbs.checkImmediately(mapOf("a" to 1, null to 2)).containsNotNullableKeyFun(null)
+                nullableFluent.containsNotNullableKeyFun(null)
             }.toThrow<AssertionError> { messageContains("$containsNotKeyDescr: null")}
         }
     }

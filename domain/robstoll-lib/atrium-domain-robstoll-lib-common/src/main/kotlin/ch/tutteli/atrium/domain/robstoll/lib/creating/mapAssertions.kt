@@ -1,5 +1,6 @@
 package ch.tutteli.atrium.domain.robstoll.lib.creating
 
+import ch.tutteli.atrium.api.cc.en_GB.asEntries
 import ch.tutteli.atrium.api.cc.en_GB.property
 import ch.tutteli.atrium.api.cc.en_GB.toBe
 import ch.tutteli.atrium.assertions.Assertion
@@ -23,19 +24,6 @@ fun <K, V : Any> _containsNullable(
     pairs: List<Pair<K, V?>>
 ): Assertion = containsNullable(plant, pairs) { value ->
     addAssertion(AssertImpl.any.isNullable(this, type, value))
-}
-
-fun <K, V : Any> _containsInAnyOrderOnly(plant: AssertionPlant<Map<K, V>>, pairs: List<Pair<K, V>>): Assertion
-    = containsInAnyOrderOnlyNonNullable(plant, pairs) { value -> toBe(value) }
-
-fun <K, V : Any> _containsInAnyOrderOnlyNullable(
-    plant: AssertionPlant<Map<K, V?>>,
-    type: KClass<V>,
-    pairs: List<Pair<K, V?>>
-): Assertion = containsInAnyOrderOnlyNullable(plant, pairs) { value ->
-    //TODO add toBe(Any?) to AssertionPlantNullable?
-    if (value == null) toBe(null)
-    else AssertImpl.any.typeTransformation.isNotNull(this, type) { toBe(value) }
 }
 
 fun <K, V : Any> _containsKeyWithValueAssertion(
@@ -70,6 +58,19 @@ private fun <K, V : Any, M> containsNullable(
     { option, key -> option.withParameterObjectNullable(createGetParameterObject(plant, key)) },
     assertionCreator
 )
+
+
+fun <K, V : Any> _containsInAnyOrderOnly(plant: AssertionPlant<Map<K, V>>, pairs: List<Pair<K, V>>): Assertion
+    = containsInAnyOrderOnlyNonNullable(plant, pairs) { value -> toBe(value) }
+
+//TODO uaArsen: rename to _containsNullableInAnyOrderOnly
+fun <K, V : Any> _containsInAnyOrderOnlyNullable(
+    plant: AssertionPlant<Map<K, V?>>,
+    type: KClass<V>,
+    pairs: List<Pair<K, V?>>
+): Assertion = containsInAnyOrderOnlyNullable(plant, pairs) { value ->
+    addAssertion(AssertImpl.any.isNullable(this, type, value))
+}
 
 private fun <K, V : Any, M> containsInAnyOrderOnlyNonNullable(
     plant: AssertionPlant<Map<K, V>>,
@@ -120,6 +121,8 @@ private  fun <K, V, M, A : BaseAssertionPlant<V, A>, C : BaseCollectingAssertion
     assertionCreator: C.(M) -> Unit,
     plant: AssertionPlant<Map<K, V>>
 ): Assertion =  LazyThreadUnsafeAssertionGroup {
+    //TODO uaArsen: that's almost the same as in contains above, try to reduce code duplication by moving shared code into another function
+
     //TODO we should actually make MethodCallFormatter configurable in ReporterBuilder and then get it via AssertionPlant
     val methodCallFormatter = AssertImpl.coreFactory.newMethodCallFormatter()
 
@@ -131,17 +134,17 @@ private  fun <K, V, M, A : BaseAssertionPlant<V, A>, C : BaseCollectingAssertion
         parameterObjectOption(option, key)
             .extractAndAssertIt{ assertionCreator(matcher) }
     }
-    val onlyAssertions = listOf<Assertion>(AssertImpl
-        .builder
-        .list
-        .withDescriptionAndEmptyRepresentation(DescriptionMapAssertion.MAP_CONTAINS_ONLY)
-        .withAssertions(createMismatchAssertionsForInAnyOrderOnly(pairs, plant))
-        .build())
+    val onlyAssertions = listOf(
+        AssertImpl.collection.hasSize(plant.asEntries(), pairs.size),
+        AssertImpl.builder.list
+            .withDescriptionAndEmptyRepresentation(DescriptionMapAssertion.WARNING_MISMATCHES)
+            .withAssertions(createMismatchAssertionsForInAnyOrderOnly(pairs, plant))
+            .build())
        
 
     val assertions = keyValueAssertions.plus(onlyAssertions)
     AssertImpl.builder.list
-        .withDescriptionAndEmptyRepresentation(DescriptionMapAssertion.CONTAINS_IN_ANY_ORDER)
+        .withDescriptionAndEmptyRepresentation(DescriptionMapAssertion.CONTAINS_IN_ANY_ORDER_ONLY)
         .withAssertions(assertions)
         .build()
 }
@@ -184,7 +187,28 @@ private fun <K, V> createGetParameterObject(
     }
 )
 
-private fun <K, V> createMismatchAssertionsForInAnyOrderOnly(pairs: List<Pair<K, V>>, plant: AssertionPlant<Map<K, V>>) : List<Assertion> { // TODO check this implementation please
+//TODO uaArsen: this implementation is fine for now (because I added the size test above) but requires improvements in the future.
+// In case you already want it to give a try, the main problem is, that it reports too much and also false information
+// It asserts again if the map contains all keys and already groups them under `map contains keys that was not asserted` even though that doesn't need to be true
+// Why is this a problem? => a user of atrium can potentially show all assertions in error reporting, not only the failing one
+// For instance, assert(mapOf("a" to 1, "b" to 2)).containsInAnyOrderOnly("a" to 2) could look as follows in reporting (reporting all assertions)
+// assert: {a=1, b=2}
+// ✘ ◆ contains only in any order:
+//     ✔ ⚬ entry "a": 1
+//         ◾ to be: 1
+//     ✘ ⚬ size: 2
+//         ◾ to be: 1
+//     ✘ ⚬ map contains keys that was not asserted:
+//         ✔ ⚬ key mismatched: "a"        <1735507635>
+//         ✘ ⚬ key mismatched: "b"        <1362728240>
+//
+// Moreover:
+// - we could not only provide hints about mismatched entries but also about additional entries
+// - it would be good to see not only the mismatched key but key and value (see example in https://github.com/robstoll/atrium/issues/68)
+//
+// The functionality for reporting mismatched and additional entries is already implemented in InAnyOrderOnlyValuesAssertionCreator.
+// If you want to improve this I highly recommend to delete all this code here and start over by coping InAnyOrderOnlyValuesAssertionCreator
+private fun <K, V> createMismatchAssertionsForInAnyOrderOnly(pairs: List<Pair<K, V>>, plant: AssertionPlant<Map<K, V>>) : List<Assertion> {
     val pairsKeys = pairs.map { it.first }.toList()
     return plant.subject.map {AssertImpl.builder
         .createDescriptive(DescriptionMapAssertion.MAP_KEYS_MISMATCH, it.key) {pairsKeys.contains(it.key)}
