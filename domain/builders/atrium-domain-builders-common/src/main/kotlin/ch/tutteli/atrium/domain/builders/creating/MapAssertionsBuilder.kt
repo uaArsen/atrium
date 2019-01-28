@@ -45,9 +45,8 @@ object MapAssertionsBuilder : MapAssertions {
     override inline fun <K, V: Any> containsInAnyOrderOnly(plant: AssertionPlant<Map<K, V>>, keyValuePairs: List<Pair<K, V>>): Assertion
         = mapAssertions.containsInAnyOrderOnly(plant, keyValuePairs)
 
-    //TODO uaArsen: rename to containsNullableInAnyOrderOnly
-    override inline fun <K, V: Any> containsInAnyOrderOnlyNullable(plant: AssertionPlant<Map<K, V?>>, type: KClass<V>, keyValuePairs: List<Pair<K, V?>>): Assertion
-        = mapAssertions.containsInAnyOrderOnlyNullable(plant, type, keyValuePairs)
+    override inline fun <K, V: Any> containsNullableInAnyOrderOnly(plant: AssertionPlant<Map<K, V?>>, type: KClass<V>, keyValuePairs: List<Pair<K, V?>>): Assertion
+        = mapAssertions.containsNullableInAnyOrderOnly(plant, type, keyValuePairs)
 
 
     override inline fun <K> containsKey(plant: AssertionPlant<Map<K, *>>, key: K)

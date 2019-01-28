@@ -15,8 +15,7 @@ import ch.tutteli.atrium.translations.DescriptionCollectionAssertion.EMPTY
 import ch.tutteli.atrium.translations.DescriptionMapAssertion
 import kotlin.reflect.KClass
 
-fun <K, V : Any> _contains(plant: AssertionPlant<Map<K, V>>, pairs: List<Pair<K, V>>): Assertion
-    = containsNonNullable(plant, pairs) { value -> toBe(value)}
+fun <K, V : Any> _contains(plant: AssertionPlant<Map<K, V>>, pairs: List<Pair<K, V>>): Assertion = containsNonNullable(plant, pairs) { value -> toBe(value) }
 
 fun <K, V : Any> _containsNullable(
     plant: AssertionPlant<Map<K, V?>>,
@@ -35,7 +34,7 @@ fun <K, V : Any> _containsKeyWithNullableValueAssertions(
     plant: AssertionPlant<Map<K, V?>>,
     type: KClass<V>,
     keyValues: List<Pair<K, (Assert<V>.() -> Unit)?>>
-): Assertion = containsNullable(plant, keyValues.map{ it }) { assertionCreator ->
+): Assertion = containsNullable(plant, keyValues.map { it }) { assertionCreator ->
     addAssertion(AssertImpl.any.isNullIfNullElse(this, type, assertionCreator))
 }
 
@@ -60,11 +59,9 @@ private fun <K, V : Any, M> containsNullable(
 )
 
 
-fun <K, V : Any> _containsInAnyOrderOnly(plant: AssertionPlant<Map<K, V>>, pairs: List<Pair<K, V>>): Assertion
-    = containsInAnyOrderOnlyNonNullable(plant, pairs) { value -> toBe(value) }
+fun <K, V : Any> _containsInAnyOrderOnly(plant: AssertionPlant<Map<K, V>>, pairs: List<Pair<K, V>>): Assertion = containsInAnyOrderOnlyNonNullable(plant, pairs) { value -> toBe(value) }
 
-//TODO uaArsen: rename to _containsNullableInAnyOrderOnly
-fun <K, V : Any> _containsInAnyOrderOnlyNullable(
+fun <K, V : Any> _containsNullableInAnyOrderOnly(
     plant: AssertionPlant<Map<K, V?>>,
     type: KClass<V>,
     pairs: List<Pair<K, V?>>
@@ -94,55 +91,34 @@ private fun <K, V : Any, M> containsInAnyOrderOnlyNullable(
     plant
 )
 
-private  fun <K, V, M, A : BaseAssertionPlant<V, A>, C : BaseCollectingAssertionPlant<V, A, C>> contains(
+private fun <K, V, M, A : BaseAssertionPlant<V, A>, C : BaseCollectingAssertionPlant<V, A, C>> contains(
     pairs: List<Pair<K, M>>,
     parameterObjectOption: (FeatureExtractor.ParameterObjectOption, K) -> FeatureExtractor.Creator<V, A, C>,
     assertionCreator: C.(M) -> Unit
-): Assertion =  LazyThreadUnsafeAssertionGroup {
-    //TODO we should actually make MethodCallFormatter configurable in ReporterBuilder and then get it via AssertionPlant
-    val methodCallFormatter = AssertImpl.coreFactory.newMethodCallFormatter()
-    val assertions = pairs.map { (key: K, matcher: M) ->
-        val option = AssertImpl.feature.extractor
-            .withDescription(
-                TranslatableWithArgs(DescriptionMapAssertion.ENTRY_WITH_KEY, methodCallFormatter.formatArgument(key))
-            )
-        parameterObjectOption(option, key)
-            .extractAndAssertIt{ assertionCreator(matcher) }
-    }
+): Assertion = LazyThreadUnsafeAssertionGroup {
+    val assertions = createAssertionsForEntryWithKey(pairs, parameterObjectOption, assertionCreator)
     AssertImpl.builder.list
         .withDescriptionAndEmptyRepresentation(DescriptionMapAssertion.CONTAINS_IN_ANY_ORDER)
         .withAssertions(assertions)
         .build()
 }
 
-private  fun <K, V, M, A : BaseAssertionPlant<V, A>, C : BaseCollectingAssertionPlant<V, A, C>> containsInAnyOrderOnly(
+private fun <K, V, M, A : BaseAssertionPlant<V, A>, C : BaseCollectingAssertionPlant<V, A, C>> containsInAnyOrderOnly(
     pairs: List<Pair<K, M>>,
     parameterObjectOption: (FeatureExtractor.ParameterObjectOption, K) -> FeatureExtractor.Creator<V, A, C>,
     assertionCreator: C.(M) -> Unit,
     plant: AssertionPlant<Map<K, V>>
-): Assertion =  LazyThreadUnsafeAssertionGroup {
-    //TODO uaArsen: that's almost the same as in contains above, try to reduce code duplication by moving shared code into another function
-
-    //TODO we should actually make MethodCallFormatter configurable in ReporterBuilder and then get it via AssertionPlant
-    val methodCallFormatter = AssertImpl.coreFactory.newMethodCallFormatter()
-
-    val keyValueAssertions = pairs.map { (key: K, matcher: M) ->
-        val option = AssertImpl.feature.extractor
-            .withDescription(
-                TranslatableWithArgs(DescriptionMapAssertion.ENTRY_WITH_KEY, methodCallFormatter.formatArgument(key))
-            )
-        parameterObjectOption(option, key)
-            .extractAndAssertIt{ assertionCreator(matcher) }
-    }
+): Assertion = LazyThreadUnsafeAssertionGroup {
+    val entryWithKeyAssertion =  createAssertionsForEntryWithKey(pairs, parameterObjectOption, assertionCreator)
     val onlyAssertions = listOf(
         AssertImpl.collection.hasSize(plant.asEntries(), pairs.size),
         AssertImpl.builder.list
             .withDescriptionAndEmptyRepresentation(DescriptionMapAssertion.WARNING_MISMATCHES)
             .withAssertions(createMismatchAssertionsForInAnyOrderOnly(pairs, plant))
             .build())
-       
 
-    val assertions = keyValueAssertions.plus(onlyAssertions)
+
+    val assertions = entryWithKeyAssertion.plus(onlyAssertions)
     AssertImpl.builder.list
         .withDescriptionAndEmptyRepresentation(DescriptionMapAssertion.CONTAINS_IN_ANY_ORDER_ONLY)
         .withAssertions(assertions)
@@ -150,11 +126,9 @@ private  fun <K, V, M, A : BaseAssertionPlant<V, A>, C : BaseCollectingAssertion
 }
 
 
-fun <K> _containsKey(plant: AssertionPlant<Map<K, *>>, key: K): Assertion
-    = AssertImpl.builder.createDescriptive(DescriptionMapAssertion.CONTAINS_KEY, key) { plant.subject.containsKey(key) }
+fun <K> _containsKey(plant: AssertionPlant<Map<K, *>>, key: K): Assertion = AssertImpl.builder.createDescriptive(DescriptionMapAssertion.CONTAINS_KEY, key) { plant.subject.containsKey(key) }
 
-fun <K> _containsNotKey(plant: AssertionPlant<Map<K, *>>, key: K): Assertion
-    = AssertImpl.builder.createDescriptive(DescriptionMapAssertion.CONTAINS_NOT_KEY, key) { plant.subject.containsKey(key).not()  }
+fun <K> _containsNotKey(plant: AssertionPlant<Map<K, *>>, key: K): Assertion = AssertImpl.builder.createDescriptive(DescriptionMapAssertion.CONTAINS_NOT_KEY, key) { plant.subject.containsKey(key).not() }
 
 fun <K, V : Any> _getExisting(
     plant: AssertionPlant<Map<K, V>>,
@@ -208,22 +182,37 @@ private fun <K, V> createGetParameterObject(
 //
 // The functionality for reporting mismatched and additional entries is already implemented in InAnyOrderOnlyValuesAssertionCreator.
 // If you want to improve this I highly recommend to delete all this code here and start over by coping InAnyOrderOnlyValuesAssertionCreator
-private fun <K, V> createMismatchAssertionsForInAnyOrderOnly(pairs: List<Pair<K, V>>, plant: AssertionPlant<Map<K, V>>) : List<Assertion> {
+private fun <K, V> createMismatchAssertionsForInAnyOrderOnly(pairs: List<Pair<K, V>>, plant: AssertionPlant<Map<K, V>>): List<Assertion> {
     val pairsKeys = pairs.map { it.first }.toList()
-    return plant.subject.map {AssertImpl.builder
-        .createDescriptive(DescriptionMapAssertion.MAP_KEYS_MISMATCH, it.key) {pairsKeys.contains(it.key)}
+    return plant.subject.map {
+        AssertImpl.builder
+            .createDescriptive(DescriptionMapAssertion.MAP_KEYS_MISMATCH, it.key) { pairsKeys.contains(it.key) }
     }.toList()
+}
+
+private fun <K, V, M, A : BaseAssertionPlant<V, A>, C : BaseCollectingAssertionPlant<V, A, C>> createAssertionsForEntryWithKey(
+    pairs: List<Pair<K, M>>,
+    parameterObjectOption: (FeatureExtractor.ParameterObjectOption, K) -> FeatureExtractor.Creator<V, A, C>,
+    assertionCreator: C.(M) -> Unit): List<Assertion> {
+    //TODO we should actually make MethodCallFormatter configurable in ReporterBuilder and then get it via AssertionPlant
+    val methodCallFormatter = AssertImpl.coreFactory.newMethodCallFormatter()
+    return pairs.map { (key: K, matcher: M) ->
+        val option = AssertImpl.feature.extractor
+            .withDescription(
+                TranslatableWithArgs(DescriptionMapAssertion.ENTRY_WITH_KEY, methodCallFormatter.formatArgument(key))
+            )
+        parameterObjectOption(option, key)
+            .extractAndAssertIt { assertionCreator(matcher) }
+    }
 }
 
 fun _hasSize(plant: AssertionPlant<Map<*, *>>, size: Int): Assertion = AssertImpl.collector.collect(plant) {
     property(Map<*, *>::size) { toBe(size) }
 }
 
-fun _isEmpty(plant: AssertionPlant<Map<*, *>>): Assertion
-    = AssertImpl.builder.createDescriptive(DescriptionBasic.IS, RawString.create(EMPTY)) { plant.subject.isEmpty() }
+fun _isEmpty(plant: AssertionPlant<Map<*, *>>): Assertion = AssertImpl.builder.createDescriptive(DescriptionBasic.IS, RawString.create(EMPTY)) { plant.subject.isEmpty() }
 
-fun _isNotEmpty(plant: AssertionPlant<Map<*, *>>): Assertion
-    = AssertImpl.builder.createDescriptive(DescriptionBasic.IS_NOT, RawString.create(EMPTY)) { plant.subject.isNotEmpty() }
+fun _isNotEmpty(plant: AssertionPlant<Map<*, *>>): Assertion = AssertImpl.builder.createDescriptive(DescriptionBasic.IS_NOT, RawString.create(EMPTY)) { plant.subject.isNotEmpty() }
 
 fun <K> _keys(plant: AssertionPlant<Map<K, *>>, assertionCreator: AssertionPlant<Set<K>>.() -> Unit): Assertion
 //TODO check that one assertion was created - problem property creates at least a feature assertion group, that's why collect is happy

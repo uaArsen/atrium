@@ -92,7 +92,7 @@ fun <K, V : Any, T: Map<K, V>> Assert<T>.enthaeltUngeordnetNur(keyValuePair: Pai
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
  */
 inline fun <K, reified V: Any, T: Map<K, V?>> Assert<T>.enthaeltNullableUngeordnetNur(keyValuePair: Pair<K, V?>, vararg otherPairs: Pair<K, V?>)
-    = addAssertion(AssertImpl.map.containsInAnyOrderOnlyNullable(this, V::class, keyValuePair glue otherPairs))
+    = addAssertion(AssertImpl.map.containsNullableInAnyOrderOnly(this, V::class, keyValuePair glue otherPairs))
 
 
 /**

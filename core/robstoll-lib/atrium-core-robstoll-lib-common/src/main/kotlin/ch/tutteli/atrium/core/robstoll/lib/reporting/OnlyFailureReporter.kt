@@ -27,6 +27,6 @@ class OnlyFailureReporter(
 
     override fun format(assertion: Assertion, sb: StringBuilder)
         = assertionFormatterFacade.format(assertion, sb, this::assertionFilter)
-    //TODO uaArsen: you can append || true to see all assertions in error reporting, without the nice ✘ and ✔ though
+
     private fun assertionFilter(assertion: Assertion) = !assertion.holds()
 }

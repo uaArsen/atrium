@@ -91,8 +91,8 @@ fun <K, V : Any, T: Map<K, V>> Assert<T>.containsInAnyOrderOnly(keyValuePair: Pa
  * @return This plant to support a fluent API.
  * @throws AssertionError Might throw an [AssertionError] if the assertion made is not correct.
  */
-inline fun <K, reified V: Any, T: Map<K, V?>> Assert<T>.containsInAnyOrderOnlyNullable(keyValuePair: Pair<K, V?>, vararg otherPairs: Pair<K, V?>)
-    = addAssertion(AssertImpl.map.containsInAnyOrderOnlyNullable(this, V::class, keyValuePair glue otherPairs))
+inline fun <K, reified V: Any, T: Map<K, V?>> Assert<T>.containsNullableInAnyOrderOnly(keyValuePair: Pair<K, V?>, vararg otherPairs: Pair<K, V?>)
+    = addAssertion(AssertImpl.map.containsNullableInAnyOrderOnly(this, V::class, keyValuePair glue otherPairs))
 
 
 /**

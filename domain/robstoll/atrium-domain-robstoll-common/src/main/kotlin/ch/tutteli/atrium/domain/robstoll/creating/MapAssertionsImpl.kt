@@ -37,12 +37,11 @@ class MapAssertionsImpl : MapAssertions {
     override fun <K, V: Any> containsInAnyOrderOnly(plant: AssertionPlant<Map<K, V>>, keyValuePairs: List<Pair<K, V>>)
         = _containsInAnyOrderOnly(plant, keyValuePairs)
 
-    //TODO uaArsen: rename to containsNullableInAnyOrderOnly
-    override fun <K, V: Any> containsInAnyOrderOnlyNullable(
+    override fun <K, V: Any> containsNullableInAnyOrderOnly(
         plant: AssertionPlant<Map<K, V?>>,
         type: KClass<V>,
         keyValuePairs: List<Pair<K, V?>>
-    ) = _containsInAnyOrderOnlyNullable(plant, type, keyValuePairs)
+    ) = _containsNullableInAnyOrderOnly(plant, type, keyValuePairs)
 
 
     override fun <K> containsKey(plant: AssertionPlant<Map<K, *>>, key: K)

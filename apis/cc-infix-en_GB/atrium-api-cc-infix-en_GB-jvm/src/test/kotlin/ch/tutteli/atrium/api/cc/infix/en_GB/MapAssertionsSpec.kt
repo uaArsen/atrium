@@ -13,10 +13,8 @@ class MapAssertionsSpec : ch.tutteli.atrium.spec.integration.MapAssertionsSpec(
     containsNullableFun.name to Companion::containsNullable,
     "${containsKeyWithValueAssertionsFun.name} ${KeyValue::class.simpleName}" to Companion::containsKeyWithValueAssertions,
     "${containsKeyWithNullableValueAssertionsFun.name} ${KeyNullableValue::class.simpleName}" to Companion::containsKeyWithNullableValueAssertions,
-
-    Assert<Map<String, Int>>::containsInAnyOrderOnly.name to Companion::containsInAnyOrderOnly,
-    Assert<Map<String, Int?>>::containsInAnyOrderOnlyNullable.name to Companion::containsInAnyOrderOnlyNullable,
-
+    containsInAnyOrderOnlyFun.name to Companion::containsInAnyOrderOnly,
+    containsNullableInAnyOrderOnlyFun.name to Companion::containsNullableInAnyOrderOnly,
     Assert<Map<String, Int>>::containsKey.name to Companion::containsKey,
     "${Assert<Map<String?, *>>::containsKey.name} for nullable" to Companion::containsNullableKey,
     Assert<Map<String, Int>>::containsNotKey.name to Companion::containsNotKey,
@@ -66,24 +64,21 @@ class MapAssertionsSpec : ch.tutteli.atrium.spec.integration.MapAssertionsSpec(
             }
         }
 
+        private val containsInAnyOrderOnlyFun : KFunction2<Assert<Map<String, Int>>, Pair<String, Int>, Assert<Map<String, Int>>> = Assert<Map<String, Int>>::containsInAnyOrderOnly
         private fun containsInAnyOrderOnly(plant: Assert<Map<String, Int>>, pair: Pair<String, Int>, otherPairs: Array<out Pair<String, Int>>): Assert<Map<String, Int>> {
             return if (otherPairs.isEmpty()) {
-                //TODO uaArsen: add function to API which allows that one can pass a single pair
-                //plant containsInAnyOrderOnly (pair.first to pair.second)
-                plant containsInAnyOrderOnly Pairs(pair)
+                plant containsInAnyOrderOnly (pair.first to pair.second)
             } else {
                 plant containsInAnyOrderOnly Pairs(pair, *otherPairs)
             }
         }
 
-        //TODO uaArsen: rename to containsNullableInAnyOrderOnly
-        private fun containsInAnyOrderOnlyNullable(plant: Assert<Map<String?, Int?>>, pair: Pair<String?, Int?>, otherPairs: Array<out Pair<String?, Int?>>): Assert<Map<String?, Int?>> {
+        private val containsNullableInAnyOrderOnlyFun : KFunction2<Assert<Map<String?, Int?>>, Pair<String?, Int?>,Assert<Map<String?, Int?>>> = Assert<Map<String?, Int?>>::containsNullableInAnyOrderOnly
+        private fun containsNullableInAnyOrderOnly(plant: Assert<Map<String?, Int?>>, pair: Pair<String?, Int?>, otherPairs: Array<out Pair<String?, Int?>>): Assert<Map<String?, Int?>> {
             return if (otherPairs.isEmpty()) {
-                //TODO uaArsen: add function to API which allows that one can pass a single pair
-                //plant containsInAnyOrderOnlyNullable (pair.first to pair.second)
-                plant containsInAnyOrderOnlyNullable Pairs(pair)
+                plant containsNullableInAnyOrderOnly (pair.first to pair.second)
             } else {
-                plant containsInAnyOrderOnlyNullable Pairs(pair, *otherPairs)
+                plant containsNullableInAnyOrderOnly Pairs(pair, *otherPairs)
             }
         }
 
