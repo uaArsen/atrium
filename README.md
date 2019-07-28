@@ -8,7 +8,7 @@
 
 # Atrium
 Atrium is an open-source assertion library for Kotlin with a fluent API.
-The project was inspired by AssertJ at first (and was named AssertK) but it moved on and provides now more 
+The project was inspired by AssertJ at first but it moved on and provides now more 
 flexibility, features and hints to its users (so to you :wink:).
 
 ----
